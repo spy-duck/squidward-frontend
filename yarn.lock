@@ -1483,6 +1483,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"axion@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "axion@npm:0.1.0"
+  checksum: 10c0/02e81f552e57aff0d3a20309e8410424e5231e259b22a5981fe73f1fb8e21b0231d0d142be4bbe623eff5dd843ba0bcaf831233e5299899867d42ec60672b7de
+  languageName: node
+  linkType: hard
+
 "babel-dead-code-elimination@npm:^1.0.6":
   version: 1.0.10
   resolution: "babel-dead-code-elimination@npm:1.0.10"
@@ -1685,6 +1692,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"consola@npm:^3.4.2":
+  version: 3.4.2
+  resolution: "consola@npm:3.4.2"
+  checksum: 10c0/7cebe57ecf646ba74b300bcce23bff43034ed6fbec9f7e39c27cee1dc00df8a21cd336b466ad32e304ea70fba04ec9e890c200270de9a526ce021ba8a7e4c11a
+  languageName: node
+  linkType: hard
+
 "content-disposition@npm:0.5.4":
   version: 0.5.4
   resolution: "content-disposition@npm:0.5.4"
@@ -1698,6 +1712,13 @@ __metadata:
   version: 1.0.5
   resolution: "content-type@npm:1.0.5"
   checksum: 10c0/b76ebed15c000aee4678c3707e0860cb6abd4e680a598c0a26e17f0bfae723ec9cc2802f0ff1bc6e4d80603719010431d2231018373d4dde10f9ccff9dadf5af
+  languageName: node
+  linkType: hard
+
+"contracts@file:../squidward-backend/libs/contracts::locator=squidward-frontend%40workspace%3A.":
+  version: 0.0.0
+  resolution: "contracts@file:../squidward-backend/libs/contracts#../squidward-backend/libs/contracts::hash=beef9b&locator=squidward-frontend%40workspace%3A."
+  checksum: 10c0/b1a710bc5a27f6bb72f98fef2de1991f87e98df4b4ed9813ee3473eb4e03e866fa7c6417709d2b0e6a2b2817592b728869cb25259c86f19fabc56fb76c282582
   languageName: node
   linkType: hard
 
@@ -1905,6 +1926,13 @@ __metadata:
   version: 1.1.0
   resolution: "detect-node-es@npm:1.1.0"
   checksum: 10c0/e562f00de23f10c27d7119e1af0e7388407eb4b06596a25f6d79a360094a109ff285de317f02b090faae093d314cf6e73ac3214f8a5bb3a0def5bece94557fbe
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:^17.2.2":
+  version: 17.2.2
+  resolution: "dotenv@npm:17.2.2"
+  checksum: 10c0/be66513504590aff6eccb14167625aed9bd42ce80547f4fe5d195860211971a7060949b57108dfaeaf90658f79e40edccd3f233f0a978bff507b5b1565ae162b
   languageName: node
   linkType: hard
 
@@ -3787,7 +3815,11 @@ __metadata:
     "@types/react": "npm:^19.1.2"
     "@types/react-dom": "npm:^19.1.2"
     "@vitejs/plugin-react-swc": "npm:^4.0.1"
+    axion: "npm:^0.1.0"
+    consola: "npm:^3.4.2"
+    contracts: "file:../squidward-backend/libs/contracts"
     dayjs: "npm:^1.11.18"
+    dotenv: "npm:^17.2.2"
     isbot: "npm:^5.1.27"
     react: "npm:^19.1.0"
     react-dom: "npm:^19.1.0"
@@ -3797,6 +3829,7 @@ __metadata:
     vite: "npm:^6.3.3"
     vite-plugin-remove-console: "npm:^2.2.0"
     vite-tsconfig-paths: "npm:^5.1.4"
+    zod: "npm:^4.1.8"
   languageName: unknown
   linkType: soft
 
@@ -4395,5 +4428,12 @@ __metadata:
   version: 1.1.4
   resolution: "zimmerframe@npm:1.1.4"
   checksum: 10c0/9470cbf22cefae975ab413c7158a119d082b354ddcf0da48a842f2f42246fa15943cd9b92c047de39db38015e3b866e32f383bc217e8e4f4192945c7d425536b
+  languageName: node
+  linkType: hard
+
+"zod@npm:^4.1.8":
+  version: 4.1.8
+  resolution: "zod@npm:4.1.8"
+  checksum: 10c0/5eae39da09d7bd0564a30dfd2348811e4e2e7dd15955d8f3444f8e196f35e5422b1482eda234b722fafb0738f4a8b718adb042b860936bfdd2cc19cdbdac8a9a
   languageName: node
   linkType: hard

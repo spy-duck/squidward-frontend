@@ -1,1 +1,1 @@
-export { UsersPage as default } from './users.page'
+export { NodesPage as default } from './nodes.page'

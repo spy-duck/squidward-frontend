@@ -1,2 +1,2 @@
-![plot](./logo.webp)
+![plot](public/logo.webp)
 # Squidward proxy - frontend

@@ -5,7 +5,7 @@ export const ROUTES = {
             BASE: '/nodes',
         },
         USERS: {
-            BASE: '/nodes',
+            BASE: '/users',
         }
     },
 } as const;
