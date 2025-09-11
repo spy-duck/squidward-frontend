@@ -1,7 +1,7 @@
 export function UsersPage() {
     return (
         <div>
-            Nodes page
+            Users page
         </div>
-    )
+    );
 }
