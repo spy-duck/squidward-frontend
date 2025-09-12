@@ -21,8 +21,8 @@ export function AppLayout() {
             <AppShell.Navbar p='md'>
                 <NavLink
                     component={ RouterLink }
-                    to={ ROUTES.LOGIN }
-                    label='Login'
+                    to={ ROUTES.DASHBOARD.USERS.BASE }
+                    label='Users'
                 />
                 <NavLink
                     component={ RouterLink }
@@ -31,8 +31,8 @@ export function AppLayout() {
                 />
                 <NavLink
                     component={ RouterLink }
-                    to={ ROUTES.DASHBOARD.USERS.BASE }
-                    label='Users'
+                    to={ ROUTES.DASHBOARD.SQUID.CONFIG }
+                    label='Squid config'
                 />
             </AppShell.Navbar>
             <AppShell.Main>

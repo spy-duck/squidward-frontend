@@ -1,6 +1,6 @@
 import React from 'react';
 import { NodesListContract } from '@swuidward/contracts/commands';
-import { Badge, Center, Table } from '@mantine/core';
+import { Badge, Center, Table, Tooltip } from '@mantine/core';
 import { formatDateTime } from '@/shared/utils';
 import { NodesListItemMenu } from '@/components/nodes/nodes-list/nodes-list-item-menu';
 
@@ -16,7 +16,9 @@ export function NodesList({ nodes }: NodesListProps): React.ReactElement {
             </Table.Td>
             <Table.Td>
                 <Center>
-                    <Badge color='red' size='xs'></Badge>
+                    <Tooltip label="Disconnected">
+                        <Badge color='red' size='xs'></Badge>
+                    </Tooltip>
                 </Center>
             </Table.Td>
             <Table.Td>{ node.name }</Table.Td>
