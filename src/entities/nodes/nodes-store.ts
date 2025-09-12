@@ -6,7 +6,12 @@ export const isEditNodeStore = atom<boolean>(false);
 export const useIsEditNodeStore = () => useAtom<boolean>(isEditNodeStore);
 export const useSetIsEditNodeStore = () => useSetAtom(isEditNodeStore);
 
-export const editNodeStore = atomWithReset<TNode | null>(null);
-export const useEditNodeStore = () => useAtomValue<TNode | null>(editNodeStore);
-export const useSetEditNodeStore = () => useSetAtom(editNodeStore);
-export const useResetEditNodeStore = () => useResetAtom(editNodeStore);
+export const actionNodeStore = atomWithReset<TNode | null>(null);
+export const useActionNodeStore = () => useAtomValue<TNode | null>(actionNodeStore);
+export const useSetActionNodeStore = () => useSetAtom(actionNodeStore);
+export const useResetActionNodeStore = () => useResetAtom(actionNodeStore);
+
+
+export const isRemoveNodeStore = atom<boolean>(false);
+export const useIsRemoveNodeStore = () => useAtom<boolean>(isRemoveNodeStore);
+export const useSetIsRemoveNodeStore = () => useSetAtom(isRemoveNodeStore);

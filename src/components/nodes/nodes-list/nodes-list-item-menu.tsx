@@ -2,7 +2,7 @@ import { type MantineColor, Menu, UnstyledButton } from '@mantine/core';
 import { IconDotsVertical, IconPencil, IconPlayerStopFilled, IconRefresh, IconTrash } from '@tabler/icons-react';
 import type { TNode } from '@swuidward/contracts/schemas/node.schema';
 import type { ReactNode } from 'react';
-import { useSetEditNodeStore, useSetIsEditNodeStore } from '@/entities/nodes/nodes-store';
+import { useSetActionNodeStore, useSetIsRemoveNodeStore, useSetIsEditNodeStore } from '@/entities/nodes/nodes-store';
 
 type MenuProps = {
     text: ReactNode;
@@ -16,15 +16,16 @@ type NodesListItemMenuProps = {
 }
 
 export function NodesListItemMenu({ node }: NodesListItemMenuProps) {
-    const setEditNode = useSetEditNodeStore();
+    const setActionNode = useSetActionNodeStore();
     const setIsEditNode = useSetIsEditNodeStore();
+    const setIsRemoveNode = useSetIsRemoveNodeStore();
     
     const items: MenuProps[] = [
         {
             text: 'Edit',
             icon: <IconPencil size={ 14 }/>,
             onClick: () => {
-                setEditNode(node);
+                setActionNode(node);
                 setIsEditNode(true);
             },
         },
@@ -46,7 +47,8 @@ export function NodesListItemMenu({ node }: NodesListItemMenuProps) {
             text: 'Delete',
             icon: <IconTrash size={ 14 }/>,
             onClick: () => {
-                console.log('Delete', node);
+                setActionNode(node);
+                setIsRemoveNode(true);
             },
             color: 'red',
         },

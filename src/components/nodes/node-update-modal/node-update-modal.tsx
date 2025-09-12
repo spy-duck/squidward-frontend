@@ -5,7 +5,7 @@ import { useForm } from '@mantine/form';
 import { UpdateNodeContract } from '@swuidward/contracts/commands';
 import { zod4Resolver } from 'mantine-form-zod-resolver';
 import { useUpdateNode } from '@/shared/api/hooks/use-update-node';
-import { useEditNodeStore, useResetEditNodeStore } from '@/entities/nodes/nodes-store';
+import { useActionNodeStore, useResetActionNodeStore } from '@/entities/nodes/nodes-store';
 
 type NodeCreateModalProps = ModalBaseProps & {
     onSubmit(): void;
@@ -19,8 +19,8 @@ export function NodeUpdateModal({ onSubmit, ...modalProps }: NodeCreateModalProp
         },
     });
     
-    const node = useEditNodeStore();
-    const resetEditNode = useResetEditNodeStore();
+    const node = useActionNodeStore();
+    const resetEditNode = useResetActionNodeStore();
     
     const form = useForm<UpdateNodeContract.Request>({
         validate: zod4Resolver(UpdateNodeContract.RequestSchema),
