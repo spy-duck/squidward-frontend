@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { apiClient } from '@/common/api/axios';
+import { apiClient } from '@/shared/api/axios';
 import { NodesListContract } from '@swuidward/contracts/commands';
-import { QUERY_KEYS } from '@/common/constants/api';
+import { QUERY_KEYS } from '@/shared/constants/api';
 
 export function useGetNodes() {
     const { data, isLoading, refetch } = useQuery({

@@ -1,16 +1,14 @@
 import { createContext, type Dispatch, type SetStateAction, useContext, useState } from 'react';
 import type { ReactNode } from 'react';
-import { useGetNodes } from '@/common/api/hooks/use-get-nodes';
+import { useGetNodes } from '@/shared/api/hooks/use-get-nodes';
 import { NodesListContract } from '@swuidward/contracts/commands';
 
 type TNodesPageContext = {
     nodes: NodesListContract.Response['response']['nodes'],
     isLoading: boolean,
     isCreateModalOpen: boolean,
-    isEditModalOpen: boolean,
-    openCreateModalOpen: Dispatch<SetStateAction<boolean>>,
-    setIsEditModalOpen: Dispatch<SetStateAction<boolean>>,
     refetchNodes(): void,
+    openCreateModalOpen: Dispatch<SetStateAction<boolean>>,
 };
 
 
@@ -23,7 +21,6 @@ type TNodesPageContextProps = {
 };
 export const NodesPageProvider = ({ children }: TNodesPageContextProps) => {
     const [ isCreateModalOpen, openCreateModalOpen ] = useState(false);
-    const [ isEditModalOpen, setIsEditModalOpen ] = useState(false);
     const { nodes, isLoading, refetchNodes } = useGetNodes();
     
     return (
@@ -32,9 +29,7 @@ export const NodesPageProvider = ({ children }: TNodesPageContextProps) => {
             refetchNodes,
             isLoading,
             isCreateModalOpen,
-            isEditModalOpen,
             openCreateModalOpen,
-            setIsEditModalOpen,
         } }>
             { children }
         </NodesPageContext>

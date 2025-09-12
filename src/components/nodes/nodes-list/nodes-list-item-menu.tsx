@@ -2,6 +2,7 @@ import { type MantineColor, Menu, UnstyledButton } from '@mantine/core';
 import { IconDotsVertical, IconPencil, IconPlayerStopFilled, IconRefresh, IconTrash } from '@tabler/icons-react';
 import type { TNode } from '@swuidward/contracts/schemas/node.schema';
 import type { ReactNode } from 'react';
+import { useSetEditNodeStore, useSetIsEditNodeStore } from '@/entities/nodes/nodes-store';
 
 type MenuProps = {
     text: ReactNode;
@@ -15,12 +16,16 @@ type NodesListItemMenuProps = {
 }
 
 export function NodesListItemMenu({ node }: NodesListItemMenuProps) {
+    const setEditNode = useSetEditNodeStore();
+    const setIsEditNode = useSetIsEditNodeStore();
+    
     const items: MenuProps[] = [
         {
             text: 'Edit',
             icon: <IconPencil size={ 14 }/>,
             onClick: () => {
-                console.log('Edit', node);
+                setEditNode(node);
+                setIsEditNode(true);
             },
         },
         {

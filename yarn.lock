@@ -1251,10 +1251,10 @@ __metadata:
 
 "@swuidward/contracts@file:../squidward-backend/libs/contracts::locator=squidward-frontend%40workspace%3A.":
   version: 0.0.0
-  resolution: "@swuidward/contracts@file:../squidward-backend/libs/contracts#../squidward-backend/libs/contracts::hash=74a2f0&locator=squidward-frontend%40workspace%3A."
+  resolution: "@swuidward/contracts@file:../squidward-backend/libs/contracts#../squidward-backend/libs/contracts::hash=8394f8&locator=squidward-frontend%40workspace%3A."
   dependencies:
     zod: "npm:^4.1.8"
-  checksum: 10c0/155710bf9e3ff7ffec2aafa72370ec152daa2d20ebab17410b3733b8b7f81fd6dbd786049bd462584bf90a3cb58927c26b738cc1476242681826506a3c28a04e
+  checksum: 10c0/e36976665b9efd72275db99b50568513602e54fbb4045280d4ddd7864aac7b525b1f7edd8ce83dad88d752f9b5d4883dd02f4d4fda927eeb58f9815558a21ac9
   languageName: node
   linkType: hard
 
@@ -2717,6 +2717,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jotai@npm:^2.14.0":
+  version: 2.14.0
+  resolution: "jotai@npm:2.14.0"
+  peerDependencies:
+    "@babel/core": ">=7.0.0"
+    "@babel/template": ">=7.0.0"
+    "@types/react": ">=17.0.0"
+    react: ">=17.0.0"
+  peerDependenciesMeta:
+    "@babel/core":
+      optional: true
+    "@babel/template":
+      optional: true
+    "@types/react":
+      optional: true
+    react:
+      optional: true
+  checksum: 10c0/1a9544a9a5f9620dc485b81a34941fd858c8b64a5264fa025213a2a09badc0a73ae6bee95156077c5ffc787340cd752b53794b9f785eebfe942dded7609121c6
+  languageName: node
+  linkType: hard
+
 "js-tokens@npm:^3.0.0 || ^4.0.0, js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -3953,6 +3974,7 @@ __metadata:
     dayjs: "npm:^1.11.18"
     dotenv: "npm:^17.2.2"
     isbot: "npm:^5.1.27"
+    jotai: "npm:^2.14.0"
     luxon: "npm:^3.7.2"
     mantine-form-zod-resolver: "npm:^1.3.0"
     react: "npm:^19.1.0"

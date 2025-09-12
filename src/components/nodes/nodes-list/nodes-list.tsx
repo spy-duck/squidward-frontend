@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodesListContract } from '@swuidward/contracts/commands';
 import { Badge, Center, Table } from '@mantine/core';
-import { formatDateTime } from '@/common/utils';
+import { formatDateTime } from '@/shared/utils';
 import { NodesListItemMenu } from '@/components/nodes/nodes-list/nodes-list-item-menu';
 
 type NodesListProps = {

@@ -1,7 +1,7 @@
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router';
-import { AppLayout } from '@/common/layout/app.layout';
+import { AppLayout } from '@/shared/layout/app.layout';
 import { lazy } from 'react';
-import { ROUTES } from '@/common/constants/routes';
+import { ROUTES } from '@/shared/constants/routes';
 
 const LoginPage = lazy(() => import('@/pages/login'));
 const NodesPage = lazy(() => import('@/pages/nodes'));

@@ -2,36 +2,52 @@ import React, { useEffect } from 'react';
 import { Button, Group, Modal, NumberInput, Stack, TextInput } from '@mantine/core';
 import type { ModalBaseProps } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { CreateNodeContract } from '@swuidward/contracts/commands';
+import { UpdateNodeContract } from '@swuidward/contracts/commands';
 import { zod4Resolver } from 'mantine-form-zod-resolver';
-import { useCreateNode } from '@/shared/api/hooks/use-create-node';
+import { useUpdateNode } from '@/shared/api/hooks/use-update-node';
+import { useEditNodeStore, useResetEditNodeStore } from '@/entities/nodes/nodes-store';
 
 type NodeCreateModalProps = ModalBaseProps & {
     onSubmit(): void;
 };
 
-export function NodeCreateModal({ onSubmit, ...modalProps }: NodeCreateModalProps): React.ReactElement {
-    const { createNode, isPending } = useCreateNode({
+export function NodeUpdateModal({ onSubmit, ...modalProps }: NodeCreateModalProps): React.ReactElement {
+    const { updateNode, isPending } = useUpdateNode({
         onSuccess() {
             modalProps.onClose();
             onSubmit();
         },
     });
     
-    const form = useForm<CreateNodeContract.Request>({
-        validate: zod4Resolver(CreateNodeContract.RequestSchema),
+    const node = useEditNodeStore();
+    const resetEditNode = useResetEditNodeStore();
+    
+    const form = useForm<UpdateNodeContract.Request>({
+        validate: zod4Resolver(UpdateNodeContract.RequestSchema),
     });
     
     useEffect(() => {
-        if (modalProps.opened) {
-            form.reset();
+        if (modalProps.opened && node) {
+            form.setValues({
+                uuid: node.uuid,
+                name: node.name,
+                host: node.host,
+                port: node.port,
+                description: node.description,
+            });
         }
     }, [ modalProps.opened ]);
     
+    function closeHandler() {
+        resetEditNode();
+        form.reset();
+        modalProps.onClose();
+    }
+    
     return (
-        <Modal { ...modalProps } title='Create new node'>
+        <Modal { ...modalProps } onClose={closeHandler} title='Create new node'>
             <form onSubmit={ form.onSubmit((values) => {
-                createNode(values);
+                updateNode(values);
             }) }>
                 <Stack
                     align='stretch'
@@ -71,7 +87,7 @@ export function NodeCreateModal({ onSubmit, ...modalProps }: NodeCreateModalProp
                     />
                 </Stack>
                 <Group justify='flex-end' mt='md'>
-                    <Button type='submit' loading={ isPending }>Create</Button>
+                    <Button type='submit' loading={ isPending }>Save</Button>
                 </Group>
             </form>
         </Modal>

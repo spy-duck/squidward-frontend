@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { apiClient } from '@/common/api/axios';
+import { apiClient } from '@/shared/api/axios';
 import { CreateNodeContract } from '@swuidward/contracts/commands';
 
 export function useCreateNode({ onSuccess }: {
