@@ -2,7 +2,7 @@ import { Center, DirectionProvider, MantineProvider } from '@mantine/core'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { QueryClient } from '@tanstack/query-core';
 import { ModalsProvider } from '@mantine/modals';
-import { theme } from '@/common/theme';
+import { theme } from '@/shared/theme';
 import { NavigationProgress } from '@mantine/nprogress';
 import { Suspense } from 'react';
 import { Router } from '@/router/router';

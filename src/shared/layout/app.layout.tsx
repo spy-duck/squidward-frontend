@@ -1,7 +1,7 @@
 import { useDisclosure } from '@mantine/hooks';
 import { AppShell, Burger, Group, NavLink } from '@mantine/core';
 import { Outlet, NavLink as RouterLink } from 'react-router';
-import { ROUTES } from '@/common/constants/routes';
+import { ROUTES } from '@/shared/constants/routes';
 
 export function AppLayout() {
     const [ opened, { toggle } ] = useDisclosure();
@@ -21,8 +21,8 @@ export function AppLayout() {
             <AppShell.Navbar p='md'>
                 <NavLink
                     component={ RouterLink }
-                    to={ ROUTES.LOGIN }
-                    label='Login'
+                    to={ ROUTES.DASHBOARD.USERS.BASE }
+                    label='Users'
                 />
                 <NavLink
                     component={ RouterLink }
@@ -31,8 +31,8 @@ export function AppLayout() {
                 />
                 <NavLink
                     component={ RouterLink }
-                    to={ ROUTES.DASHBOARD.USERS.BASE }
-                    label='Users'
+                    to={ ROUTES.DASHBOARD.SQUID.CONFIG }
+                    label='Squid config'
                 />
             </AppShell.Navbar>
             <AppShell.Main>

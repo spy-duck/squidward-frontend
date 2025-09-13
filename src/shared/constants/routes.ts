@@ -6,6 +6,10 @@ export const ROUTES = {
         },
         USERS: {
             BASE: '/users',
+        },
+        SQUID: {
+            BASE: '/squid',
+            CONFIG: '/squid/config',
         }
     },
 } as const;
