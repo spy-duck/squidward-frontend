@@ -2,9 +2,25 @@ import { useDisclosure } from '@mantine/hooks';
 import { AppShell, Burger, Group, NavLink } from '@mantine/core';
 import { Outlet, NavLink as RouterLink } from 'react-router';
 import { ROUTES } from '@/shared/constants/routes';
+import { motion } from 'framer-motion'
 
 export function AppLayout() {
     const [ opened, { toggle } ] = useDisclosure();
+    
+    const navLinks = [
+        {
+            label: 'Users',
+            to: ROUTES.DASHBOARD.USERS.BASE,
+        },
+        {
+            label: 'Nodes',
+            to: ROUTES.DASHBOARD.NODES.BASE,
+        },
+        {
+            label: 'Squid config',
+            to: ROUTES.DASHBOARD.SQUID.CONFIG,
+        },
+    ]
     
     return (
         <AppShell
@@ -19,21 +35,29 @@ export function AppLayout() {
                 </Group>
             </AppShell.Header>
             <AppShell.Navbar p='md'>
-                <NavLink
-                    component={ RouterLink }
-                    to={ ROUTES.DASHBOARD.USERS.BASE }
-                    label='Users'
-                />
-                <NavLink
-                    component={ RouterLink }
-                    to={ ROUTES.DASHBOARD.NODES.BASE }
-                    label='Nodes'
-                />
-                <NavLink
-                    component={ RouterLink }
-                    to={ ROUTES.DASHBOARD.SQUID.CONFIG }
-                    label='Squid config'
-                />
+                { navLinks.map(({ label, to }, index) => (
+                    <motion.div
+                        initial={ {
+                            opacity: 0,
+                            translateY: -5,
+                        } }
+                        animate={ {
+                            opacity: 1,
+                            translateY: 0,
+                        } }
+                        transition={ {
+                            duration: 0.5,
+                            ease: [ 0, 0.71, 0.2, 1.01 ],
+                            delay: (index + 1) / 15,
+                        } }
+                    >
+                        <NavLink
+                            component={ RouterLink }
+                            to={ to }
+                            label={ label }
+                        />
+                    </motion.div>
+                )) }
             </AppShell.Navbar>
             <AppShell.Main>
                 <Outlet/>

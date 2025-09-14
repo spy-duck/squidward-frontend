@@ -1,9 +1,8 @@
 import { createContext, type Dispatch, type SetStateAction, useContext, useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
-import { useGetNodes } from '@/shared/api/hooks/use-get-nodes';
+import { queryClient, useGetNodes } from '@/shared/api';
 import { NodesListContract } from '@swuidward/contracts/commands';
-import { queryClient } from '@/common/api';
-import { useIsEditNodeStore, useIsRemoveNodeStore } from '@/entities/nodes/nodes-store';
+import { useIsEditNodeStore, useIsRemoveNodeStore, useResetActionNodeStore } from '@/entities';
 import { QUERY_KEYS } from '@/shared/constants/api';
 
 type TNodesPageContext = {
@@ -29,14 +28,20 @@ export const NodesPageProvider = ({ children }: TNodesPageContextProps) => {
     const [ isEditModalOpen ] = useIsEditNodeStore();
     const [ isRemoveModalOpen ] = useIsRemoveNodeStore();
     const { nodes, isLoading, refetchNodes } = useGetNodes();
+    const resetAction = useResetActionNodeStore();
     
     useEffect(() => {
-        if (isCreateModalOpen || isEditModalOpen) return
-            ;
         (async () => {
-            await queryClient.refetchQueries({ queryKey: [ QUERY_KEYS.NODES.NODES_LIST ] })
-        })()
-    }, [ isCreateModalOpen, isEditModalOpen ])
+            await queryClient.prefetchQuery({
+                queryKey: [ QUERY_KEYS.NODES.NODES_LIST ]
+            });
+            await refetchNodes(); // TODO: fix bug (prefetch not working)
+        })();
+        
+        return () => {
+            resetAction()
+        }
+    }, []);
     
     return (
         <NodesPageContext value={ {

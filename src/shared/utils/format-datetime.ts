@@ -1,23 +1,22 @@
-import { DateTime } from 'luxon';
+import dayjs from 'dayjs';
+import type { Dayjs } from 'dayjs';
 
 export const FORMAT = {
-    DATETIME: 'dd.MM.yyyy HH:mm',
-    DATETIME_FULL: 'dd.MM.yyyy HH:mm:ss',
-    DATE: 'dd.MM.yyyy',
+    DATETIME: 'DD.MM.yyyy HH:mm',
+    DATETIME_FULL: 'DD.MM.YYYY HH:mm:ss',
+    DATE: 'DD.MM.YYYY',
     TIME: 'HH:mm',
 };
 
-function parseDateTime(value: string | DateTime | Date): DateTime {
-    if (value instanceof DateTime) {
+function parseDateTime(value: string | Dayjs | Date): Dayjs {
+    if (dayjs.isDayjs(value)) {
         return value;
-    } else if (value instanceof Date) {
-        return DateTime.fromJSDate(value);
     }
-    return DateTime.fromISO(value);
+    return dayjs(value);
 }
 
-export const formatDate = (value: string | DateTime | undefined): string | undefined =>
-    value && parseDateTime(value).toFormat(FORMAT.DATE);
+export const formatDate = (value: string | Dayjs | undefined): string | undefined =>
+    value && parseDateTime(value).format(FORMAT.DATE);
 
-export const formatDateTime = (value: string | DateTime | Date | undefined): string | undefined =>
-    value && parseDateTime(value).toFormat(FORMAT.DATETIME_FULL);
+export const formatDateTime = (value: string | Dayjs | Date | undefined): string | undefined =>
+    value && parseDateTime(value).format(FORMAT.DATETIME_FULL);

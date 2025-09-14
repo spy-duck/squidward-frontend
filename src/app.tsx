@@ -5,8 +5,9 @@ import { theme } from '@/shared/theme';
 import { NavigationProgress } from '@mantine/nprogress';
 import { Suspense } from 'react';
 import { Router } from '@/router/router';
-import { queryClient } from '@/common/api';
+import { queryClient } from '@/shared/api';
 import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css';
 
 
 

@@ -4,7 +4,7 @@ import type { ModalBaseProps } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { CreateNodeContract } from '@swuidward/contracts/commands';
 import { zod4Resolver } from 'mantine-form-zod-resolver';
-import { useCreateNode } from '@/shared/api/hooks/use-create-node';
+import { useCreateNode } from '@/shared/api';
 
 type NodeCreateModalProps = ModalBaseProps & {
     onSubmit(): void;
@@ -19,6 +19,7 @@ export function NodeCreateModal({ onSubmit, ...modalProps }: NodeCreateModalProp
     });
     
     const form = useForm<CreateNodeContract.Request>({
+        mode: 'uncontrolled',
         validate: zod4Resolver(CreateNodeContract.RequestSchema),
     });
     

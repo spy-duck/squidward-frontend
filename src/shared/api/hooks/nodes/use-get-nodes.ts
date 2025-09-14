@@ -11,13 +11,14 @@ export function useGetNodes() {
                 url: NodesListContract.endpointDetails.CONTROLLER_URL,
                 method: NodesListContract.endpointDetails.REQUEST_METHOD,
             });
-            return NodesListContract.ResponseSchema.parse(response.data);
+            return NodesListContract.ResponseSchema.parseAsync(response.data);
         },
         select(data: NodesListContract.Response) {
             return data.response.nodes;
         },
         staleTime: 5000,
         refetchInterval: 5000,
+        throwOnError: true,
     });
     return {
         nodes: data,

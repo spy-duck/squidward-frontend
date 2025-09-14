@@ -1,10 +1,12 @@
 import { NodesPageProvider, useNodesPageContext } from '@/pages/nodes/nodes.context';
 import { NodesList } from '@/components/nodes/nodes-list';
-import { Button, Space } from '@mantine/core';
+import { Button, Flex } from '@mantine/core';
 import { NodeCreateModal } from '@/components/nodes/node-create-modal';
 import { useSetIsEditNodeStore } from '@/entities/nodes/nodes-store';
-import { NodeUpdateModal } from '@/components/nodes/node-update-modal';
+import { NodeEditModal } from '@/components/nodes/node-edit-modal';
 import { NodeRemoveModal } from '@/components/nodes/node-remove-modal';
+import { IconPlus, IconRefresh } from '@tabler/icons-react';
+import { PageWrapper } from '@/shared/components/ui';
 
 function NodesPageComponent() {
     const {
@@ -16,32 +18,42 @@ function NodesPageComponent() {
         isRemoveModalOpen,
     } = useNodesPageContext();
     
-    const setIsEditNodeStore = useSetIsEditNodeStore();
-    const setIsRemoveNodeStore = useSetIsEditNodeStore();
+    const setIsEdit = useSetIsEditNodeStore();
+    const setIsRemove = useSetIsEditNodeStore();
     
     return (
-        <div>
-            <Space>
-                <h1>Nodes</h1>
-                <Button onClick={ () => openCreateModalOpen(true) }>Create node</Button>
-            </Space>
+        <PageWrapper>
+            <Flex align='center'>
+                <h1 style={ { flex: 1 } }>Nodes</h1>
+                <Flex gap={ 14 }>
+                    <Button
+                        onClick={ () => openCreateModalOpen(true) }
+                        leftSection={ <IconPlus size={ 16 }/> }
+                    >
+                        Create node
+                    </Button>
+                    <Button onClick={ () => refetchNodes() }>
+                        <IconRefresh/>
+                    </Button>
+                </Flex>
+            </Flex>
             <NodesList nodes={ nodes }/>
             <NodeCreateModal
                 opened={ isCreateModalOpen }
                 onClose={ () => openCreateModalOpen(false) }
                 onSubmit={ () => refetchNodes() }
             />
-            <NodeUpdateModal
+            <NodeEditModal
                 opened={ isEditModalOpen }
-                onClose={ () => setIsEditNodeStore(false) }
+                onClose={ () => setIsEdit(false) }
                 onSubmit={ () => refetchNodes() }
             />
             <NodeRemoveModal
                 opened={ isRemoveModalOpen }
-                onClose={ () => setIsRemoveNodeStore(false) }
+                onClose={ () => setIsRemove(false) }
                 onSubmit={ () => refetchNodes() }
             />
-        </div>
+        </PageWrapper>
     )
 }
 

@@ -4,14 +4,14 @@ import type { ModalBaseProps } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { UpdateNodeContract } from '@swuidward/contracts/commands';
 import { zod4Resolver } from 'mantine-form-zod-resolver';
-import { useUpdateNode } from '@/shared/api/hooks/use-update-node';
+import { useUpdateNode } from '@/shared/api';
 import { useActionNodeStore, useResetActionNodeStore } from '@/entities/nodes/nodes-store';
 
 type NodeCreateModalProps = ModalBaseProps & {
     onSubmit(): void;
 };
 
-export function NodeUpdateModal({ onSubmit, ...modalProps }: NodeCreateModalProps): React.ReactElement {
+export function NodeEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps): React.ReactElement {
     const { updateNode, isPending } = useUpdateNode({
         onSuccess() {
             modalProps.onClose();
@@ -20,9 +20,10 @@ export function NodeUpdateModal({ onSubmit, ...modalProps }: NodeCreateModalProp
     });
     
     const node = useActionNodeStore();
-    const resetEditNode = useResetActionNodeStore();
+    const resetAction = useResetActionNodeStore();
     
     const form = useForm<UpdateNodeContract.Request>({
+        mode: 'uncontrolled',
         validate: zod4Resolver(UpdateNodeContract.RequestSchema),
     });
     
@@ -40,13 +41,13 @@ export function NodeUpdateModal({ onSubmit, ...modalProps }: NodeCreateModalProp
     }, [ modalProps.opened ]);
     console.log(form.errors)
     function closeHandler() {
-        resetEditNode();
+        resetAction();
         form.reset();
         modalProps.onClose();
     }
     
     return (
-        <Modal { ...modalProps } onClose={closeHandler} title='Create new node'>
+        <Modal { ...modalProps } onClose={closeHandler} title='Edit node'>
             <form onSubmit={ form.onSubmit((values) => {
                 updateNode(values);
             }) }>

@@ -1,27 +1,27 @@
 import React from 'react';
 import { Button, Group, Modal } from '@mantine/core';
 import type { ModalBaseProps } from '@mantine/core';
-import { useActionNodeStore, useResetActionNodeStore } from '@/entities/nodes/nodes-store';
-import { useRemoveNode } from '@/shared/api';
+import { useActionUserStore, useResetActionUserStore } from '@/entities/users/users-store';
+import { useRemoveUser } from '@/shared/api';
 
 type NodeCreateModalProps = ModalBaseProps & {
     onSubmit(): void;
 };
 
-export function NodeRemoveModal({ onSubmit, ...modalProps }: NodeCreateModalProps): React.ReactElement {
-    const { removeNode, isPending } = useRemoveNode({
+export function UserRemoveModal({ onSubmit, ...modalProps }: NodeCreateModalProps): React.ReactElement {
+    const { removeNode, isPending } = useRemoveUser({
         onSuccess() {
             modalProps.onClose();
             onSubmit();
         },
     });
     
-    const node = useActionNodeStore();
-    const resetActionNode = useResetActionNodeStore();
+    const user = useActionUserStore();
+    const resetActionNode = useResetActionUserStore();
     
     function confirmClickHandler() {
-        if (!node) return;
-        removeNode(node.uuid!);
+        if (!user) return;
+        removeNode(user.uuid!);
     }
     
     function cancelClickHandler() {
@@ -34,8 +34,8 @@ export function NodeRemoveModal({ onSubmit, ...modalProps }: NodeCreateModalProp
     }
     
     return (
-        <Modal { ...modalProps } onClose={ closeHandler } title='Confirm delete node'>
-            Confirm delete node "{ node?.name }"
+        <Modal { ...modalProps } onClose={ closeHandler } title='Confirm delete user'>
+            Confirm delete user "{ user?.name }"
             <Group justify='flex-end' mt='md'>
                 <Button type='submit' loading={ isPending } color='red' onClick={ confirmClickHandler }>Delete</Button>
                 <Button type='submit' loading={ isPending } color='gray' onClick={ cancelClickHandler }>Cancel</Button>
