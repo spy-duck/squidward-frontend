@@ -6,8 +6,8 @@ export const isEditNodeStore = atom<boolean>(false);
 export const useIsEditNodeStore = () => useAtom<boolean>(isEditNodeStore);
 export const useSetIsEditNodeStore = () => useSetAtom(isEditNodeStore);
 
-export const actionNodeStore = atomWithReset<TNode | null>(null);
-export const useActionNodeStore = () => useAtomValue<TNode | null>(actionNodeStore);
+export const actionNodeStore = atomWithReset<Partial<TNode> | null>(null);
+export const useActionNodeStore = () => useAtomValue<Partial<TNode> | null>(actionNodeStore);
 export const useSetActionNodeStore = () => useSetAtom(actionNodeStore);
 export const useResetActionNodeStore = () => useResetAtom(actionNodeStore);
 

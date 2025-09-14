@@ -2,15 +2,22 @@ import { NodesPageProvider, useNodesPageContext } from '@/pages/nodes/nodes.cont
 import { NodesList } from '@/components/nodes/nodes-list';
 import { Button, Space } from '@mantine/core';
 import { NodeCreateModal } from '@/components/nodes/node-create-modal';
-import { useIsEditNodeStore, useIsRemoveNodeStore } from '@/entities/nodes/nodes-store';
+import { useSetIsEditNodeStore } from '@/entities/nodes/nodes-store';
 import { NodeUpdateModal } from '@/components/nodes/node-update-modal';
 import { NodeRemoveModal } from '@/components/nodes/node-remove-modal';
 
 function NodesPageComponent() {
-    const { nodes, isCreateModalOpen, refetchNodes, openCreateModalOpen } = useNodesPageContext();
+    const {
+        nodes,
+        isCreateModalOpen,
+        refetchNodes,
+        openCreateModalOpen,
+        isEditModalOpen,
+        isRemoveModalOpen,
+    } = useNodesPageContext();
     
-    const [ isEditModalOpen, setIsEditNodeStore ] = useIsEditNodeStore();
-    const [ isRemoveModalOpen, setIsRemoveNodeStore ] = useIsRemoveNodeStore();
+    const setIsEditNodeStore = useSetIsEditNodeStore();
+    const setIsRemoveNodeStore = useSetIsEditNodeStore();
     
     return (
         <div>

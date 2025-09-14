@@ -1,5 +1,12 @@
 import { type MantineColor, Menu, UnstyledButton } from '@mantine/core';
-import { IconDotsVertical, IconPencil, IconPlayerStopFilled, IconRefresh, IconTrash } from '@tabler/icons-react';
+import {
+    IconDotsVertical,
+    IconPencil,
+    IconPlayerPlayFilled,
+    IconPlayerStopFilled,
+    IconRefresh,
+    IconTrash,
+} from '@tabler/icons-react';
 import type { TNode } from '@swuidward/contracts/schemas/node.schema';
 import type { ReactNode } from 'react';
 import { useSetActionNodeStore, useSetIsRemoveNodeStore, useSetIsEditNodeStore } from '@/entities/nodes/nodes-store';
@@ -11,8 +18,10 @@ type MenuProps = {
     color?: MantineColor;
 }
 
+
+
 type NodesListItemMenuProps = {
-    node: TNode;
+    node: Partial<TNode>;
 }
 
 export function NodesListItemMenu({ node }: NodesListItemMenuProps) {
@@ -27,6 +36,13 @@ export function NodesListItemMenu({ node }: NodesListItemMenuProps) {
             onClick: () => {
                 setActionNode(node);
                 setIsEditNode(true);
+            },
+        },
+        {
+            text: 'Start',
+            icon: <IconPlayerPlayFilled size={ 14 }/>,
+            onClick: () => {
+                console.log('Start', node);
             },
         },
         {
@@ -64,7 +80,7 @@ export function NodesListItemMenu({ node }: NodesListItemMenuProps) {
             <Menu.Dropdown>
                 { items.map((item, index) => (
                     <Menu.Item
-                        key={ index + node.uuid }
+                        key={ index + node.uuid! }
                         leftSection={ item.icon }
                         color={ item.color }
                         onClick={ item.onClick }
