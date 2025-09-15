@@ -67,7 +67,7 @@ export function UserCreateModal({ onSubmit, ...modalProps }: NodeCreateModalProp
     }
     
     return (
-        <Modal { ...modalProps } title='Create new user'>
+        <Modal { ...modalProps } title='Create new user' centered>
             <form onSubmit={ form.onSubmit(submitHandler) }>
                 <Stack
                     align='stretch'

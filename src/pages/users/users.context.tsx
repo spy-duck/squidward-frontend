@@ -33,7 +33,7 @@ export const UsersPageProvider = ({ children }: TUsersPageContextProps) => {
     useEffect(() => {
         (async () => {
             await queryClient.prefetchQuery({
-                queryKey: [ QUERY_KEYS.USERS.USERS_LIST ]
+                queryKey: QUERY_KEYS.USERS.USERS_LIST,
             });
         })();
         return () => {

@@ -5,7 +5,7 @@ import { QUERY_KEYS } from '@/shared/constants/api';
 
 export function useGetUsers() {
     const { data, isLoading, refetch } = useQuery({
-        queryKey: [ QUERY_KEYS.NODES.NODES_LIST ],
+        queryKey: QUERY_KEYS.USERS.USERS_LIST,
         queryFn: async () => {
             const response = await apiClient<UsersListContract.Response>({
                 url: UsersListContract.endpointDetails.CONTROLLER_URL,

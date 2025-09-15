@@ -1,0 +1,1 @@
+export * from './config-remove-modal'

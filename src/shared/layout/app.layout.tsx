@@ -37,6 +37,7 @@ export function AppLayout() {
             <AppShell.Navbar p='md'>
                 { navLinks.map(({ label, to }, index) => (
                     <motion.div
+                        key={ to }
                         initial={ {
                             opacity: 0,
                             translateY: -5,

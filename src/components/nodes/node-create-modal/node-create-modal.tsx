@@ -30,7 +30,7 @@ export function NodeCreateModal({ onSubmit, ...modalProps }: NodeCreateModalProp
     }, [ modalProps.opened ]);
     
     return (
-        <Modal { ...modalProps } title='Create new node'>
+        <Modal { ...modalProps } title='Create new node' centered>
             <form onSubmit={ form.onSubmit((values) => {
                 createNode(values);
             }) }>

@@ -5,7 +5,7 @@ import { QUERY_KEYS } from '@/shared/constants/api';
 
 export function useGetNodes() {
     const { data, isLoading, refetch } = useQuery({
-        queryKey: [ QUERY_KEYS.NODES.NODES_LIST ],
+        queryKey: QUERY_KEYS.NODES.NODES_LIST,
         queryFn: async () => {
             const response = await apiClient<NodesListContract.Response>({
                 url: NodesListContract.endpointDetails.CONTROLLER_URL,

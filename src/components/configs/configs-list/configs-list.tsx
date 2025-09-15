@@ -1,19 +1,18 @@
 import React from 'react';
-import { UsersListContract } from '@squidward/contracts/commands';
-import { Badge, Center, Table } from '@mantine/core';
+import { ConfigsListContract } from '@squidward/contracts/commands';
+import { Center, Table } from '@mantine/core';
 import { formatDateTime } from '@/shared/utils';
-import { UsersListItemMenu } from '@/components/users/users-list/users-list-item-menu';
+import { ConfigsListItemMenu } from './configs-list-item-menu';
 import { motion } from 'framer-motion';
-import { USER_STATUS_COLOR } from '@/shared/constants/users/user-status';
 
-type NodesListProps = {
-    users: UsersListContract.Response['response']['users'],
+type ConfigsListProps = {
+    configs: ConfigsListContract.Response['response']['configs'],
 };
 
-export function UsersList({ users }: NodesListProps): React.ReactElement {
-    const rows = (users || []).map((user, index) => (
+export function ConfigsList({ configs }: ConfigsListProps): React.ReactElement {
+    const rows = (configs || []).map((config, index) => (
         <motion.tr
-            key={ user.uuid }
+            key={ config.uuid }
             initial={ {
                 opacity: 0,
                 translateY: -5,
@@ -29,17 +28,11 @@ export function UsersList({ users }: NodesListProps): React.ReactElement {
             } }
         >
             <Table.Td>
-                <UsersListItemMenu user={ user }/>
+                <ConfigsListItemMenu config={ config }/>
             </Table.Td>
-            <Table.Td>{ user.name }</Table.Td>
-            <Table.Td>
-                <Badge variant='light' color={ USER_STATUS_COLOR[user.status] }>
-                    { user.status }
-                </Badge>
-            </Table.Td>
-            <Table.Td>{ user.email }</Table.Td>
-            <Table.Td>{ user.telegramId }</Table.Td>
-            <Table.Td>{ formatDateTime(user.createdAt) }</Table.Td>
+            <Table.Td>{ config.name }</Table.Td>
+            <Table.Td>{ config.version }</Table.Td>
+            <Table.Td>{ formatDateTime(config.createdAt) }</Table.Td>
         </motion.tr>
     ));
     return (
@@ -48,16 +41,14 @@ export function UsersList({ users }: NodesListProps): React.ReactElement {
                 <Table.Tr>
                     <Table.Th style={ { width: 40 } }></Table.Th>
                     <Table.Th>Name</Table.Th>
-                    <Table.Th>status</Table.Th>
-                    <Table.Th>Email</Table.Th>
-                    <Table.Th>telegramId</Table.Th>
+                    <Table.Th>Version</Table.Th>
                     <Table.Th style={ { width: 160 } }>Created at</Table.Th>
                 </Table.Tr>
             </Table.Thead>
             <Table.Tbody>
                 { rows.length === 0 && (
                     <Table.Tr>
-                        <Table.Td colSpan={ 6 }>
+                        <Table.Td colSpan={ 4 }>
                             <Center>No users found</Center>
                         </Table.Td>
                     </Table.Tr>

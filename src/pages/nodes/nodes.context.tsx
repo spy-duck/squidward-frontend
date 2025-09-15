@@ -33,9 +33,8 @@ export const NodesPageProvider = ({ children }: TNodesPageContextProps) => {
     useEffect(() => {
         (async () => {
             await queryClient.prefetchQuery({
-                queryKey: [ QUERY_KEYS.NODES.NODES_LIST ]
+                queryKey: QUERY_KEYS.NODES.NODES_LIST,
             });
-            await refetchNodes(); // TODO: fix bug (prefetch not working)
         })();
         
         return () => {

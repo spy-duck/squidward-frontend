@@ -1,27 +1,27 @@
 import React from 'react';
 import { Button, Group, Modal } from '@mantine/core';
 import type { ModalBaseProps } from '@mantine/core';
-import { useActionNodeStore, useResetActionNodeStore } from '@/entities/nodes/nodes-store';
-import { useRemoveNode } from '@/shared/api';
+import { useActionConfigStore, useResetActionConfigStore } from '@/entities/configs/configs-store';
+import { useRemoveConfig } from '@/shared/api';
 
-type NodeCreateModalProps = ModalBaseProps & {
+type ConfigRemoveModalProps = ModalBaseProps & {
     onSubmit(): void;
 };
 
-export function NodeRemoveModal({ onSubmit, ...modalProps }: NodeCreateModalProps): React.ReactElement {
-    const { removeNode, isPending } = useRemoveNode({
+export function ConfigRemoveModal({ onSubmit, ...modalProps }: ConfigRemoveModalProps): React.ReactElement {
+    const { removeConfig, isPending } = useRemoveConfig({
         onSuccess() {
             modalProps.onClose();
             onSubmit();
         },
     });
     
-    const node = useActionNodeStore();
-    const resetActionNode = useResetActionNodeStore();
+    const config = useActionConfigStore();
+    const resetAction = useResetActionConfigStore();
     
     function confirmClickHandler() {
-        if (!node) return;
-        removeNode(node.uuid!);
+        if (!config) return;
+        removeConfig(config.uuid!);
     }
     
     function cancelClickHandler() {
@@ -29,13 +29,13 @@ export function NodeRemoveModal({ onSubmit, ...modalProps }: NodeCreateModalProp
     }
     
     function closeHandler() {
-        resetActionNode();
+        resetAction();
         modalProps.onClose();
     }
     
     return (
-        <Modal { ...modalProps } onClose={ closeHandler } title='Confirm delete node' centered>
-            Confirm delete node "{ node?.name }"
+        <Modal { ...modalProps } onClose={ closeHandler } title='Confirm delete config' centered>
+            Confirm delete config "{ config?.name }"
             <Group justify='flex-end' mt='md'>
                 <Button type='submit' loading={ isPending } color='red' onClick={ confirmClickHandler }>Delete</Button>
                 <Button type='submit' loading={ isPending } color='gray' onClick={ cancelClickHandler }>Cancel</Button>

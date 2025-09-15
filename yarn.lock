@@ -1278,10 +1278,10 @@ __metadata:
 
 "@squidward/contracts@file:../squidward-backend/libs/contracts::locator=squidward-frontend%40workspace%3A.":
   version: 0.0.0
-  resolution: "@squidward/contracts@file:../squidward-backend/libs/contracts#../squidward-backend/libs/contracts::hash=703958&locator=squidward-frontend%40workspace%3A."
+  resolution: "@squidward/contracts@file:../squidward-backend/libs/contracts#../squidward-backend/libs/contracts::hash=9a78b0&locator=squidward-frontend%40workspace%3A."
   dependencies:
     zod: "npm:^4.1.8"
-  checksum: 10c0/86bae89d0fee9a29e4268d16a607dfeebc42a266e14049466b2c8e4aebb0d82e226eb396f69879ce05c65a2803976379eba814bb62e2f56f9a35e5769fe6b379
+  checksum: 10c0/4ac044bdd54172e368f588e593595ed8e39ec72477e9bcf5277e4d4133f2cdbbb4fcd677425879b74dae2d929a7a14423a1732beb1000cc0e93d75f80fc2967f
   languageName: node
   linkType: hard
 
@@ -4542,6 +4542,7 @@ __metadata:
     "@vitejs/plugin-react-swc": "npm:^4.0.1"
     axion: "npm:^0.1.0"
     axios: "npm:^1.12.0"
+    clsx: "npm:^2.1.1"
     consola: "npm:^3.4.2"
     dayjs: "npm:^1.11.18"
     dotenv: "npm:^17.2.2"

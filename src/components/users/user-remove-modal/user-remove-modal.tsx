@@ -34,7 +34,7 @@ export function UserRemoveModal({ onSubmit, ...modalProps }: NodeCreateModalProp
     }
     
     return (
-        <Modal { ...modalProps } onClose={ closeHandler } title='Confirm delete user'>
+        <Modal { ...modalProps } onClose={ closeHandler } title='Confirm delete user' centered>
             Confirm delete user "{ user?.name }"
             <Group justify='flex-end' mt='md'>
                 <Button type='submit' loading={ isPending } color='red' onClick={ confirmClickHandler }>Delete</Button>

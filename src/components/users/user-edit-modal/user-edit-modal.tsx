@@ -64,7 +64,7 @@ export function UserEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps)
     }
     
     return (
-        <Modal { ...modalProps } onClose={closeHandler} title='Edit user'>
+        <Modal { ...modalProps } onClose={closeHandler} title='Edit user' centered>
             <form onSubmit={ form.onSubmit(submitHandler) }>
                 <Stack
                     align='stretch'

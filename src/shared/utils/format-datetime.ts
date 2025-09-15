@@ -15,8 +15,8 @@ function parseDateTime(value: string | Dayjs | Date): Dayjs {
     return dayjs(value);
 }
 
-export const formatDate = (value: string | Dayjs | undefined): string | undefined =>
-    value && parseDateTime(value).format(FORMAT.DATE);
+export const formatDate = (value: string | Dayjs | undefined | null): string | undefined =>
+    value ? parseDateTime(value).format(FORMAT.DATE) : undefined;
 
-export const formatDateTime = (value: string | Dayjs | Date | undefined): string | undefined =>
-    value && parseDateTime(value).format(FORMAT.DATETIME_FULL);
+export const formatDateTime = (value: string | Dayjs | Date | undefined | null): string | undefined =>
+    value ? parseDateTime(value).format(FORMAT.DATETIME_FULL) : undefined;

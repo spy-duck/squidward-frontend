@@ -47,7 +47,7 @@ export function NodeEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps)
     }
     
     return (
-        <Modal { ...modalProps } onClose={closeHandler} title='Edit node'>
+        <Modal { ...modalProps } onClose={closeHandler} title='Edit node' size='sm' centered>
             <form onSubmit={ form.onSubmit((values) => {
                 updateNode(values);
             }) }>

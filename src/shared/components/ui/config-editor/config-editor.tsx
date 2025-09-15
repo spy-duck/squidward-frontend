@@ -1,44 +1,53 @@
-import type { ReactElement } from 'react';
-import { Button, Group, Stack } from '@mantine/core';
-import { useForm } from '@mantine/form';
-import { NodeUpdateContract } from '@squidward/contracts/commands';
-import { zod4Resolver } from 'mantine-form-zod-resolver';
+import { type ReactElement, type ReactNode, useState } from 'react';
 import { Editor } from '@monaco-editor/react';
-import styles from './squid-config-edit.module.scss';
+import styles from './config-editor.module.scss';
+import { Button, Flex } from '@mantine/core';
+import type { editor } from 'monaco-editor';
+import clsx from 'clsx';
 
-type SquidConfigEditProps = {
-    onSubmit(): void;
+type ConfigEditorProps = {
+    value: string | undefined,
+    error: ReactNode,
+    onChange(value: string | undefined): void;
 };
 
-export function SquidConfigEdit({ onSubmit }: SquidConfigEditProps): ReactElement {
-    const form = useForm<NodeUpdateContract.Request>({
-        mode: 'uncontrolled',
-        validate: zod4Resolver(NodeUpdateContract.RequestSchema),
-    });
+export function ConfigEditor({ error, value, onChange }: ConfigEditorProps): ReactElement {
+    const [ editor, setEditor ] = useState<editor.IStandaloneCodeEditor | null>(null)
+    function useDefaultClickHandler() {
+        editor?.setValue(DEV_CONFIG);
+        onChange(DEV_CONFIG);
+    }
     
     return (
-        <form onSubmit={ form.onSubmit((values) => {
-            console.log(values);
-            onSubmit();
-        }) }>
-            <Stack
-                align='stretch'
-                justify='center'
-                gap='md'
-            >
-                <div className={ styles.squidConfigEditEditor }>
+        <Flex direction='column' align='start' gap={14}>
+            <div className={styles.configEditorWrapper}>
+                <div className={ clsx(styles.configEditor, error && styles.configEditorErrored) }>
                     <Editor
                         theme='vs-dark'
-                        height='70vh'
+                        height='55vh'
                         defaultLanguage='ini'
-                        defaultValue={ DEV_CONFIG }
+                        defaultValue={ value }
+                        onChange={(value) => {
+                            onChange(value);
+                        }}
+                        onMount={setEditor}
                     />
                 </div>
-            </Stack>
-            <Group justify='flex-end' mt='md'>
-                <Button type='submit'>Save</Button>
-            </Group>
-        </form>
+                {error && (
+                    <div className={styles.configEditorError}>
+                        {error}
+                    </div>
+                )}
+            </div>
+            <Button
+                variant="outline"
+                onClick={useDefaultClickHandler}
+                size='xs'
+                disabled={editor === null}
+            >
+                Use default
+            </Button>
+        </Flex>
     );
 }
 

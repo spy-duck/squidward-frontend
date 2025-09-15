@@ -71,7 +71,7 @@ export function NodesList({ nodes }: NodesListProps): ReactElement {
             <Table.Tbody>
                 { rows.length === 0 && (
                     <Table.Tr>
-                        <Table.Td colSpan={ 6 }>
+                        <Table.Td colSpan={ 7 }>
                             <Center>No nodes found</Center>
                         </Table.Td>
                     </Table.Tr>
