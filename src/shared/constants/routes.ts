@@ -9,7 +9,7 @@ export const ROUTES = {
         },
         SQUID: {
             BASE: '/squid',
-            CONFIG: '/squid/config',
+            CONFIGS: '/squid/configs',
         }
     },
 } as const;

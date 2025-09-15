@@ -1,7 +1,7 @@
 import { Flex } from '@mantine/core';
 import { PageWrapper } from '@/shared/components/ui';
 import { SquidConfigPageProvider } from '@/pages/squid-config/squid-config.context';
-import { SquidConfigEdit } from '@/components/squid-config/squid-config-edit';
+import { SquidConfigEdit } from '@/components/squid-configs/squid-config-edit';
 
 function SquidConfigPageComponent() {
     return (

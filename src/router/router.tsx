@@ -16,7 +16,7 @@ const router = createBrowserRouter(
                 <Route element={<LoginPage />} path={ROUTES.LOGIN} />
                 <Route element={<NodesPage />} path={ROUTES.DASHBOARD.NODES.BASE} />
                 <Route element={<UsersPage />} path={ROUTES.DASHBOARD.USERS.BASE} />
-                <Route element={<SquidConfigPage />} path={ROUTES.DASHBOARD.SQUID.CONFIG} />
+                <Route element={<SquidConfigPage />} path={ROUTES.DASHBOARD.SQUID.CONFIGS} />
             </Route>
         </Route>
     )

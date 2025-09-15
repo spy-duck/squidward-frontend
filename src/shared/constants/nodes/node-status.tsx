@@ -1,5 +1,5 @@
 import React, { type ReactNode } from 'react';
-import type { TNodeState } from '@swuidward/contracts/constants';
+import type { TNodeState } from '@squidward/contracts/constants';
 import { Tooltip } from '@mantine/core';
 import {
     IconAlertTriangle,

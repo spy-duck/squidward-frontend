@@ -1,15 +1,15 @@
 import { useMutation } from '@tanstack/react-query';
 import { apiClient } from '@/shared/api/axios';
-import { CreateNodeContract } from '@swuidward/contracts/commands';
+import { NodeCreateContract } from '@squidward/contracts/commands';
 
 export function useCreateNode({ onSuccess }: {
     onSuccess(): void;
 }) {
     const { mutate, isPending } = useMutation({
-        mutationFn: async (data: CreateNodeContract.Request) => {
-            const response = await apiClient<CreateNodeContract.Response>({
-                url: CreateNodeContract.endpointDetails.CONTROLLER_URL,
-                method: CreateNodeContract.endpointDetails.REQUEST_METHOD,
+        mutationFn: async (data: NodeCreateContract.Request) => {
+            const response = await apiClient<NodeCreateContract.Response>({
+                url: NodeCreateContract.endpointDetails.CONTROLLER_URL,
+                method: NodeCreateContract.endpointDetails.REQUEST_METHOD,
                 data,
             });
             return response.data.response.success;

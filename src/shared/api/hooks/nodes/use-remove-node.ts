@@ -1,15 +1,15 @@
 import { useMutation } from '@tanstack/react-query';
 import { apiClient } from '@/shared/api/axios';
-import { RemoveNodeContract } from '@swuidward/contracts/commands/nodes/remove-node.contract';
+import { NodeRemoveContract } from '@squidward/contracts/commands';
 
 export function useRemoveNode({ onSuccess }: {
     onSuccess(): void;
 }) {
     const { mutate, isPending } = useMutation({
         mutationFn: async (uuid: string) => {
-            const response = await apiClient<RemoveNodeContract.Response>({
-                url: RemoveNodeContract.url(uuid),
-                method: RemoveNodeContract.endpointDetails.REQUEST_METHOD,
+            const response = await apiClient<NodeRemoveContract.Response>({
+                url: NodeRemoveContract.url(uuid),
+                method: NodeRemoveContract.endpointDetails.REQUEST_METHOD,
             });
             return response.data.response.success;
         },

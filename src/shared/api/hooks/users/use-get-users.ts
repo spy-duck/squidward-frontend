@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/shared/api/axios';
-import { UsersListContract } from '@swuidward/contracts/commands';
+import { UsersListContract } from '@squidward/contracts/commands';
 import { QUERY_KEYS } from '@/shared/constants/api';
 
 export function useGetUsers() {

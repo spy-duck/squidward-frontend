@@ -1,6 +1,6 @@
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { atomWithReset, useResetAtom } from 'jotai/utils'
-import type { TUser } from '@swuidward/contracts/schemas';
+import type { TUser } from '@squidward/contracts/schemas';
 
 export const isEditUserStore = atom<boolean>(false);
 export const useIsEditUserStore = () => useAtom<boolean>(isEditUserStore);

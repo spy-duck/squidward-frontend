@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Button, Group, Modal, NumberInput, Stack, TextInput } from '@mantine/core';
 import type { ModalBaseProps } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { CreateNodeContract } from '@swuidward/contracts/commands';
+import { NodeCreateContract } from '@squidward/contracts/commands';
 import { zod4Resolver } from 'mantine-form-zod-resolver';
 import { useCreateNode } from '@/shared/api';
 
@@ -18,9 +18,9 @@ export function NodeCreateModal({ onSubmit, ...modalProps }: NodeCreateModalProp
         },
     });
     
-    const form = useForm<CreateNodeContract.Request>({
+    const form = useForm<NodeCreateContract.Request>({
         mode: 'uncontrolled',
-        validate: zod4Resolver(CreateNodeContract.RequestSchema),
+        validate: zod4Resolver(NodeCreateContract.RequestSchema),
     });
     
     useEffect(() => {

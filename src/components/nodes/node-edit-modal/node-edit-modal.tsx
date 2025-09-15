@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Button, Group, Modal, NumberInput, Stack, Switch, TextInput } from '@mantine/core';
 import type { ModalBaseProps } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { UpdateNodeContract } from '@swuidward/contracts/commands';
+import { NodeUpdateContract } from '@squidward/contracts/commands';
 import { zod4Resolver } from 'mantine-form-zod-resolver';
 import { useUpdateNode } from '@/shared/api';
 import { useActionNodeStore, useResetActionNodeStore } from '@/entities/nodes/nodes-store';
@@ -22,9 +22,9 @@ export function NodeEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps)
     const node = useActionNodeStore();
     const resetAction = useResetActionNodeStore();
     
-    const form = useForm<UpdateNodeContract.Request>({
+    const form = useForm<NodeUpdateContract.Request>({
         mode: 'uncontrolled',
-        validate: zod4Resolver(UpdateNodeContract.RequestSchema),
+        validate: zod4Resolver(NodeUpdateContract.RequestSchema),
     });
     
     useEffect(() => {

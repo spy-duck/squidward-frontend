@@ -1,7 +1,7 @@
 import { createContext, type Dispatch, type SetStateAction, useContext, useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { queryClient, useGetNodes } from '@/shared/api';
-import { NodesListContract } from '@swuidward/contracts/commands';
+import { NodesListContract } from '@squidward/contracts/commands';
 import { useIsEditNodeStore, useIsRemoveNodeStore, useResetActionNodeStore } from '@/entities';
 import { QUERY_KEYS } from '@/shared/constants/api';
 

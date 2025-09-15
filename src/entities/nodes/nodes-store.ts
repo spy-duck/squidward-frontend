@@ -1,6 +1,6 @@
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { atomWithReset, useResetAtom } from 'jotai/utils'
-import type { TNode } from '@swuidward/contracts/schemas';
+import type { TNode } from '@squidward/contracts/schemas';
 
 export const isEditNodeStore = atom<boolean>(false);
 export const useIsEditNodeStore = () => useAtom<boolean>(isEditNodeStore);

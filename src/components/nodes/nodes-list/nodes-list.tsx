@@ -1,10 +1,10 @@
 import type { ReactElement } from 'react';
-import { NodesListContract } from '@swuidward/contracts/commands';
+import { NodesListContract } from '@squidward/contracts/commands';
 import { Badge, Center, Flex, Table, Tooltip } from '@mantine/core';
 import { formatDateTime } from '@/shared/utils';
 import { NodesListItemMenu } from '@/components/nodes/nodes-list/nodes-list-item-menu';
 import { IconPower } from '@tabler/icons-react';
-import type { TNodeState } from '@swuidward/contracts/constants';
+import type { TNodeState } from '@squidward/contracts/constants';
 import { motion } from 'framer-motion';
 import { NODE_STATUS_ICON } from '@/shared/constants/nodes/node-status';
 
@@ -71,7 +71,7 @@ export function NodesList({ nodes }: NodesListProps): ReactElement {
             <Table.Tbody>
                 { rows.length === 0 && (
                     <Table.Tr>
-                        <Table.Td colSpan={ 7 }>
+                        <Table.Td colSpan={ 6 }>
                             <Center>No nodes found</Center>
                         </Table.Td>
                     </Table.Tr>

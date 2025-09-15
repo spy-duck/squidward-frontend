@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/shared/api/axios';
-import { NodesListContract } from '@swuidward/contracts/commands';
+import { NodesListContract } from '@squidward/contracts/commands';
 import { QUERY_KEYS } from '@/shared/constants/api';
 
 export function useGetNodes() {

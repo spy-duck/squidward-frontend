@@ -1,5 +1,5 @@
 import React from 'react';
-import { UsersListContract } from '@swuidward/contracts/commands';
+import { UsersListContract } from '@squidward/contracts/commands';
 import { Badge, Center, Table } from '@mantine/core';
 import { formatDateTime } from '@/shared/utils';
 import { UsersListItemMenu } from '@/components/users/users-list/users-list-item-menu';
@@ -57,7 +57,7 @@ export function UsersList({ users }: NodesListProps): React.ReactElement {
             <Table.Tbody>
                 { rows.length === 0 && (
                     <Table.Tr>
-                        <Table.Td colSpan={ 7 }>
+                        <Table.Td colSpan={ 5 }>
                             <Center>No users found</Center>
                         </Table.Td>
                     </Table.Tr>

@@ -7,7 +7,7 @@ import {
     IconRefresh,
     IconTrash,
 } from '@tabler/icons-react';
-import type { TNode } from '@swuidward/contracts/schemas/node.schema';
+import type { TNode } from '@squidward/contracts/schemas/node.schema';
 import type { ReactNode } from 'react';
 import { useSetActionNodeStore, useSetIsRemoveNodeStore, useSetIsEditNodeStore } from '@/entities/nodes/nodes-store';
 

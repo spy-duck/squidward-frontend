@@ -1,4 +1,4 @@
-import type { TUserStatus } from '@swuidward/contracts/constants';
+import type { TUserStatus } from '@squidward/contracts/constants';
 import type { MantineColor } from '@mantine/core';
 
 export const USER_STATUS_COLOR: Record<TUserStatus, MantineColor> = {

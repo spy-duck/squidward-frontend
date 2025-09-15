@@ -10,7 +10,7 @@ import {
     useSetIsEditUserStore,
     useSetIsRemoveUserStore,
 } from '@/entities/users/users-store';
-import type { TUser } from '@swuidward/contracts/schemas';
+import type { TUser } from '@squidward/contracts/schemas';
 
 type MenuProps = {
     text: ReactNode;

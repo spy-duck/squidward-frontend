@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react';
 import { Button, Group, Stack } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { UpdateNodeContract } from '@swuidward/contracts/commands';
+import { NodeUpdateContract } from '@squidward/contracts/commands';
 import { zod4Resolver } from 'mantine-form-zod-resolver';
 import { Editor } from '@monaco-editor/react';
 import styles from './squid-config-edit.module.scss';
@@ -11,9 +11,9 @@ type SquidConfigEditProps = {
 };
 
 export function SquidConfigEdit({ onSubmit }: SquidConfigEditProps): ReactElement {
-    const form = useForm<UpdateNodeContract.Request>({
+    const form = useForm<NodeUpdateContract.Request>({
         mode: 'uncontrolled',
-        validate: zod4Resolver(UpdateNodeContract.RequestSchema),
+        validate: zod4Resolver(NodeUpdateContract.RequestSchema),
     });
     
     return (

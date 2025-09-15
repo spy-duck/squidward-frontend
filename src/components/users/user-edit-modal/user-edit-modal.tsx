@@ -14,8 +14,8 @@ import { type TransformedValues, useForm } from '@mantine/form';
 import { zod4Resolver } from 'mantine-form-zod-resolver';
 import { useUpdateUser } from '@/shared/api';
 import { useActionUserStore, useResetActionUserStore } from '@/entities/users/users-store';
-import { UpdateUserContract } from '@swuidward/contracts/commands';
-import { USER_STATUS_VALUES } from '@swuidward/contracts/constants';
+import { UserUpdateContract } from '@squidward/contracts/commands';
+import { USER_STATUS_VALUES } from '@squidward/contracts/constants';
 import { DatePickerInput } from '@mantine/dates';
 
 type NodeCreateModalProps = ModalBaseProps & {
@@ -33,9 +33,9 @@ export function UserEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps)
     const user = useActionUserStore();
     const resetAction = useResetActionUserStore();
     
-    const form = useForm<UpdateUserContract.Request>({
+    const form = useForm<UserUpdateContract.Request>({
         mode: 'uncontrolled',
-        validate: zod4Resolver(UpdateUserContract.RequestSchema),
+        validate: zod4Resolver(UserUpdateContract.RequestSchema),
     });
     
     useEffect(() => {

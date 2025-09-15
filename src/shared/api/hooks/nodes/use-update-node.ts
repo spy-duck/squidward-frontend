@@ -1,15 +1,15 @@
 import { useMutation } from '@tanstack/react-query';
 import { apiClient } from '@/shared/api/axios';
-import { UpdateNodeContract } from '@swuidward/contracts/commands';
+import { NodeUpdateContract } from '@squidward/contracts/commands';
 
 export function useUpdateNode({ onSuccess }: {
     onSuccess(): void;
 }) {
     const { mutate, isPending } = useMutation({
-        mutationFn: async (data: UpdateNodeContract.Request) => {
-            const response = await apiClient<UpdateNodeContract.Response>({
-                url: UpdateNodeContract.url(data.uuid),
-                method: UpdateNodeContract.endpointDetails.REQUEST_METHOD,
+        mutationFn: async (data: NodeUpdateContract.Request) => {
+            const response = await apiClient<NodeUpdateContract.Response>({
+                url: NodeUpdateContract.url(data.uuid),
+                method: NodeUpdateContract.endpointDetails.REQUEST_METHOD,
                 data,
             });
             return response.data.response.success;

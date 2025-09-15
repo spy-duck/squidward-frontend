@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { Button, Group, Modal, NativeSelect, NumberInput, PasswordInput, Stack, TextInput } from '@mantine/core';
 import type { ModalBaseProps } from '@mantine/core';
 import { type TransformedValues, useForm } from '@mantine/form';
-import { CreateUserContract } from '@swuidward/contracts/commands';
+import { UserCreateContract } from '@squidward/contracts/commands';
 import { zod4Resolver } from 'mantine-form-zod-resolver';
 import { useCreateUser } from '@/shared/api';
-import { USER_STATUS, USER_STATUS_VALUES } from '@swuidward/contracts/constants';
+import { USER_STATUS, USER_STATUS_VALUES } from '@squidward/contracts/constants';
 import { DatePickerInput } from '@mantine/dates';
 import { z } from 'zod';
 import dayjs from 'dayjs';
@@ -23,7 +23,7 @@ export function UserCreateModal({ onSubmit, ...modalProps }: NodeCreateModalProp
         },
     });
     
-    const form = useForm<CreateUserContract.Request>({
+    const form = useForm<UserCreateContract.Request>({
         mode: 'uncontrolled',
         initialValues: {
             name: '',
@@ -35,7 +35,7 @@ export function UserCreateModal({ onSubmit, ...modalProps }: NodeCreateModalProp
             expireAt: dayjs().add(1, 'day').toDate(),
         },
         validate: zod4Resolver(
-            CreateUserContract.RequestSchema
+            UserCreateContract.RequestSchema
                 .extend({
                     email: z
                         .email()

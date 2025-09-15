@@ -17,8 +17,8 @@ export function AppLayout() {
             to: ROUTES.DASHBOARD.NODES.BASE,
         },
         {
-            label: 'Squid config',
-            to: ROUTES.DASHBOARD.SQUID.CONFIG,
+            label: 'Squid configs',
+            to: ROUTES.DASHBOARD.SQUID.CONFIGS,
         },
     ]
     
