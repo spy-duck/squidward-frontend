@@ -1,0 +1,1 @@
+export { SquidConfigPage as default } from './squid-config.page'

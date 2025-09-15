@@ -37,4 +37,20 @@ export default defineConfig({
     define: {
         __API_BASE_URL__: JSON.stringify(process.env.API_BASE_URL || 'http://localhost:4000').trim(),
     },
+    css: {
+        modules: {
+            generateScopedName: '[local]___[hash:base64:5]',
+            localsConvention: 'dashesOnly',
+        },
+        preprocessorOptions: {
+            less: {
+                math: 'always',
+                relativeUrls: true,
+                javascriptEnabled: true,
+            },
+            scss: {
+                "silenceDeprecations": [ "mixed-decls", "color-functions", "global-builtin", "import", "legacy-js-api" ],
+            },
+        },
+    },
 });
