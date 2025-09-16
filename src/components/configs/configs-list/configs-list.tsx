@@ -48,11 +48,11 @@ export function ConfigsList({ configs }: ConfigsListProps): React.ReactElement {
         </motion.tr>
     ));
     return (
-        <Table>
+        <Table striped withTableBorder>
             <Table.Thead>
                 <Table.Tr>
                     <Table.Th style={ { width: 40 } }></Table.Th>
-                    <Table.Th>Name</Table.Th>
+                    <Table.Th style={{ width: 'min-content' }}>Name</Table.Th>
                     <Table.Th>Nodes</Table.Th>
                     <Table.Th style={ { width: 160 } }>Updated At</Table.Th>
                     <Table.Th style={ { width: 160 } }>Created at</Table.Th>

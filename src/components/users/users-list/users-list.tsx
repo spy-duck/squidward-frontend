@@ -43,7 +43,7 @@ export function UsersList({ users }: NodesListProps): React.ReactElement {
         </motion.tr>
     ));
     return (
-        <Table>
+        <Table striped withTableBorder>
             <Table.Thead>
                 <Table.Tr>
                     <Table.Th style={ { width: 40 } }></Table.Th>

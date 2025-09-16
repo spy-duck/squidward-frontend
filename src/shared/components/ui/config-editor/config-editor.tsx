@@ -44,6 +44,7 @@ export function ConfigEditor({ disabled, error, value, onChange }: ConfigEditorP
                 onClick={useDefaultClickHandler}
                 size='xs'
                 disabled={editor === null}
+                color='gray'
             >
                 Use default
             </Button>
