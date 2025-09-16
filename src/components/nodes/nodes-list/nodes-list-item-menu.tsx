@@ -10,6 +10,8 @@ import {
 import type { TNode } from '@squidward/contracts/schemas/node.schema';
 import type { ReactNode } from 'react';
 import { useSetActionNodeStore, useSetIsRemoveNodeStore, useSetIsEditNodeStore } from '@/entities/nodes/nodes-store';
+import { useStartNode } from '@/shared/api';
+import { useNodesPageContext } from '@/pages/nodes/nodes.context';
 
 type MenuProps = {
     text: ReactNode;
@@ -28,6 +30,12 @@ export function NodesListItemMenu({ node }: NodesListItemMenuProps) {
     const setActionNode = useSetActionNodeStore();
     const setIsEditNode = useSetIsEditNodeStore();
     const setIsRemoveNode = useSetIsRemoveNodeStore();
+    const { refetchNodes } = useNodesPageContext();
+    const { startNode } = useStartNode({
+        onSuccess: () => {
+            refetchNodes();
+        },
+    });
     
     const items: MenuProps[] = [
         {
@@ -42,7 +50,7 @@ export function NodesListItemMenu({ node }: NodesListItemMenuProps) {
             text: 'Start',
             icon: <IconPlayerPlayFilled size={ 14 }/>,
             onClick: () => {
-                console.log('Start', node);
+                startNode({ uuid: node.uuid!});
             },
         },
         {
@@ -72,7 +80,7 @@ export function NodesListItemMenu({ node }: NodesListItemMenuProps) {
     return (
         <Menu shadow='md' width={ 200 } position='bottom-start'>
             <Menu.Target>
-                <UnstyledButton>
+                <UnstyledButton style={{ paddingLeft: 7, paddingRight: 7 }}>
                     <IconDotsVertical size={ 14 }/>
                 </UnstyledButton>
             </Menu.Target>

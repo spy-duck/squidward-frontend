@@ -15,6 +15,11 @@ export const NODE_STATUS_ICON: Record<TNodeState, ReactNode> = {
             <IconPlayerStop color='gray' size={18}/>
         </Tooltip>
     ),
+    STARTING: (
+        <Tooltip label='Starting'>
+            <IconPlayerPlayFilled color='yellow' size={18}/>
+        </Tooltip>
+    ),
     RUNNING: (
         <Tooltip label='Running'>
             <IconPlayerPlayFilled color='green' size={18}/>
