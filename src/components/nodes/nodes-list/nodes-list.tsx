@@ -3,7 +3,7 @@ import { NodesListContract } from '@squidward/contracts/commands';
 import { Badge, Center, Flex, Table, Tooltip } from '@mantine/core';
 import { formatDateTime } from '@/shared/utils';
 import { NodesListItemMenu } from '@/components/nodes/nodes-list/nodes-list-item-menu';
-import { IconPower, IconCircleFilled } from '@tabler/icons-react';
+import { IconLink, IconLinkOff } from '@tabler/icons-react';
 import type { TNodeState } from '@squidward/contracts/constants';
 import { motion } from 'framer-motion';
 import { NODE_STATUS_ICON } from '@/shared/constants/nodes/node-status';
@@ -36,16 +36,17 @@ export function NodesList({ nodes }: NodesListProps): ReactElement {
             </Table.Td>
             <Table.Td>
                 <Flex align='center' justify='center' gap={ 14 }>
-                    <Tooltip label={ node.isEnabled ? 'Enabled' : 'Disabled' }>
-                        <IconPower color={ node.isEnabled ? 'green' : 'gray' } size={ 18 }/>
-                    </Tooltip>
-                    { !node.isConnected ? (
-                        <Tooltip label='Disconnected'>
-                            <IconCircleFilled color='#e03131' size={18}/>
-                        </Tooltip>
-                    ) : (
-                        NODE_STATUS_ICON[node.state as TNodeState] || `Unknown[${ node.state }]`
-                    ) }
+                        {node.isConnected && (
+                            <Tooltip label='Connected'>
+                                <IconLink size={ 18 } color='green'/>
+                            </Tooltip>
+                        )}
+                        {!node.isConnected && (
+                            <Tooltip label='Disconnected'>
+                                <IconLinkOff size={ 18 } color='#e03131'/>
+                            </Tooltip>
+                        )}
+                    { NODE_STATUS_ICON[node.state as TNodeState] || `Unknown[${ node.state }]` }
                 </Flex>
             </Table.Td>
             <Table.Td>{ node.name }</Table.Td>

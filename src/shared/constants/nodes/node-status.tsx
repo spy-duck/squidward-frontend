@@ -2,7 +2,7 @@ import React, { type ReactNode } from 'react';
 import type { TNodeState } from '@squidward/contracts/constants';
 import { Tooltip } from '@mantine/core';
 import {
-    IconAlertTriangle,
+    IconAlertTriangle, IconMobiledataOff,
     IconPlayerPlayFilled,
     IconPlayerStop,
     IconPlayerStopFilled,
@@ -33,6 +33,11 @@ export const NODE_STATUS_ICON: Record<TNodeState, ReactNode> = {
     SHUTDOWN: (
         <Tooltip label='Shutdown'>
             <IconPlayerStopFilled color='gray' size={18}/>
+        </Tooltip>
+    ),
+    OFFLINE: (
+        <Tooltip label='Offline'>
+            <IconMobiledataOff color='gray' size={18}/>
         </Tooltip>
     ),
 }

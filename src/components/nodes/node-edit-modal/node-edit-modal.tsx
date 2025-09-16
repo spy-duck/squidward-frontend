@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Button, Group, Modal, NumberInput, Select, Stack, Switch, TextInput } from '@mantine/core';
+import { Button, Group, Modal, NumberInput, Select, Stack, TextInput } from '@mantine/core';
 import type { ModalBaseProps } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { NodeUpdateContract } from '@squidward/contracts/commands';
@@ -38,7 +38,6 @@ export function NodeEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps)
                 port: node.port,
                 configId: node.configId,
                 description: node.description || '',
-                isEnabled: node.isEnabled,
             });
             ;(async () => {
                 await refetchConfigs();
@@ -62,13 +61,6 @@ export function NodeEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps)
                     justify='center'
                     gap='md'
                 >
-                    <Switch
-                        label='Enabled'
-                        key={ form.key('isEnabled') }
-                        { ...form.getInputProps('isEnabled') }
-                        checked={ form.values.isEnabled }
-                        readOnly={ isPending }
-                    />
                     <TextInput
                         withAsterisk
                         label='Name'
