@@ -1,7 +1,9 @@
 import { createTheme } from '@mantine/core'
 
+import components from './overrides'
 
 export const theme = createTheme({
+    components,
     cursorType: 'pointer',
     fontFamily: 'Montserrat, Twemoji Country Flags, sans-serif',
     fontFamilyMonospace: 'Fira Mono, monospace',
@@ -25,5 +27,5 @@ export const theme = createTheme({
     headings: {
         fontWeight: '600'
     },
-    defaultRadius: 'md'
+    defaultRadius: 'xs'
 })

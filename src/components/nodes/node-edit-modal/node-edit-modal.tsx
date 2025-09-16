@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import { Button, Group, Modal, NumberInput, Stack, Switch, TextInput } from '@mantine/core';
+import { Button, Group, Modal, NumberInput, Select, Stack, Switch, TextInput } from '@mantine/core';
 import type { ModalBaseProps } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { NodeUpdateContract } from '@squidward/contracts/commands';
 import { zod4Resolver } from 'mantine-form-zod-resolver';
-import { useUpdateNode } from '@/shared/api';
+import { useGetConfigs, useUpdateNode } from '@/shared/api';
 import { useActionNodeStore, useResetActionNodeStore } from '@/entities/nodes/nodes-store';
 
 type NodeCreateModalProps = ModalBaseProps & {
@@ -18,6 +18,8 @@ export function NodeEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps)
             onSubmit();
         },
     });
+    
+    const { configs, refetchConfigs } = useGetConfigs();
     
     const node = useActionNodeStore();
     const resetAction = useResetActionNodeStore();
@@ -34,12 +36,16 @@ export function NodeEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps)
                 name: node.name,
                 host: node.host,
                 port: node.port,
+                configId: node.configId,
                 description: node.description || '',
                 isEnabled: node.isEnabled,
             });
+            ;(async () => {
+                await refetchConfigs();
+            })();
         }
-    }, [ modalProps.opened ]);
-    console.log(form.errors)
+    }, [ modalProps.opened, node, refetchConfigs ]);
+    
     function closeHandler() {
         resetAction();
         form.reset();
@@ -47,7 +53,7 @@ export function NodeEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps)
     }
     
     return (
-        <Modal { ...modalProps } onClose={closeHandler} title='Edit node' size='sm' centered>
+        <Modal { ...modalProps } onClose={ closeHandler } title='Edit node' size='sm' centered>
             <form onSubmit={ form.onSubmit((values) => {
                 updateNode(values);
             }) }>
@@ -57,7 +63,7 @@ export function NodeEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps)
                     gap='md'
                 >
                     <Switch
-                        label="Enabled"
+                        label='Enabled'
                         key={ form.key('isEnabled') }
                         { ...form.getInputProps('isEnabled') }
                         checked={ form.values.isEnabled }
@@ -86,6 +92,15 @@ export function NodeEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps)
                         key={ form.key('port') }
                         { ...form.getInputProps('port') }
                         readOnly={ isPending }
+                    />
+                    <Select
+                        label='Squid config'
+                        placeholder='Pick squid config'
+                        data={ configs?.map((config) => ({
+                            value: config.uuid, label: config.name,
+                        })) }
+                        key={ form.key('configId') }
+                        { ...form.getInputProps('configId') }
                     />
                     <TextInput
                         label='Description'

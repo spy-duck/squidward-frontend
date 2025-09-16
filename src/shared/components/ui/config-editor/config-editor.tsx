@@ -17,8 +17,6 @@ export function ConfigEditor({ error, value, onChange }: ConfigEditorProps): Rea
         editor?.setValue(DEV_CONFIG);
         onChange(DEV_CONFIG);
     }
-    
-    console.log(value);
     return (
         <Flex direction='column' align='start' gap={14}>
             <div className={styles.configEditorWrapper}>

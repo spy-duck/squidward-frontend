@@ -1,9 +1,9 @@
-import type { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { NodesListContract } from '@squidward/contracts/commands';
 import { Badge, Center, Flex, Table, Tooltip } from '@mantine/core';
 import { formatDateTime } from '@/shared/utils';
 import { NodesListItemMenu } from '@/components/nodes/nodes-list/nodes-list-item-menu';
-import { IconPower } from '@tabler/icons-react';
+import { IconPower, IconCircleFilled } from '@tabler/icons-react';
 import type { TNodeState } from '@squidward/contracts/constants';
 import { motion } from 'framer-motion';
 import { NODE_STATUS_ICON } from '@/shared/constants/nodes/node-status';
@@ -41,7 +41,7 @@ export function NodesList({ nodes }: NodesListProps): ReactElement {
                     </Tooltip>
                     { !node.isConnected ? (
                         <Tooltip label='Disconnected'>
-                            <Badge color='red' size='xs'></Badge>
+                            <IconCircleFilled color='#e03131' size={18}/>
                         </Tooltip>
                     ) : (
                         NODE_STATUS_ICON[node.state as TNodeState] || `Unknown[${ node.state }]`
@@ -51,6 +51,11 @@ export function NodesList({ nodes }: NodesListProps): ReactElement {
             <Table.Td>{ node.name }</Table.Td>
             <Table.Td>{ node.host }</Table.Td>
             <Table.Td>{ node.port }</Table.Td>
+            <Table.Td>
+                <Badge variant='outline'>
+                    { node.config?.name }
+                </Badge>
+            </Table.Td>
             <Table.Td>{ node.description }</Table.Td>
             <Table.Td>{ formatDateTime(node.createdAt) }</Table.Td>
         </motion.tr>
@@ -64,6 +69,7 @@ export function NodesList({ nodes }: NodesListProps): ReactElement {
                     <Table.Th>Name</Table.Th>
                     <Table.Th>Host</Table.Th>
                     <Table.Th>Port</Table.Th>
+                    <Table.Th>Config</Table.Th>
                     <Table.Th>Description</Table.Th>
                     <Table.Th style={ { width: 160 } }>Created at</Table.Th>
                 </Table.Tr>
@@ -71,7 +77,7 @@ export function NodesList({ nodes }: NodesListProps): ReactElement {
             <Table.Tbody>
                 { rows.length === 0 && (
                     <Table.Tr>
-                        <Table.Td colSpan={ 7 }>
+                        <Table.Td colSpan={ 8 }>
                             <Center>No nodes found</Center>
                         </Table.Td>
                     </Table.Tr>

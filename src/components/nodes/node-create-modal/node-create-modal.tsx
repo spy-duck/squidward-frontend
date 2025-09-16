@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import { Button, Group, Modal, NumberInput, Stack, TextInput } from '@mantine/core';
+import { Button, Group, Modal, NumberInput, Select, Stack, TextInput } from '@mantine/core';
 import type { ModalBaseProps } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { NodeCreateContract } from '@squidward/contracts/commands';
 import { zod4Resolver } from 'mantine-form-zod-resolver';
-import { useCreateNode } from '@/shared/api';
+import { useCreateNode, useGetConfigs } from '@/shared/api';
 
 type NodeCreateModalProps = ModalBaseProps & {
     onSubmit(): void;
@@ -18,6 +18,8 @@ export function NodeCreateModal({ onSubmit, ...modalProps }: NodeCreateModalProp
         },
     });
     
+    const { configs, refetchConfigs } = useGetConfigs();
+    
     const form = useForm<NodeCreateContract.Request>({
         mode: 'uncontrolled',
         validate: zod4Resolver(NodeCreateContract.RequestSchema),
@@ -26,8 +28,11 @@ export function NodeCreateModal({ onSubmit, ...modalProps }: NodeCreateModalProp
     useEffect(() => {
         if (modalProps.opened) {
             form.reset();
+            ;(async () => {
+                await refetchConfigs();
+            })();
         }
-    }, [ modalProps.opened ]);
+    }, [ modalProps.opened, refetchConfigs ]);
     
     return (
         <Modal { ...modalProps } title='Create new node' centered>
@@ -62,6 +67,15 @@ export function NodeCreateModal({ onSubmit, ...modalProps }: NodeCreateModalProp
                         key={ form.key('port') }
                         { ...form.getInputProps('port') }
                         readOnly={ isPending }
+                    />
+                    <Select
+                        label="Squid config"
+                        placeholder="Pick squid config"
+                        data={configs?.map((config) => ({
+                            value: config.uuid, label: config.name,
+                        }))}
+                        key={ form.key('configId') }
+                        { ...form.getInputProps('configId') }
                     />
                     <TextInput
                         label='Description'

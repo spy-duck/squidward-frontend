@@ -1,9 +1,10 @@
 import React from 'react';
 import { ConfigsListContract } from '@squidward/contracts/commands';
-import { Center, Table } from '@mantine/core';
+import { Badge, Center, Table, Tooltip } from '@mantine/core';
 import { formatDateTime } from '@/shared/utils';
 import { ConfigsListItemMenu } from './configs-list-item-menu';
 import { motion } from 'framer-motion';
+import { IconCloudDataConnection } from '@tabler/icons-react';
 
 type ConfigsListProps = {
     configs: ConfigsListContract.Response['response']['configs'],
@@ -31,6 +32,17 @@ export function ConfigsList({ configs }: ConfigsListProps): React.ReactElement {
                 <ConfigsListItemMenu config={ config }/>
             </Table.Td>
             <Table.Td>{ config.name }</Table.Td>
+            <Table.Td>
+                <Tooltip label='Used by nodes'>
+                    <Badge
+                        leftSection={ <IconCloudDataConnection size={ 12 } stroke='2px'/> }
+                        variant='outline'
+                        color={!config.nodesCount || config.nodesCount === 0 ? 'gray' : 'cyan'}
+                    >
+                        { config.nodesCount }
+                    </Badge>
+                </Tooltip>
+            </Table.Td>
             <Table.Td>{ config.version }</Table.Td>
             <Table.Td>{ formatDateTime(config.createdAt) }</Table.Td>
         </motion.tr>
@@ -41,6 +53,7 @@ export function ConfigsList({ configs }: ConfigsListProps): React.ReactElement {
                 <Table.Tr>
                     <Table.Th style={ { width: 40 } }></Table.Th>
                     <Table.Th>Name</Table.Th>
+                    <Table.Th>Nodes</Table.Th>
                     <Table.Th>Version</Table.Th>
                     <Table.Th style={ { width: 160 } }>Created at</Table.Th>
                 </Table.Tr>
