@@ -30,7 +30,7 @@ export function ConfigEditModal({ onSubmit, ...modalProps }: ConfigEditModalProp
     
     const actionConfig = useActionConfigStore();
     
-    const { config } = useGetOneConfig({
+    const { config, isLoading: isLoadingConfig } = useGetOneConfig({
         uuid: actionConfig?.uuid || '',
     });
     
@@ -85,16 +85,21 @@ export function ConfigEditModal({ onSubmit, ...modalProps }: ConfigEditModalProp
                         placeholder='Default'
                         key={ form.key('name') }
                         { ...form.getInputProps('name') }
-                        readOnly={ isPending }
+                        readOnly={ isLoadingConfig || isPending }
                     />
                     <ConfigEditor
                         value={ form.values.config }
                         error={ form.errors.config }
                         onChange={ (value) => form.setFieldValue('config', value || '') }
+                        disabled={ isLoadingConfig }
                     />
                 </Stack>
                 <Group justify='flex-end' mt='md'>
-                    <Button type='submit' loading={ isPending }>Save</Button>
+                    <Button
+                        type='submit'
+                        loading={ isPending }
+                        disabled={ isLoadingConfig }
+                    >Save</Button>
                 </Group>
             </form>
         </Modal>

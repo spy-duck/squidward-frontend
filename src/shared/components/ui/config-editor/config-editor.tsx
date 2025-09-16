@@ -8,10 +8,11 @@ import clsx from 'clsx';
 type ConfigEditorProps = {
     value: string | undefined,
     error: ReactNode,
+    disabled: boolean,
     onChange(value: string | undefined): void;
 };
 
-export function ConfigEditor({ error, value, onChange }: ConfigEditorProps): ReactElement {
+export function ConfigEditor({ disabled, error, value, onChange }: ConfigEditorProps): ReactElement {
     const [ editor, setEditor ] = useState<editor.IStandaloneCodeEditor | null>(null)
     function useDefaultClickHandler() {
         editor?.setValue(DEV_CONFIG);
@@ -27,7 +28,7 @@ export function ConfigEditor({ error, value, onChange }: ConfigEditorProps): Rea
                         defaultLanguage='ini'
                         value={ value }
                         onChange={(value) => {
-                            onChange(value);
+                            !disabled && onChange(value);
                         }}
                         onMount={setEditor}
                     />

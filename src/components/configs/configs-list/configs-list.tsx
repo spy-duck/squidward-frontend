@@ -37,13 +37,13 @@ export function ConfigsList({ configs }: ConfigsListProps): React.ReactElement {
                     <Badge
                         leftSection={ <IconCloudDataConnection size={ 12 } stroke='2px'/> }
                         variant='outline'
-                        color={!config.nodesCount || config.nodesCount === 0 ? 'gray' : 'cyan'}
+                        color={ !config.nodesCount || config.nodesCount === 0 ? 'gray' : 'cyan' }
                     >
                         { config.nodesCount }
                     </Badge>
                 </Tooltip>
             </Table.Td>
-            <Table.Td>{ config.version }</Table.Td>
+            <Table.Td>{ formatDateTime(config.updatedAt) }</Table.Td>
             <Table.Td>{ formatDateTime(config.createdAt) }</Table.Td>
         </motion.tr>
     ));
@@ -54,7 +54,7 @@ export function ConfigsList({ configs }: ConfigsListProps): React.ReactElement {
                     <Table.Th style={ { width: 40 } }></Table.Th>
                     <Table.Th>Name</Table.Th>
                     <Table.Th>Nodes</Table.Th>
-                    <Table.Th>Version</Table.Th>
+                    <Table.Th style={ { width: 160 } }>Updated At</Table.Th>
                     <Table.Th style={ { width: 160 } }>Created at</Table.Th>
                 </Table.Tr>
             </Table.Thead>
