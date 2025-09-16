@@ -1,6 +1,6 @@
 import React, { type ReactNode } from 'react';
 import type { TNodeState } from '@squidward/contracts/constants';
-import { Tooltip } from '@mantine/core';
+import { Loader, Tooltip } from '@mantine/core';
 import {
     IconAlertTriangle, IconMobiledataOff,
     IconPlayerPlayFilled,
@@ -17,7 +17,12 @@ export const NODE_STATUS_ICON: Record<TNodeState, ReactNode> = {
     ),
     STARTING: (
         <Tooltip label='Starting'>
-            <IconPlayerPlayFilled color='yellow' size={18}/>
+            <Loader color='yellow' size='xs'/>
+        </Tooltip>
+    ),
+    STOPPING: (
+        <Tooltip label='Stopping'>
+            <Loader color='gray' size='xs'/>
         </Tooltip>
     ),
     RUNNING: (
