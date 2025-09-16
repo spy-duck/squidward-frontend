@@ -31,7 +31,7 @@ export const UsersPageProvider = ({ children }: TUsersPageContextProps) => {
     const resetAction = useResetActionUserStore();
     
     useEffect(() => {
-        (async () => {
+        ;(async () => {
             await queryClient.prefetchQuery({
                 queryKey: QUERY_KEYS.USERS.USERS_LIST,
             });

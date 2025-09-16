@@ -9,10 +9,11 @@ import {
 import type { ModalBaseProps } from '@mantine/core';
 import { type TransformedValues, useForm } from '@mantine/form';
 import { zod4Resolver } from 'mantine-form-zod-resolver';
-import { useUpdateConfig } from '@/shared/api';
+import { queryClient, useGetOneConfig, useUpdateConfig } from '@/shared/api';
 import { useActionConfigStore, useResetActionConfigStore } from '@/entities/configs/configs-store';
 import { ConfigUpdateContract } from '@squidward/contracts/commands';
 import { ConfigEditor } from '@/shared/components/ui/config-editor';
+import { QUERY_KEYS } from '@/shared/constants/api';
 
 type ConfigEditModalProps = ModalBaseProps & {
     onSubmit(): void;
@@ -20,13 +21,19 @@ type ConfigEditModalProps = ModalBaseProps & {
 
 export function ConfigEditModal({ onSubmit, ...modalProps }: ConfigEditModalProps): React.ReactElement {
     const { updateConfig, isPending } = useUpdateConfig({
-        onSuccess() {
+        async onSuccess() {
             modalProps.onClose();
+            await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CONFIGS.CONFIG_ITEM(actionConfig?.uuid || '') });
             onSubmit();
         },
     });
     
-    const user = useActionConfigStore();
+    const actionConfig = useActionConfigStore();
+    
+    const { config } = useGetOneConfig({
+        uuid: actionConfig?.uuid || '',
+    });
+    
     const resetAction = useResetActionConfigStore();
     
     const form = useForm<ConfigUpdateContract.Request>({
@@ -35,14 +42,24 @@ export function ConfigEditModal({ onSubmit, ...modalProps }: ConfigEditModalProp
     });
     
     useEffect(() => {
-        if (modalProps.opened && user) {
+        if (modalProps.opened && actionConfig) {
+            ;(async () => {
+                await queryClient.prefetchQuery({
+                    queryKey: QUERY_KEYS.CONFIGS.CONFIG_ITEM(actionConfig.uuid!),
+                });
+            })();
+        }
+    }, [ modalProps.opened, actionConfig ]);
+    
+    useEffect(() => {
+        if (actionConfig && config) {
             form.setValues({
-                uuid: user.uuid,
-                name: user.name,
-                config: user.config,
+                uuid: actionConfig.uuid,
+                name: actionConfig.name,
+                config: config.config,
             });
         }
-    }, [ modalProps.opened ]);
+    }, [ actionConfig, config ]);
 
     function closeHandler() {
         resetAction();

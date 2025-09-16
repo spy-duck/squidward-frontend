@@ -32,7 +32,7 @@ export const SquidConfigPageProvider = ({ children }: TSquidConfigPageContextPro
     const resetAction = useResetActionConfigStore();
     
     useEffect(() => {
-        (async () => {
+        ;(async () => {
             await queryClient.prefetchQuery({
                 queryKey: QUERY_KEYS.CONFIGS.CONFIGS_LIST,
             });

@@ -1,15 +1,20 @@
 export const ROUTES = {
-    LOGIN: '/login',
+    AUTH: {
+        ROOT: '/auth/',
+        LOGIN: '/auth/login',
+        LOGOUT: '/auth/logout',
+    },
     DASHBOARD: {
+        ROOT: '/dashboard',
         NODES: {
-            BASE: '/nodes',
+            BASE: '/dashboard/nodes',
         },
         USERS: {
-            BASE: '/users',
+            BASE: '/dashboard/users',
         },
         SQUID: {
-            BASE: '/squid',
-            CONFIGS: '/squid/configs',
+            BASE: '/dashboard/squid',
+            CONFIGS: '/dashboard/squid/configs',
         }
     },
 } as const;

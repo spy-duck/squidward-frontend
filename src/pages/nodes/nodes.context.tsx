@@ -31,7 +31,7 @@ export const NodesPageProvider = ({ children }: TNodesPageContextProps) => {
     const resetAction = useResetActionNodeStore();
     
     useEffect(() => {
-        (async () => {
+        ;(async () => {
             await queryClient.prefetchQuery({
                 queryKey: QUERY_KEYS.NODES.NODES_LIST,
             });

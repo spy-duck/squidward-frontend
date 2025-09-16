@@ -1,0 +1,1 @@
+export { ErrorPageComponent as default } from './server-error.component'

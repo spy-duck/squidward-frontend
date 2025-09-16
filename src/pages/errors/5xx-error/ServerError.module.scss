@@ -1,0 +1,4 @@
+@use '@/shared/scss/mixins';
+
+@include mixins.error-page();
+

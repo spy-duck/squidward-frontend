@@ -18,6 +18,7 @@ export function ConfigEditor({ error, value, onChange }: ConfigEditorProps): Rea
         onChange(DEV_CONFIG);
     }
     
+    console.log(value);
     return (
         <Flex direction='column' align='start' gap={14}>
             <div className={styles.configEditorWrapper}>
@@ -26,7 +27,7 @@ export function ConfigEditor({ error, value, onChange }: ConfigEditorProps): Rea
                         theme='vs-dark'
                         height='55vh'
                         defaultLanguage='ini'
-                        defaultValue={ value }
+                        value={ value }
                         onChange={(value) => {
                             onChange(value);
                         }}

@@ -1,0 +1,1 @@
+export { NotFoundPageComponent as default } from './not-found.component'
