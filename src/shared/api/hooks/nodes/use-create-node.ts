@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { apiClient } from '@/shared/api/axios';
 import { NodeCreateContract } from '@squidward/contracts/commands';
+import { apiErrorHandler } from '@/shared/api/helpers/api-error-handler';
 
 export function useCreateNode({ onSuccess }: {
     onSuccess(): void;
@@ -15,6 +16,9 @@ export function useCreateNode({ onSuccess }: {
             return response.data.response.success;
         },
         onSuccess,
+        onError: apiErrorHandler({
+            contract: NodeCreateContract,
+        }),
     });
     return {
         createNode: mutate,
