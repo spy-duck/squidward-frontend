@@ -12,6 +12,7 @@ import type { ReactNode } from 'react';
 import { useSetActionNodeStore, useSetIsRemoveNodeStore, useSetIsEditNodeStore } from '@/entities/nodes/nodes-store';
 import { useStartNode } from '@/shared/api';
 import { useNodesPageContext } from '@/pages/nodes/nodes.context';
+import { useStopNode } from '@/shared/api/hooks/nodes/use-stop-node';
 
 type MenuProps = {
     text: ReactNode;
@@ -32,6 +33,11 @@ export function NodesListItemMenu({ node }: NodesListItemMenuProps) {
     const setIsRemoveNode = useSetIsRemoveNodeStore();
     const { refetchNodes } = useNodesPageContext();
     const { startNode } = useStartNode({
+        onSuccess: () => {
+            refetchNodes();
+        },
+    });
+    const { stopNode } = useStopNode({
         onSuccess: () => {
             refetchNodes();
         },
@@ -64,7 +70,7 @@ export function NodesListItemMenu({ node }: NodesListItemMenuProps) {
             text: 'Stop',
             icon: <IconPlayerStopFilled size={ 14 }/>,
             onClick: () => {
-                console.log('Stop', node);
+                stopNode({ uuid: node.uuid!});
             },
         },
         {

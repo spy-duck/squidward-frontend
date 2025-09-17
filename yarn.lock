@@ -1293,10 +1293,10 @@ __metadata:
 
 "@squidward/contracts@file:../squidward-backend/libs/contracts::locator=squidward-frontend%40workspace%3A.":
   version: 0.0.0
-  resolution: "@squidward/contracts@file:../squidward-backend/libs/contracts#../squidward-backend/libs/contracts::hash=5e631b&locator=squidward-frontend%40workspace%3A."
+  resolution: "@squidward/contracts@file:../squidward-backend/libs/contracts#../squidward-backend/libs/contracts::hash=afe8c3&locator=squidward-frontend%40workspace%3A."
   dependencies:
     zod: "npm:^4.1.8"
-  checksum: 10c0/7971030be408963b6671e212a73075613c9b5c1adf67c64d6d52c443385ec0be142e72b94ccacd06ee68717a6287fae71eba2bdc6c7cada48ea1839633f01028
+  checksum: 10c0/d9819dbd79ba8e0770259aad5bd5ad3abf6521e002ed1817c954c941df7c4d3f9fddcbd1099f8d4440d33388458bbd02fc9112f82dea35c28c9680a69b23a5d2
   languageName: node
   linkType: hard
 

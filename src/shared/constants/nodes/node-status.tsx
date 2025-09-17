@@ -17,7 +17,7 @@ export const NODE_STATUS_ICON: Record<TNodeState, ReactNode> = {
     ),
     STARTING: (
         <Tooltip label='Starting'>
-            <Loader color='yellow' size='xs'/>
+            <Loader color='green' size='xs'/>
         </Tooltip>
     ),
     STOPPING: (
