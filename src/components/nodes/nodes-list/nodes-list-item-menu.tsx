@@ -16,11 +16,12 @@ import { useStopNode } from '@/shared/api/hooks/nodes/use-stop-node';
 import { useRestartNode } from '@/shared/api/hooks/nodes/use-restart-node';
 import { NODE_STATE, type TNodeState } from '@squidward/contracts/constants';
 
-type MenuProps = {
-    text: ReactNode;
-    icon: ReactNode;
-    onClick(): void;
+type MenuItemProps = {
+    text: string;
+    leftSection?: ReactNode;
+    onClick?: () => void;
     color?: MantineColor;
+    disabled?: boolean;
 }
 
 
@@ -39,73 +40,81 @@ export function NodesListItemMenu({ node }: NodesListItemMenuProps) {
     
     function makeNodeMenuAction(
         availableStates: TNodeState[],
-        makeMenuItem: (disabled: boolean) => MenuProps,
-        disabledStates?: TNodeState[],
-    ): MenuProps[] {
+        menuItem: MenuItemProps,
+    ): MenuItemProps[] {
+        if (!node.isConnected) return [];
         if (!node.state || !availableStates.includes(node.state as TNodeState)) return [];
-        
-        const menuItem = makeMenuItem(disabledStates?.includes(node.state as TNodeState) || false);
-        
         return [ menuItem ];
     }
     
+    function isStateContains(state: TNodeState | undefined, states: TNodeState[]): boolean {
+        if (!state) {
+            return false;
+        }
+        return states.includes(state);
+    }
+    
     // TODO: refactor this shit
-    const items: MenuProps[] = [
+    const items: MenuItemProps[] = [
         {
             text: 'Edit',
-            icon: <IconPencil size={ 14 }/>,
+            leftSection: <IconPencil size={ 14 }/>,
             onClick: () => {
                 setActionNode(node);
                 setIsEditNode(true);
             },
+            disabled: isStateContains(node.state, [
+                NODE_STATE.STARTING,
+                NODE_STATE.STOPPING,
+                NODE_STATE.RESTARTING,
+            ]),
         },
         ...makeNodeMenuAction(
             [ NODE_STATE.CREATED, NODE_STATE.STOPPED, NODE_STATE.FATAL, NODE_STATE.OFFLINE, NODE_STATE.SHUTDOWN, NODE_STATE.STARTING ],
-            (disabled) => ({
+            {
                 text: 'Start',
-                icon: <IconPlayerPlayFilled size={ 14 } color={ disabled ? 'gray' : undefined }/>,
+                leftSection: <IconPlayerPlayFilled size={ 14 }/>,
                 onClick: () => {
-                    if (disabled) return;
                     startNode({ uuid: node.uuid! });
                 },
-                color: disabled ? 'gray' : undefined,
-            }),
-            [ NODE_STATE.STARTING ],
+                disabled: isStateContains(node.state, [ NODE_STATE.STARTING ]),
+            },
         ),
         ...makeNodeMenuAction(
             [ NODE_STATE.RUNNING, NODE_STATE.RESTARTING, NODE_STATE.STOPPING ],
-            (disabled) => ({
+            {
                 text: 'Restart',
-                icon: <IconRefresh size={ 14 } color={ disabled ? 'gray' : undefined }/>,
+                leftSection: <IconRefresh size={ 14 }/>,
                 onClick: () => {
-                    if (disabled) return;
                     restartNode({ uuid: node.uuid! });
                 },
-                color: disabled ? 'gray' : undefined,
-            }),
-            [ NODE_STATE.STOPPING, NODE_STATE.RESTARTING ],
+                disabled: isStateContains(node.state, [ NODE_STATE.STOPPING, NODE_STATE.RESTARTING ]),
+            },
         ),
         ...makeNodeMenuAction(
             [ NODE_STATE.RUNNING, NODE_STATE.RESTARTING, NODE_STATE.STOPPING ],
-            (disabled) => ({
+            {
                 text: 'Stop',
-                icon: <IconPlayerStopFilled size={ 14 } color={ disabled ? 'gray' : undefined }/>,
+                leftSection: <IconPlayerStopFilled size={ 14 }/>,
                 onClick: () => {
-                    if (disabled) return;
                     stopNode({ uuid: node.uuid! });
                 },
-                color: disabled ? 'gray' : undefined,
-            }),
-            [ NODE_STATE.STOPPING, NODE_STATE.RESTARTING ],
+                disabled: isStateContains(node.state, [ NODE_STATE.STOPPING, NODE_STATE.RESTARTING ]),
+            },
         ),
         {
             text: 'Delete',
-            icon: <IconTrash size={ 14 }/>,
+            leftSection: <IconTrash size={ 14 }/>,
             onClick: () => {
                 setActionNode(node);
                 setIsRemoveNode(true);
             },
             color: 'red',
+            disabled: isStateContains(node.state, [
+                NODE_STATE.STARTING,
+                NODE_STATE.STOPPING,
+                NODE_STATE.RESTARTING,
+            ]),
         },
     ]
     return (
@@ -120,9 +129,10 @@ export function NodesListItemMenu({ node }: NodesListItemMenuProps) {
                 { items.map((item, index) => (
                     <Menu.Item
                         key={ index + node.uuid! }
-                        leftSection={ item.icon }
-                        color={ item.color }
+                        leftSection={ item.leftSection }
                         onClick={ item.onClick }
+                        disabled={ item.disabled }
+                        color={ item.color }
                     >
                         { item.text }
                     </Menu.Item>
