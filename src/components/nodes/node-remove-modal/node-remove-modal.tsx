@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Group, Modal } from '@mantine/core';
 import type { ModalBaseProps } from '@mantine/core';
-import { useActionNodeStore, useResetActionNodeStore } from '@/entities/nodes/nodes-store';
+import { useActionNodeStore, useResetActionNodeStore, useSetIsRemoveNodeStore } from '@/entities/nodes/nodes-store';
 import { useRemoveNode } from '@/shared/api';
 
 type NodeCreateModalProps = ModalBaseProps & {
@@ -9,15 +9,18 @@ type NodeCreateModalProps = ModalBaseProps & {
 };
 
 export function NodeRemoveModal({ onSubmit, ...modalProps }: NodeCreateModalProps): React.ReactElement {
+    const node = useActionNodeStore();
+    const setIsRemove = useSetIsRemoveNodeStore();
+    const resetActionNode = useResetActionNodeStore();
+    
     const { removeNode, isPending } = useRemoveNode({
         onSuccess() {
-            modalProps.onClose();
+            resetActionNode();
+            setIsRemove(false);
             onSubmit();
         },
     });
     
-    const node = useActionNodeStore();
-    const resetActionNode = useResetActionNodeStore();
     
     function confirmClickHandler() {
         if (!node) return;
@@ -25,12 +28,13 @@ export function NodeRemoveModal({ onSubmit, ...modalProps }: NodeCreateModalProp
     }
     
     function cancelClickHandler() {
-        modalProps.onClose();
+        resetActionNode();
+        setIsRemove(false);
     }
     
     function closeHandler() {
         resetActionNode();
-        modalProps.onClose();
+        setIsRemove(false);
     }
     
     return (

@@ -41,7 +41,7 @@ export function NodesList({ nodes }: NodesListProps): ReactElement {
                                 <IconLinkOff size={ 18 } color='#e03131'/>
                             </Tooltip>
                         )}
-                    { NODE_STATUS_ICON[node.state as TNodeState] || `[${ node.state }]` }
+                    { node.state && NODE_STATUS_ICON[node.state as TNodeState] || `[${ node.state }]` }
                 </Flex>
             </Table.Td>
             <Table.Td>{ node.name }</Table.Td>

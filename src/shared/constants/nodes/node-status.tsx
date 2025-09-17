@@ -6,10 +6,10 @@ import {
     IconPlayerPlayFilled,
     IconPlayerStop,
     IconPlayerStopFilled,
-    IconRefresh,
 } from '@tabler/icons-react';
 
 export const NODE_STATUS_ICON: Record<TNodeState, ReactNode> = {
+    CREATED: null,
     STOPPED: (
         <Tooltip label='Stopped'>
             <IconPlayerStop color='gray' size={18}/>
@@ -37,7 +37,7 @@ export const NODE_STATUS_ICON: Record<TNodeState, ReactNode> = {
     ),
     RESTARTING: (
         <Tooltip label='Restarting'>
-            <IconRefresh color='orange' size={18}/>
+            <Loader color='orange' size='xs'/>
         </Tooltip>
     ),
     SHUTDOWN: (
