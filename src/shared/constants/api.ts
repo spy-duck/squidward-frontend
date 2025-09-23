@@ -1,6 +1,7 @@
 export const QUERY_KEYS = {
     NODES: {
         NODES_LIST: [ 'NODES_LIST' ],
+        KEYGEN: [ 'KEYGEN' ],
     },
     USERS: {
         USERS_LIST: [ 'USERS_LIST' ],

@@ -1,16 +1,21 @@
 import React, { useEffect } from 'react';
-import { Button, Group, Modal, NumberInput, Select, Stack, TextInput } from '@mantine/core';
+import { Button, CopyButton, Fieldset, Group, Modal, NumberInput, Select, Stack, TextInput } from '@mantine/core';
 import type { ModalBaseProps } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { NodeCreateContract } from '@squidward/contracts/commands';
 import { zod4Resolver } from 'mantine-form-zod-resolver';
-import { useCreateNode, useGetConfigs } from '@/shared/api';
+import { useCreateNode, useGetConfigs, useKeygenNodes } from '@/shared/api';
+import { IconCopy } from '@tabler/icons-react';
 
 type NodeCreateModalProps = ModalBaseProps & {
     onSubmit(): void;
 };
 
 export function NodeCreateModal({ onSubmit, ...modalProps }: NodeCreateModalProps): React.ReactElement {
+    const { publicKey, isLoading } = useKeygenNodes({
+        enabled: modalProps.opened,
+    });
+    
     const { createNode, isPending } = useCreateNode({
         onSuccess() {
             modalProps.onClose();
@@ -44,6 +49,23 @@ export function NodeCreateModal({ onSubmit, ...modalProps }: NodeCreateModalProp
                     justify='center'
                     gap='md'
                 >
+                    <Fieldset legend='Node SSL config'>
+                        Copy SSL_CERT param and add this to <i>.env</i> on node <br/>
+                        <CopyButton value={ `SSL_CERT="${ publicKey }"` }>
+                            { ({ copied, copy }) => (
+                                <Button
+                                    leftSection={(
+                                        <IconCopy/>
+                                    )}
+                                    color={ copied ? 'teal' : 'blue' }
+                                    onClick={ copy }
+                                    disabled={ isLoading }
+                                >
+                                    Copy
+                                </Button>
+                            ) }
+                        </CopyButton>
+                    </Fieldset>
                     <TextInput
                         withAsterisk
                         label='Name'
@@ -69,11 +91,11 @@ export function NodeCreateModal({ onSubmit, ...modalProps }: NodeCreateModalProp
                         readOnly={ isPending }
                     />
                     <Select
-                        label="Squid config"
-                        placeholder="Pick squid config"
-                        data={configs?.map((config) => ({
+                        label='Squid config'
+                        placeholder='Pick squid config'
+                        data={ configs?.map((config) => ({
                             value: config.uuid, label: config.name,
-                        }))}
+                        })) }
                         key={ form.key('configId') }
                         { ...form.getInputProps('configId') }
                     />
