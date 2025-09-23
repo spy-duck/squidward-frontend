@@ -15,6 +15,16 @@ export const NODE_STATUS_ICON: Record<TNodeState, ReactNode> = {
             <IconPlayerStop color='gray' size={18}/>
         </Tooltip>
     ),
+    EXITED: (
+        <Tooltip label='Stopped'>
+            <IconPlayerStop color='gray' size={18}/>
+        </Tooltip>
+    ),
+    BACKOFF: (
+        <Tooltip label='Stopped'>
+            <IconPlayerStop color='gray' size={18}/>
+        </Tooltip>
+    ),
     STARTING: (
         <Tooltip label='Starting'>
             <Loader color='green' size='xs'/>

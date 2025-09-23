@@ -70,7 +70,15 @@ export function NodesListItemMenu({ node }: NodesListItemMenuProps) {
             ]),
         },
         ...makeNodeMenuAction(
-            [ NODE_STATE.CREATED, NODE_STATE.STOPPED, NODE_STATE.FATAL, NODE_STATE.OFFLINE, NODE_STATE.SHUTDOWN, NODE_STATE.STARTING ],
+            [
+                NODE_STATE.CREATED,
+                NODE_STATE.STOPPED,
+                NODE_STATE.FATAL,
+                NODE_STATE.OFFLINE,
+                NODE_STATE.SHUTDOWN,
+                NODE_STATE.STARTING,
+                NODE_STATE.EXITED,
+            ],
             {
                 text: 'Start',
                 leftSection: <IconPlayerPlayFilled size={ 14 }/>,
