@@ -9,7 +9,7 @@ type NodeCreateModalProps = ModalBaseProps & {
 };
 
 export function UserRemoveModal({ onSubmit, ...modalProps }: NodeCreateModalProps): React.ReactElement {
-    const { removeNode, isPending } = useRemoveUser({
+    const { removeUser, isPending } = useRemoveUser({
         onSuccess() {
             modalProps.onClose();
             onSubmit();
@@ -21,7 +21,7 @@ export function UserRemoveModal({ onSubmit, ...modalProps }: NodeCreateModalProp
     
     function confirmClickHandler() {
         if (!user) return;
-        removeNode(user.uuid!);
+        removeUser(user.uuid!);
     }
     
     function cancelClickHandler() {

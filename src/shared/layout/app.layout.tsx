@@ -1,11 +1,14 @@
 import { useDisclosure } from '@mantine/hooks';
-import { AppShell, Burger, Group, NavLink } from '@mantine/core';
+import { AppShell, Burger, Button, Group, NavLink } from '@mantine/core';
 import { Outlet, NavLink as RouterLink } from 'react-router';
 import { ROUTES } from '@/shared/constants/routes';
 import { motion } from 'framer-motion'
+import { IconLogout } from '@tabler/icons-react';
+import { useAuthContext } from '@/shared/context/auth.context';
 
 export function AppLayout() {
-    const [ opened, { toggle } ] = useDisclosure();
+    const [ opened, { toggle, close } ] = useDisclosure();
+    const { logout } = useAuthContext();
     
     const navLinks = [
         {
@@ -31,7 +34,12 @@ export function AppLayout() {
             <AppShell.Header>
                 <Group h='100%' px='md'>
                     <Burger opened={ opened } onClick={ toggle } hiddenFrom='sm' size='sm'/>
-                    Squidward Dashboard
+                    <div style={ { flex: 1 } }>
+                        Squidward Dashboard
+                    </div>
+                    <Button onClick={ () => logout() }>
+                        <IconLogout size={ 16 }/>
+                    </Button>
                 </Group>
             </AppShell.Header>
             <AppShell.Navbar p='md'>
@@ -56,6 +64,7 @@ export function AppLayout() {
                             component={ RouterLink }
                             to={ to }
                             label={ label }
+                            onClick={ () => close() }
                         />
                     </motion.div>
                 )) }

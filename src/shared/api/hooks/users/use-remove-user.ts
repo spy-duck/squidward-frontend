@@ -20,7 +20,7 @@ export function useRemoveUser({ onSuccess }: {
         }),
     });
     return {
-        removeNode: mutate,
+        removeUser: mutate,
         isPending,
     }
 }

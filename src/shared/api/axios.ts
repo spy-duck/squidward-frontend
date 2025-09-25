@@ -1,38 +1,20 @@
 import axios from 'axios';
-import { consola } from "consola/browser";
-
+import { CLIENT_TYPE_BROWSER, CLIENT_TYPE_HEADER } from '@squidward/contracts/constants';
 
 let authorizationToken = '';
 export const apiClient = axios.create({
     headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
+        [CLIENT_TYPE_HEADER]: CLIENT_TYPE_BROWSER,
     },
+    validateStatus: (status) => String(status).startsWith('2') || status === 401,
 });
 
 apiClient.interceptors.request.use((config) => {
     config.headers.set('Authorization', `Bearer ${ authorizationToken }`)
     return config
 });
-
-apiClient.interceptors.response.use(
-    (response) => {
-        return response
-    },
-    (error) => {
-        if (error.response) {
-            const responseStatus = error.response.status
-            if (responseStatus === 403 || responseStatus === 401) {
-                try {
-                    // TOTO: logout
-                } catch (error) {
-                    consola.log('error', error)
-                }
-            }
-        }
-        return Promise.reject(error)
-    }
-)
 
 export const setAuthorizationToken = (token: string) => {
     authorizationToken = token

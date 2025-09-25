@@ -1,7 +1,10 @@
 export const QUERY_KEYS = {
+    AUTH: {
+        CHECK: [ 'AUTH_CHECK' ],
+    },
     NODES: {
         NODES_LIST: [ 'NODES_LIST' ],
-        KEYGEN: [ 'KEYGEN' ],
+        KEYGEN: [ 'NODES_KEYGEN' ],
     },
     USERS: {
         USERS_LIST: [ 'USERS_LIST' ],
