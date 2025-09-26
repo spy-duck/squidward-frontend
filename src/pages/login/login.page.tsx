@@ -4,8 +4,8 @@ import React from 'react';
 import { useAuthContext } from '@/shared/context/auth.context';
 import { useNavigate } from 'react-router';
 import { ROUTES } from '@/shared/constants/routes';
-import { useAuthLogin } from '@/shared/api/hooks/auth/use-auth-login';
 import { IconLogin2 } from '@tabler/icons-react';
+import { useAuthLogin } from '@/shared/api/hooks/auth';
 
 type TForm = {
     login: string;
@@ -26,8 +26,8 @@ export function LoginPage() {
             onSubmit={ form.onSubmit(async (values) => {
                 const { success, accessToken } = await authLogin(values);
                 
-                if (success) {
-                    login(accessToken);
+                if (success && accessToken) {
+                    await login(accessToken);
                     navigate(ROUTES.DASHBOARD.ROOT, { replace: true });
                 }
             }) }

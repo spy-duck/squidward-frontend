@@ -1,11 +1,13 @@
-type Listener = () => void
+import type { AxiosResponse } from 'axios';
+
+type Listener = (axiosResponse: AxiosResponse) => void
 type Unsubscribe = () => void
 
 class LogoutEventEmitter {
     private listeners: Set<Listener> = new Set()
     
-    emit() {
-        this.listeners.forEach((listener) => listener())
+    emit(axiosResponse: AxiosResponse): void {
+        this.listeners.forEach((listener) => listener(axiosResponse))
     }
     
     subscribe(listener: Listener): Unsubscribe {

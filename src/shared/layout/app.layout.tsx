@@ -5,10 +5,11 @@ import { ROUTES } from '@/shared/constants/routes';
 import { motion } from 'framer-motion'
 import { IconLogout } from '@tabler/icons-react';
 import { useAuthContext } from '@/shared/context/auth.context';
+import { ChangeAdminCredentialsModal } from '@/shared/components/ui/change-admin-credentials-modal';
 
 export function AppLayout() {
     const [ opened, { toggle, close } ] = useDisclosure();
-    const { logout } = useAuthContext();
+    const { logout, isChangePasswordRequired } = useAuthContext();
     
     const navLinks = [
         {
@@ -31,6 +32,9 @@ export function AppLayout() {
             navbar={ { width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } } }
             padding='md'
         >
+            {isChangePasswordRequired && (
+                <ChangeAdminCredentialsModal />
+            )}
             <AppShell.Header>
                 <Group h='100%' px='md'>
                     <Burger opened={ opened } onClick={ toggle } hiddenFrom='sm' size='sm'/>

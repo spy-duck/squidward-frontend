@@ -23,7 +23,7 @@ apiClient.interceptors.response.use(
     (error) => {
         if (isAxiosError(error) && error.response && [401, 403].includes(error.response.status)) {
             try {
-                logoutEvents.emit()
+                logoutEvents.emit(error.response)
             } catch (error) {
                 consola.log('error', error)
             }

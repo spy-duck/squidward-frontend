@@ -1,15 +1,16 @@
 import React, { type ReactNode, useEffect, useState } from 'react';
 import { useAuthCheck } from '@/shared/api/hooks/auth';
 import { useSessionToken, useSetSession } from '@/entities/auth/session-store';
-import { setAuthorizationToken } from '@/shared/api';
-import { logoutEvents } from '@/shared/emmiters';
+import { queryClient, setAuthorizationToken } from '@/shared/api';
+import { credentialsChangedEvents, logoutEvents } from '@/shared/emmiters';
 import { notifications } from '@mantine/notifications';
 import { ROUTES } from '@/shared/constants/routes';
 
 type TAuthContext = {
     isAuthenticated: boolean;
     isInitialized: boolean;
-    login(accessToken: string): void;
+    isChangePasswordRequired: boolean;
+    login(accessToken: string): Promise<void>;
     logout(): void;
 };
 
@@ -17,6 +18,7 @@ type TAuthContext = {
 const AuthContext = React.createContext<TAuthContext>({
     isAuthenticated: false,
     isInitialized: false,
+    isChangePasswordRequired: false,
 } as TAuthContext);
 
 export function useAuthContext() {
@@ -29,6 +31,7 @@ type TAuthProps = {
 export const AuthProvider = ({ children }: TAuthProps): ReactNode => {
     const [ isAuthenticated, setIsAuthenticated ] = useState(false);
     const [ isInitialized, setIsInitialized ] = useState(false);
+    const [ isChangePasswordRequired, setIsChangePasswordRequired ] = useState(false);
     const sessionToken = useSessionToken();
     const setSessionToken = useSetSession();
     
@@ -37,7 +40,7 @@ export const AuthProvider = ({ children }: TAuthProps): ReactNode => {
         setIsAuthenticated(!!sessionToken);
     }, [ sessionToken ]);
     
-    const { authCheck, isAuthFetched } = useAuthCheck();
+    const { authCheck, isAuthFetched, refetchCheckAuth } = useAuthCheck();
     
     useEffect(() => {
         setIsInitialized(isAuthFetched);
@@ -45,15 +48,16 @@ export const AuthProvider = ({ children }: TAuthProps): ReactNode => {
     
     useEffect(() => {
         setIsAuthenticated(authCheck?.success || false);
+        if (authCheck?.success) {
+            setIsChangePasswordRequired(!!authCheck?.isChangePasswordRequired);
+        }
     }, [ authCheck?.success ]);
-    
-    function login(accessToken: string) {
-        setSessionToken(accessToken);
-        setIsAuthenticated(true);
-    }
     
     useEffect(() => {
         return logoutEvents.subscribe(() => {
+            if (!isAuthenticated) {
+                return;
+            }
             logout();
             if (!window.location.pathname.startsWith(ROUTES.AUTH.ROOT)) {
                 notifications.show({
@@ -64,17 +68,40 @@ export const AuthProvider = ({ children }: TAuthProps): ReactNode => {
                 });
             }
         });
+    }, [ isAuthenticated ]);
+    
+    useEffect(() => {
+        return credentialsChangedEvents.subscribe(async () => {
+            setIsChangePasswordRequired(false);
+            notifications.show({
+                title: 'Credentials changed',
+                message: 'Please log in again',
+                color: 'green',
+                radius: 'md',
+            });
+            logout();
+        });
     }, []);
+    
+    async function login(accessToken: string) {
+        setSessionToken(accessToken);
+        setIsAuthenticated(true);
+        setTimeout(async () => {
+            await refetchCheckAuth();
+        }, 300);
+    }
     
     function logout() {
         setSessionToken(null);
         setIsAuthenticated(false);
+        queryClient.clear();
     }
     
     return (
         <AuthContext value={ {
             isAuthenticated,
             isInitialized,
+            isChangePasswordRequired,
             login,
             logout,
         } }>
