@@ -61,8 +61,8 @@ export function ConfigsList({ configs }: ConfigsListProps): React.ReactElement {
             <Table.Tbody>
                 { rows.length === 0 && (
                     <Table.Tr>
-                        <Table.Td colSpan={ 4 }>
-                            <Center>No users found</Center>
+                        <Table.Td colSpan={ 5 }>
+                            <Center>No configs found</Center>
                         </Table.Td>
                     </Table.Tr>
                 ) }

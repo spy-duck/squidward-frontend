@@ -11,9 +11,9 @@ export function useGetUsers() {
                 url: UsersListContract.endpointDetails.CONTROLLER_URL,
                 method: UsersListContract.endpointDetails.REQUEST_METHOD,
             });
-            return UsersListContract
+            return response.data ? UsersListContract
                 .ResponseSchema
-                .parseAsync(response.data);
+                .parseAsync(response.data) : undefined;
         },
         select(data: UsersListContract.Response | undefined): UsersListContract.Response['response']['users'] | null {
             return data?.response?.users || null;

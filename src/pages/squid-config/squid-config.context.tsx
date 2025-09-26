@@ -1,7 +1,11 @@
 import { createContext, type Dispatch, type SetStateAction, useContext, useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { ConfigsListContract } from '@squidward/contracts/commands';
-import { useIsEditConfigStore, useIsRemoveConfigStore, useResetActionConfigStore } from '@/entities';
+import {
+    useIsEditConfigStore,
+    useIsRemoveConfigStore,
+    useResetConfigStore,
+} from '@/entities';
 import { queryClient } from '@/shared/api';
 import { QUERY_KEYS } from '@/shared/constants/api';
 import { useGetConfigs } from '@/shared/api/hooks/configs';
@@ -29,7 +33,7 @@ export const SquidConfigPageProvider = ({ children }: TSquidConfigPageContextPro
     const [ isEditModalOpen ] = useIsEditConfigStore();
     const [ isRemoveModalOpen ] = useIsRemoveConfigStore();
     const { configs, isLoading, refetchConfigs } = useGetConfigs();
-    const resetAction = useResetActionConfigStore();
+    const resetConfigStore = useResetConfigStore();
     
     useEffect(() => {
         ;(async () => {
@@ -38,7 +42,7 @@ export const SquidConfigPageProvider = ({ children }: TSquidConfigPageContextPro
             });
         })();
         return () => {
-            resetAction();
+            resetConfigStore();
         }
     }, []);
     

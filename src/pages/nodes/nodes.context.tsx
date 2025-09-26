@@ -2,7 +2,7 @@ import { createContext, type Dispatch, type SetStateAction, useContext, useEffec
 import type { ReactNode } from 'react';
 import { queryClient, useGetNodes } from '@/shared/api';
 import { NodesListContract } from '@squidward/contracts/commands';
-import { useIsEditNodeStore, useIsRemoveNodeStore, useResetActionNodeStore } from '@/entities';
+import { useIsEditNodeStore, useIsRemoveNodeStore, useResetNodeStore } from '@/entities';
 import { QUERY_KEYS } from '@/shared/constants/api';
 
 type TNodesPageContext = {
@@ -28,7 +28,7 @@ export const NodesPageProvider = ({ children }: TNodesPageContextProps) => {
     const [ isEditModalOpen ] = useIsEditNodeStore();
     const [ isRemoveModalOpen ] = useIsRemoveNodeStore();
     const { nodes, isLoading, refetchNodes } = useGetNodes();
-    const resetAction = useResetActionNodeStore();
+    const resetNodeStore = useResetNodeStore();
     
     useEffect(() => {
         ;(async () => {
@@ -38,7 +38,7 @@ export const NodesPageProvider = ({ children }: TNodesPageContextProps) => {
         })();
         
         return () => {
-            resetAction()
+            resetNodeStore()
         }
     }, []);
     

@@ -2,7 +2,11 @@ import { createContext, type Dispatch, type SetStateAction, useContext, useEffec
 import type { ReactNode } from 'react';
 import { queryClient, useGetUsers } from '@/shared/api';
 import { UsersListContract } from '@squidward/contracts/commands';
-import { useIsEditUserStore, useIsRemoveUserStore, useResetActionUserStore } from '@/entities/users/users-store';
+import {
+    useIsEditUserStore,
+    useIsRemoveUserStore,
+    useResetUserStore,
+} from '@/entities/users/users-store';
 import { QUERY_KEYS } from '@/shared/constants/api';
 
 type TUsersPageContext = {
@@ -28,7 +32,7 @@ export const UsersPageProvider = ({ children }: TUsersPageContextProps) => {
     const [ isEditModalOpen ] = useIsEditUserStore();
     const [ isRemoveModalOpen ] = useIsRemoveUserStore();
     const { users, isLoading, refetchUsers } = useGetUsers();
-    const resetAction = useResetActionUserStore();
+    const resetUserStore = useResetUserStore();
     
     useEffect(() => {
         ;(async () => {
@@ -37,7 +41,7 @@ export const UsersPageProvider = ({ children }: TUsersPageContextProps) => {
             });
         })();
         return () => {
-            resetAction();
+            resetUserStore();
         }
     }, []);
     

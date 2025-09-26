@@ -28,7 +28,7 @@ export function LoginPage() {
                 
                 if (success) {
                     login(accessToken);
-                    navigate(ROUTES.DASHBOARD.ROOT);
+                    navigate(ROUTES.DASHBOARD.ROOT, { replace: true });
                 }
             }) }
         >

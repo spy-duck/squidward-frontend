@@ -2,6 +2,9 @@ import React, { type ReactNode, useEffect, useState } from 'react';
 import { useAuthCheck } from '@/shared/api/hooks/auth';
 import { useSessionToken, useSetSession } from '@/entities/auth/session-store';
 import { setAuthorizationToken } from '@/shared/api';
+import { logoutEvents } from '@/shared/emmiters';
+import { notifications } from '@mantine/notifications';
+import { ROUTES } from '@/shared/constants/routes';
 
 type TAuthContext = {
     isAuthenticated: boolean;
@@ -48,6 +51,20 @@ export const AuthProvider = ({ children }: TAuthProps): ReactNode => {
         setSessionToken(accessToken);
         setIsAuthenticated(true);
     }
+    
+    useEffect(() => {
+        return logoutEvents.subscribe(() => {
+            logout();
+            if (!window.location.pathname.startsWith(ROUTES.AUTH.ROOT)) {
+                notifications.show({
+                    title: 'Session expired',
+                    message: 'You need to log in again',
+                    color: 'orange',
+                    radius: 'md',
+                });
+            }
+        });
+    }, []);
     
     function logout() {
         setSessionToken(null);
