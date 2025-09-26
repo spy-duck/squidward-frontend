@@ -11,6 +11,7 @@ const LoginPage = lazy(() => import('@/pages/login'));
 const NodesPage = lazy(() => import('@/pages/nodes'));
 const UsersPage = lazy(() => import('@/pages/users'));
 const SquidConfigPage = lazy(() => import('@/pages/squid-config'));
+const ApiTokensPage = lazy(() => import('@/pages/api-tokens'));
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -24,11 +25,12 @@ const router = createBrowserRouter(
                 </Route>
                 
                 <Route element={ <AppLayout/> } path={ ROUTES.DASHBOARD.ROOT }>
-                    <Route element={ <Navigate replace to={ ROUTES.DASHBOARD.USERS.BASE }/> }
+                    <Route element={ <Navigate replace to={ ROUTES.DASHBOARD.USERS.ROOT }/> }
                            path={ ROUTES.DASHBOARD.ROOT }/>
-                    <Route element={ <NodesPage/> } path={ ROUTES.DASHBOARD.NODES.BASE }/>
-                    <Route element={ <UsersPage/> } path={ ROUTES.DASHBOARD.USERS.BASE }/>
+                    <Route element={ <NodesPage/> } path={ ROUTES.DASHBOARD.NODES.ROOT }/>
+                    <Route element={ <UsersPage/> } path={ ROUTES.DASHBOARD.USERS.ROOT }/>
                     <Route element={ <SquidConfigPage/> } path={ ROUTES.DASHBOARD.SQUID.CONFIGS }/>
+                    <Route element={ <ApiTokensPage/> } path={ ROUTES.DASHBOARD.API_TOKENS.ROOT }/>
                 </Route>
                 
                 <Route element={ <NotFoundPageComponent/> } path='*'/>

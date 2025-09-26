@@ -8,14 +8,20 @@ export const ROUTES = {
     DASHBOARD: {
         ROOT: '/dashboard',
         NODES: {
-            BASE: '/dashboard/nodes',
+            ROOT: '/dashboard/nodes',
         },
         USERS: {
-            BASE: '/dashboard/users',
+            ROOT: '/dashboard/users',
         },
         SQUID: {
-            BASE: '/dashboard/squid',
+            ROOT: '/dashboard/squid',
             CONFIGS: '/dashboard/squid/configs',
-        }
+        },
+        API_TOKENS: {
+            ROOT: '/dashboard/api-tokens',
+        },
+        HOSTS: {
+            ROOT: '/dashboard/hosts',
+        },
     },
 } as const;

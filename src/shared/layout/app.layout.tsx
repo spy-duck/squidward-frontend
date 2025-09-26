@@ -1,5 +1,5 @@
 import { useDisclosure } from '@mantine/hooks';
-import { AppShell, Burger, Button, Group, NavLink } from '@mantine/core';
+import { AppShell, Avatar, Burger, Button, Flex, Group, NavLink, Text } from '@mantine/core';
 import { Outlet, NavLink as RouterLink } from 'react-router';
 import { ROUTES } from '@/shared/constants/routes';
 import { motion } from 'framer-motion'
@@ -14,15 +14,23 @@ export function AppLayout() {
     const navLinks = [
         {
             label: 'Users',
-            to: ROUTES.DASHBOARD.USERS.BASE,
+            to: ROUTES.DASHBOARD.USERS.ROOT,
+        },
+        {
+            label: 'Hosts',
+            to: ROUTES.DASHBOARD.HOSTS.ROOT,
         },
         {
             label: 'Nodes',
-            to: ROUTES.DASHBOARD.NODES.BASE,
+            to: ROUTES.DASHBOARD.NODES.ROOT,
         },
         {
             label: 'Squid configs',
             to: ROUTES.DASHBOARD.SQUID.CONFIGS,
+        },
+        {
+            label: 'API tokens',
+            to: ROUTES.DASHBOARD.API_TOKENS.ROOT,
         },
     ]
     
@@ -38,9 +46,17 @@ export function AppLayout() {
             <AppShell.Header>
                 <Group h='100%' px='md'>
                     <Burger opened={ opened } onClick={ toggle } hiddenFrom='sm' size='sm'/>
-                    <div style={ { flex: 1 } }>
-                        Squidward Dashboard
-                    </div>
+                    <Flex style={ { flex: 1 } } align='center' gap={14}>
+                        <Avatar src='/logo.webp' radius="xl" />
+                        <Text
+                            size="xl"
+                            fw={900}
+                            variant="gradient"
+                            gradient={{ from: 'cyan', to: 'blue', deg: 90 }}
+                        >
+                            Squidward Dashboard
+                        </Text>
+                    </Flex>
                     <Button onClick={ () => logout() }>
                         <IconLogout size={ 16 }/>
                     </Button>
