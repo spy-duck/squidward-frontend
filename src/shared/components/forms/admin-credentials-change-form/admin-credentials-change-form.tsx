@@ -11,7 +11,7 @@ import { credentialsChangedEvents } from '@/shared/emmiters';
 
 type ChangePasswordFormProps = {};
 
-export function ChangeAdminCredentialsForm({}: ChangePasswordFormProps): React.ReactElement {
+export function AdminCredentialsChangeForm({}: ChangePasswordFormProps): React.ReactElement {
     const [ visible, { toggle } ] = useDisclosure(false);
     const [ isPasswordGenerated, setIsPasswordGenerated ] = useState(false);
     const { adminChangeCredentials, isLoading } = useAdminChangeCredentials();

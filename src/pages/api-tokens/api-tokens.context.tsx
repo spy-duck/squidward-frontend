@@ -1,43 +1,40 @@
 import { createContext, type Dispatch, type SetStateAction, useContext, useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
-import { queryClient, useGetUsers } from '@/shared/api';
-import { UsersListContract } from '@squidward/contracts/commands';
+import { queryClient, useGetApiTokens } from '@/shared/api';
+import { ApiTokensListContract } from '@squidward/contracts/commands';
 import {
-    useIsEditUserStore,
-    useIsRemoveUserStore,
-    useResetUserStore,
-} from '@/entities/users/users-store';
+    useIsRemoveApiTokenStore,
+    useResetApiTokenStore,
+} from '@/entities';
 import { QUERY_KEYS } from '@/shared/constants/api';
 
-type TUsersPageContext = {
-    users: UsersListContract.Response['response']['users'],
+type TApiTokensPageContext = {
+    apiTokens: ApiTokensListContract.Response['response']['apiTokens'],
     isLoading: boolean,
     isCreateModalOpen: boolean,
-    isEditModalOpen: boolean,
     isRemoveModalOpen: boolean,
-    refetchUsers(): void,
+    refetchApiTokens(): void,
     openCreateModalOpen: Dispatch<SetStateAction<boolean>>,
 };
 
 
-export const UsersPageContext = createContext<TUsersPageContext>({} as TUsersPageContext)
+export const ApiTokensPageContext = createContext<TApiTokensPageContext>({} as TApiTokensPageContext)
 
-export const useUsersPageContext = () => useContext(UsersPageContext);
+export const useApiTokensPageContext = () => useContext(ApiTokensPageContext);
 
-type TUsersPageContextProps = {
+type TApiTokensPageContextProps = {
     children?: ReactNode
 };
-export const UsersPageProvider = ({ children }: TUsersPageContextProps) => {
+export const ApiTokensPageProvider = ({ children }: TApiTokensPageContextProps) => {
     const [ isCreateModalOpen, openCreateModalOpen ] = useState(false);
-    const [ isEditModalOpen ] = useIsEditUserStore();
-    const [ isRemoveModalOpen ] = useIsRemoveUserStore();
-    const { users, isLoading, refetchUsers } = useGetUsers();
-    const resetUserStore = useResetUserStore();
+    const [ isRemoveModalOpen ] = useIsRemoveApiTokenStore();
+    const { apiTokens, isLoading, refetchApiTokens } = useGetApiTokens();
+    const resetUserStore = useResetApiTokenStore();
     
     useEffect(() => {
         ;(async () => {
             await queryClient.prefetchQuery({
-                queryKey: QUERY_KEYS.USERS.USERS_LIST,
+                queryKey: QUERY_KEYS.API_TOKENS.API_TOKENS_LIST,
             });
         })();
         return () => {
@@ -46,17 +43,16 @@ export const UsersPageProvider = ({ children }: TUsersPageContextProps) => {
     }, []);
     
     return (
-        <UsersPageContext value={ {
-            users: users || [],
-            refetchUsers,
+        <ApiTokensPageContext value={ {
+            apiTokens: apiTokens || [],
+            refetchApiTokens,
             isLoading,
             isCreateModalOpen,
-            isEditModalOpen,
             isRemoveModalOpen,
             openCreateModalOpen,
         } }>
             { children }
-        </UsersPageContext>
+        </ApiTokensPageContext>
     );
     
 }

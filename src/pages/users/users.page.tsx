@@ -1,12 +1,12 @@
 import { Button, Flex } from '@mantine/core';
 import { useSetIsEditUserStore, useSetIsRemoveUserStore } from '@/entities/users/users-store';
 import { UsersPageProvider, useUsersPageContext } from '@/pages/users/users.context';
-import { UsersList } from '@/components/users/users-list';
-import { UserCreateModal } from '@/components/users/user-create-modal';
+import { UsersList } from '@/features/users/users-list';
+import { UserCreateModal } from '@/features/users/user-create-modal';
 import { IconPlus, IconRefresh } from '@tabler/icons-react';
 import { PageWrapper } from '@/shared/components/ui';
-import { UserRemoveModal } from '@/components/users/user-remove-modal';
-import { UserEditModal } from '@/components/users/user-edit-modal';
+import { UserRemoveModal } from '@/features/users/user-remove-modal';
+import { UserEditModal } from '@/features/users/user-edit-modal';
 
 function UsersPageComponent() {
     const {

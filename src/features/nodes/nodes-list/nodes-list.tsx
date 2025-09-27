@@ -2,7 +2,7 @@ import React, { type ReactElement } from 'react';
 import { NodesListContract } from '@squidward/contracts/commands';
 import { Badge, Center, Flex, Table, Tooltip } from '@mantine/core';
 import { formatDateTime } from '@/shared/utils';
-import { NodesListItemMenu } from '@/components/nodes/nodes-list/nodes-list-item-menu';
+import { NodesListItemMenu } from '@/features/nodes/nodes-list/nodes-list-item-menu';
 import { IconLinkOff } from '@tabler/icons-react';
 import type { TNodeState } from '@squidward/contracts/constants';
 import { motion } from 'framer-motion';

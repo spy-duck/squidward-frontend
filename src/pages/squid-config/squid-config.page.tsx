@@ -1,13 +1,13 @@
 import { Button, Flex } from '@mantine/core';
 import { PageWrapper } from '@/shared/components/ui';
 import { SquidConfigPageProvider } from '@/pages/squid-config/squid-config.context';
-import { ConfigsList } from '@/components/configs/configs-list';
+import { ConfigsList } from '@/features/configs/configs-list';
 import { useSquidConfigPageContext } from './squid-config.context';
 import { useSetIsEditConfigStore, useSetIsRemoveConfigStore } from '@/entities';
-import { ConfigCreateModal } from '@/components/configs/config-create-modal';
+import { ConfigCreateModal } from '@/features/configs/config-create-modal';
 import { IconPlus, IconRefresh } from '@tabler/icons-react';
-import { ConfigRemoveModal } from '@/components/configs/config-remove-modal';
-import { ConfigEditModal } from '@/components/configs/config-edit-modal';
+import { ConfigRemoveModal } from '@/features/configs/config-remove-modal';
+import { ConfigEditModal } from '@/features/configs/config-edit-modal';
 
 function SquidConfigPageComponent() {
     const {

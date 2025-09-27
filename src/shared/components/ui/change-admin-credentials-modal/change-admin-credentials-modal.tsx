@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal } from '@mantine/core';
-import { ChangeAdminCredentialsForm } from '@/shared/components/forms/change-admin-credentials-form';
+import { AdminCredentialsChangeForm } from '@/shared/components/forms/admin-credentials-change-form';
 
 type ChangePasswordModalProps = {};
 
@@ -19,7 +19,7 @@ export function ChangeAdminCredentialsModal({}: ChangePasswordModalProps): React
             }}
             centered
         >
-            <ChangeAdminCredentialsForm />
+            <AdminCredentialsChangeForm />
         </Modal>
     );
 }

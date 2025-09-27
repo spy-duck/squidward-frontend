@@ -1,10 +1,10 @@
 import { NodesPageProvider, useNodesPageContext } from '@/pages/nodes/nodes.context';
-import { NodesList } from '@/components/nodes/nodes-list';
+import { NodesList } from '@/features/nodes/nodes-list';
 import { Button, Flex } from '@mantine/core';
-import { NodeCreateModal } from '@/components/nodes/node-create-modal';
+import { NodeCreateModal } from '@/features/nodes/node-create-modal';
 import { useSetIsEditNodeStore } from '@/entities/nodes/nodes-store';
-import { NodeEditModal } from '@/components/nodes/node-edit-modal';
-import { NodeRemoveModal } from '@/components/nodes/node-remove-modal';
+import { NodeEditModal } from '@/features/nodes/node-edit-modal';
+import { NodeRemoveModal } from '@/features/nodes/node-remove-modal';
 import { IconPlus, IconRefresh } from '@tabler/icons-react';
 import { PageWrapper } from '@/shared/components/ui';
 

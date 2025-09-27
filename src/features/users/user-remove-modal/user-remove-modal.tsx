@@ -4,11 +4,11 @@ import type { ModalBaseProps } from '@mantine/core';
 import { useActionUserStore, useResetActionUserStore } from '@/entities/users/users-store';
 import { useRemoveUser } from '@/shared/api';
 
-type NodeCreateModalProps = ModalBaseProps & {
+type UserRemoveModalProps = ModalBaseProps & {
     onSubmit(): void;
 };
 
-export function UserRemoveModal({ onSubmit, ...modalProps }: NodeCreateModalProps): React.ReactElement {
+export function UserRemoveModal({ onSubmit, ...modalProps }: UserRemoveModalProps): React.ReactElement {
     const { removeUser, isPending } = useRemoveUser({
         onSuccess() {
             modalProps.onClose();

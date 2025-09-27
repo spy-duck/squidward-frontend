@@ -2,15 +2,15 @@ import React from 'react';
 import { UsersListContract } from '@squidward/contracts/commands';
 import { Badge, Center, Table } from '@mantine/core';
 import { formatDateTime } from '@/shared/utils';
-import { UsersListItemMenu } from '@/components/users/users-list/users-list-item-menu';
+import { UsersListItemMenu } from '@/features/users/users-list/users-list-item-menu';
 import { motion } from 'framer-motion';
 import { USER_STATUS_COLOR } from '@/shared/constants/users/user-status';
 
-type NodesListProps = {
+type UsersListProps = {
     users: UsersListContract.Response['response']['users'],
 };
 
-export function UsersList({ users }: NodesListProps): React.ReactElement {
+export function UsersList({ users }: UsersListProps): React.ReactElement {
     const rows = (users || []).map((user, index) => (
         <motion.tr
             key={ user.uuid }
