@@ -4,15 +4,16 @@ import { useForm } from '@mantine/form';
 import dayjs from 'dayjs';
 import { zod4Resolver } from 'mantine-form-zod-resolver';
 import { Button, Group, Stack, TextInput } from '@mantine/core';
-import { DatePickerInput } from '@mantine/dates';
+import { DateInput } from '@mantine/dates';
 import { z } from 'zod';
+import { IconCalendar } from '@tabler/icons-react';
 
-type ApiTokenCreateProps = {
+type ApiTokenCreateFormProps = {
     onSubmit: (values: ApiTokenCreateContract.Request) => void;
     isPending: boolean;
 };
 
-export function ApiTokenCreateForm({ onSubmit, isPending }: ApiTokenCreateProps): React.ReactElement {
+export function ApiTokenCreateForm({ onSubmit, isPending }: ApiTokenCreateFormProps): React.ReactElement {
     
     const form = useForm<ApiTokenCreateContract.Request>({
         mode: 'uncontrolled',
@@ -23,7 +24,23 @@ export function ApiTokenCreateForm({ onSubmit, isPending }: ApiTokenCreateProps)
         validate: zod4Resolver(
             ApiTokenCreateContract.RequestSchema
                 .extend({
-                    expireAt: z.date().or(z.iso.date())
+                    expireAt: z
+                        .date()
+                        .min(dayjs().add(1, 'day').toDate())
+                        .or(
+                            z
+                                .iso
+                                .date()
+                                .refine(
+                                    (isoString) => {
+                                        const date = dayjs(isoString);
+                                        return date.isValid() && date > dayjs().add(1, 'day');
+                                    },
+                                    {
+                                        message: `Date must be an ISO string and not earlier than ${dayjs().add(1, 'day').toISOString()}`,
+                                    }
+                                )
+                        )
                 }),
         ),
         transformValues: (values) => ({
@@ -47,8 +64,10 @@ export function ApiTokenCreateForm({ onSubmit, isPending }: ApiTokenCreateProps)
                     { ...form.getInputProps('tokenName') }
                     readOnly={ isPending }
                 />
-                <DatePickerInput
+                <DateInput
+                    leftSection={<IconCalendar size={18} stroke={1.5} />}
                     label='Expire at'
+                    // minDate={dayjs().add(1, 'day').format('YYYY-MM-DD')}
                     key={ form.key('expireAt') }
                     { ...form.getInputProps('expireAt') }
                     disabled={ isPending }

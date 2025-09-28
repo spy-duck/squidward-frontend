@@ -17,6 +17,7 @@ import { useActionUserStore, useResetActionUserStore } from '@/entities/users/us
 import { UserUpdateContract } from '@squidward/contracts/commands';
 import { USER_STATUS_VALUES } from '@squidward/contracts/constants';
 import { DatePickerInput } from '@mantine/dates';
+import { IconCalendar } from '@tabler/icons-react';
 
 type NodeCreateModalProps = ModalBaseProps & {
     onSubmit(): void;
@@ -118,6 +119,7 @@ export function UserEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps)
                         data={ USER_STATUS_VALUES }
                     />
                     <DatePickerInput
+                        leftSection={<IconCalendar size={18} stroke={1.5} />}
                         label='Expire at'
                         key={ form.key('expireAt') }
                         { ...form.getInputProps('expireAt') }

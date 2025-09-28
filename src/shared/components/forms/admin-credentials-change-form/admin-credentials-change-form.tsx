@@ -9,9 +9,9 @@ import { useDisclosure } from '@mantine/hooks';
 import { useAdminChangeCredentials } from '@/shared/api/hooks/admin';
 import { credentialsChangedEvents } from '@/shared/emmiters';
 
-type ChangePasswordFormProps = {};
+type AdminCredentialsChangeFormProps = {};
 
-export function AdminCredentialsChangeForm({}: ChangePasswordFormProps): React.ReactElement {
+export function AdminCredentialsChangeForm({}: AdminCredentialsChangeFormProps): React.ReactElement {
     const [ visible, { toggle } ] = useDisclosure(false);
     const [ isPasswordGenerated, setIsPasswordGenerated ] = useState(false);
     const { adminChangeCredentials, isLoading } = useAdminChangeCredentials();

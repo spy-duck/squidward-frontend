@@ -9,6 +9,7 @@ import { USER_STATUS, USER_STATUS_VALUES } from '@squidward/contracts/constants'
 import { DatePickerInput } from '@mantine/dates';
 import { z } from 'zod';
 import dayjs from 'dayjs';
+import { IconCalendar } from '@tabler/icons-react';
 
 
 type NodeCreateModalProps = ModalBaseProps & {
@@ -121,6 +122,7 @@ export function UserCreateModal({ onSubmit, ...modalProps }: NodeCreateModalProp
                         data={ USER_STATUS_VALUES }
                     />
                     <DatePickerInput
+                        leftSection={<IconCalendar size={18} stroke={1.5} />}
                         label='Expire at'
                         key={ form.key('expireAt') }
                         { ...form.getInputProps('expireAt') }

@@ -6,7 +6,7 @@ import {
     useIsEditUserStore,
     useIsRemoveUserStore,
     useResetUserStore,
-} from '@/entities/users/users-store';
+} from '@/entities';
 import { QUERY_KEYS } from '@/shared/constants/api';
 
 type TUsersPageContext = {

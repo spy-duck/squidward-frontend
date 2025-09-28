@@ -12,6 +12,9 @@ export const QUERY_KEYS = {
     API_TOKENS: {
         API_TOKENS_LIST: [ 'API_TOKENS_LIST' ],
     },
+    HOSTS: {
+        HOSTS_LIST: [ 'HOSTS_LIST' ],
+    },
     CONFIGS: {
         CONFIGS_LIST: [ 'CONFIGS_LIST' ],
         CONFIG_ITEM: (uuid: string) => [ 'CONFIGS_LIST', uuid ],

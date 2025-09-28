@@ -37,13 +37,15 @@ export function ApiTokensList({ apiTokens }: ApiTokensProps): React.ReactElement
                     <CopyButton value={ apiToken.token }>
                         { ({ copied, copy }) => (
                             <Button
+                                component='span'
                                 leftSection={(
-                                    <IconCopy/>
+                                    <IconCopy size={14}/>
                                 )}
                                 color={ copied ? 'teal' : 'blue' }
                                 onClick={ copy }
+                                size='compact-xs'
                             >
-                                Copy
+                                Copy token
                             </Button>
                         ) }
                     </CopyButton>

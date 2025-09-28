@@ -17,7 +17,7 @@ export function ApiTokenCreateModal({ onSubmit, ...modalProps }: ApiTokenCreateM
         createApiToken(values);
     }
     return (
-        <Modal {...modalProps} title='API Token Create Modal' centered>
+        <Modal {...modalProps} title='Create API token' centered>
             <ApiTokenCreateForm
                 onSubmit={formSubmitHandler}
                 isPending={isPending}
