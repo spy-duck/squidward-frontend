@@ -6,13 +6,6 @@ on:
       - '*'
 
 jobs:
-  send-start-deploy-telegram-message:
-    name: Send Telegram message
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout source code
-        uses: actions/checkout@v2
-
   build-and-release:
     runs-on: ubuntu-22.04
     steps:
@@ -65,10 +58,23 @@ jobs:
           echo "$CHANGELOG" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
+      - name: Clone backend repository
+        run: |
+          git clone https://github.com/spy-duck/squidward-backend.git ../squidward-backend-tmp
+          mkdir ../squidward-backend
+          mv ../squidward-backend-tmp/libs ../squidward-backend
+          rm -rf ../squidward-backend-tmp
+
       - name: Install dependencies and build
         run: |
-          npm ci
-          npm run start:build
+          corepack enable
+          yarn set version stable
+          yarn install --frozen-lockfile
+          yarn build
+
+      - name: Clean
+        run: |
+          rm -rf ../squidward-backend
 
       - name: Create ZIP archive of /dist
         run: |
