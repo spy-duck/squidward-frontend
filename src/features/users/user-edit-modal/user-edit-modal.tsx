@@ -18,6 +18,8 @@ import { UserUpdateContract } from '@squidward/contracts/commands';
 import { USER_STATUS_VALUES } from '@squidward/contracts/constants';
 import { DatePickerInput } from '@mantine/dates';
 import { IconCalendar } from '@tabler/icons-react';
+import dayjs from 'dayjs';
+import { z } from 'zod';
 
 type NodeCreateModalProps = ModalBaseProps & {
     onSubmit(): void;
@@ -36,7 +38,46 @@ export function UserEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps)
     
     const form = useForm<UserUpdateContract.Request>({
         mode: 'uncontrolled',
-        validate: zod4Resolver(UserUpdateContract.RequestSchema),
+        validate: zod4Resolver(
+            UserUpdateContract.RequestSchema
+                .extend({
+                    email: z.union([
+                        z.literal(''),
+                        z.email()
+                            .optional()
+                            .nullable(),
+                    ]),
+                    telegramId: z
+                        .number()
+                        .optional()
+                        .nullable(),
+                    expireAt: z
+                        .date()
+                        .min(dayjs().add(1, 'day').toDate())
+                        .or(
+                            z
+                                .iso
+                                .date()
+                                .refine(
+                                    (isoString) => {
+                                        const date = dayjs(isoString);
+                                        return date.isValid() && date > dayjs();
+                                    },
+                                    {
+                                        message: `Date must be an ISO string and not earlier than ${dayjs().toISOString()}`,
+                                    }
+                                )
+                        )
+                }),
+        ),
+        transformValues(values) {
+            return {
+                ...values,
+                telegramId: values.telegramId || null,
+                email: values.email?.trim() || null,
+                expireAt: dayjs(values.expireAt).toDate(),
+            }
+        },
     });
     
     useEffect(() => {
@@ -79,6 +120,7 @@ export function UserEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps)
                         key={ form.key('name') }
                         { ...form.getInputProps('name') }
                         readOnly={ isPending }
+                        autoComplete='new-password'
                     />
                     <TextInput
                         withAsterisk
@@ -87,6 +129,7 @@ export function UserEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps)
                         key={ form.key('username') }
                         { ...form.getInputProps('username') }
                         readOnly={ isPending }
+                        autoComplete='new-password'
                     />
                     <PasswordInput
                         withAsterisk
@@ -95,6 +138,7 @@ export function UserEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps)
                         key={ form.key('password') }
                         { ...form.getInputProps('password') }
                         readOnly={ isPending }
+                        autoComplete='new-password'
                     />
                     <TextInput
                         label='Email'
@@ -102,6 +146,7 @@ export function UserEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps)
                         key={ form.key('email') }
                         { ...form.getInputProps('email') }
                         readOnly={ isPending }
+                        autoComplete='new-password'
                     />
                     <NumberInput
                         withAsterisk
@@ -110,6 +155,7 @@ export function UserEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps)
                         key={ form.key('telegramId') }
                         { ...form.getInputProps('telegramId') }
                         readOnly={ isPending }
+                        autoComplete='new-password'
                     />
                     <NativeSelect
                         label='Status'

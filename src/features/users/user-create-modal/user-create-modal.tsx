@@ -38,21 +38,41 @@ export function UserCreateModal({ onSubmit, ...modalProps }: NodeCreateModalProp
         validate: zod4Resolver(
             UserCreateContract.RequestSchema
                 .extend({
-                    email: z
-                        .email()
-                        .optional()
-                        .nullable(),
+                    email: z.union([
+                        z.literal(''),
+                        z.email()
+                            .optional()
+                            .nullable(),
+                    ]),
                     telegramId: z
                         .number()
                         .optional()
                         .nullable(),
+                    expireAt: z
+                        .date()
+                        .min(dayjs().add(1, 'day').toDate())
+                        .or(
+                            z
+                                .iso
+                                .date()
+                                .refine(
+                                    (isoString) => {
+                                        const date = dayjs(isoString);
+                                        return date.isValid() && date > dayjs();
+                                    },
+                                    {
+                                        message: `Date must be an ISO string and not earlier than ${dayjs().toISOString()}`,
+                                    }
+                                )
+                        )
                 }),
         ),
         transformValues(values) {
             return {
                 ...values,
                 telegramId: values.telegramId || null,
-                email: values.email || null,
+                email: values.email?.trim() || null,
+                expireAt: dayjs(values.expireAt).toDate(),
             }
         },
     });
@@ -90,6 +110,7 @@ export function UserCreateModal({ onSubmit, ...modalProps }: NodeCreateModalProp
                         key={ form.key('username') }
                         { ...form.getInputProps('username') }
                         readOnly={ isPending }
+                        autoComplete='new-password'
                     />
                     <PasswordInput
                         withAsterisk
@@ -98,6 +119,7 @@ export function UserCreateModal({ onSubmit, ...modalProps }: NodeCreateModalProp
                         key={ form.key('password') }
                         { ...form.getInputProps('password') }
                         readOnly={ isPending }
+                        autoComplete='new-password'
                     />
                     <TextInput
                         label='Email'
@@ -105,6 +127,7 @@ export function UserCreateModal({ onSubmit, ...modalProps }: NodeCreateModalProp
                         key={ form.key('email') }
                         { ...form.getInputProps('email') }
                         readOnly={ isPending }
+                        autoComplete='new-password'
                     />
                     <NumberInput
                         withAsterisk

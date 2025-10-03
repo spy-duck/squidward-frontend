@@ -40,6 +40,7 @@ export function UsersList({ users }: UsersListProps): React.ReactElement {
             <Table.Td>{ user.email }</Table.Td>
             <Table.Td>{ user.telegramId }</Table.Td>
             <Table.Td>{ formatDateTime(user.createdAt) }</Table.Td>
+            <Table.Td>{ formatDateTime(user.expireAt) }</Table.Td>
         </motion.tr>
     ));
     return (
@@ -52,6 +53,7 @@ export function UsersList({ users }: UsersListProps): React.ReactElement {
                     <Table.Th>Email</Table.Th>
                     <Table.Th>telegramId</Table.Th>
                     <Table.Th style={ { width: 160 } }>Created at</Table.Th>
+                    <Table.Th style={ { width: 160 } }>Expire at</Table.Th>
                 </Table.Tr>
             </Table.Thead>
             <Table.Tbody>
