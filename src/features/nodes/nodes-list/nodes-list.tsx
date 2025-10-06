@@ -7,6 +7,7 @@ import { IconLinkOff } from '@tabler/icons-react';
 import type { TNodeState } from '@squidward/contracts/constants';
 import { motion } from 'framer-motion';
 import { NODE_STATUS_ICON } from '@/shared/constants/nodes/node-status';
+import { COUNTRIES_MAP, type CountryCode } from '@/shared/constants';
 
 
 type NodesListProps = {
@@ -45,6 +46,9 @@ export function NodesList({ nodes }: NodesListProps): ReactElement {
                 </Flex>
             </Table.Td>
             <Table.Td>{ node.name }</Table.Td>
+            <Table.Td style={ { whiteSpace: 'nowrap' } }>
+                { COUNTRIES_MAP[node.countryCode as CountryCode] }
+            </Table.Td>
             <Table.Td>{ node.host }</Table.Td>
             <Table.Td>{ node.port }</Table.Td>
             <Table.Td>
@@ -63,6 +67,7 @@ export function NodesList({ nodes }: NodesListProps): ReactElement {
                     <Table.Th style={ { width: 40 } }></Table.Th>
                     <Table.Th style={ { width: 40 } }><Center>Status</Center></Table.Th>
                     <Table.Th>Name</Table.Th>
+                    <Table.Th>Country</Table.Th>
                     <Table.Th>Host</Table.Th>
                     <Table.Th>Port</Table.Th>
                     <Table.Th>Config</Table.Th>

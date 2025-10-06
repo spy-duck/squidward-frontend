@@ -6,6 +6,8 @@ import { NodeUpdateContract } from '@squidward/contracts/commands';
 import { zod4Resolver } from 'mantine-form-zod-resolver';
 import { useGetConfigs, useUpdateNode } from '@/shared/api';
 import { useActionNodeStore, useResetActionNodeStore } from '@/entities/nodes/nodes-store';
+import { COUNTRIES } from '@/shared/constants';
+import { IconMapPin } from '@tabler/icons-react';
 
 type NodeCreateModalProps = ModalBaseProps & {
     onSubmit(): void;
@@ -69,6 +71,21 @@ export function NodeEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps)
                         { ...form.getInputProps('name') }
                         readOnly={ isPending }
                     />
+                    
+                    <Select
+                        key={ form.key('countryCode') }
+                        label='Country'
+                        { ...form.getInputProps('countryCode') }
+                        data={ COUNTRIES }
+                        leftSection={ <IconMapPin size={ 16 }/> }
+                        placeholder='Select country'
+                        required
+                        searchable
+                        styles={ {
+                            label: { fontWeight: 500 },
+                        } }
+                    />
+                    
                     <TextInput
                         withAsterisk
                         label='Host'

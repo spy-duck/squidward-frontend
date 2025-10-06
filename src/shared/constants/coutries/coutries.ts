@@ -195,3 +195,8 @@ export const COUNTRIES = [
 ] as const
 
 export type CountryCode = (typeof COUNTRIES)[number]['value']
+
+export const COUNTRIES_MAP: Record<CountryCode, string> = COUNTRIES.reduce((acc, country) => ({
+    ...acc,
+    [country.value]: country.label,
+}), {} as any);

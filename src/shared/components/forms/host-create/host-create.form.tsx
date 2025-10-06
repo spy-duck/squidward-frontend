@@ -44,8 +44,8 @@ export function HostCreateForm({ onSubmit, isPending }: HostCreateFormProps): Re
                 />
                 <TextInput
                     withAsterisk
-                    label='Token name'
-                    placeholder='My app name'
+                    label='Host name'
+                    placeholder='My US host (it will be displayed to clients)'
                     key={ form.key('name') }
                     { ...form.getInputProps('name') }
                     readOnly={ isPending }
