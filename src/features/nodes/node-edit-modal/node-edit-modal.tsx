@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
-import { Button, Group, Modal, NumberInput, Select, Stack, TextInput } from '@mantine/core';
+import { Button, Fieldset, Grid, Group, Modal } from '@mantine/core';
 import type { ModalBaseProps } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { NodeUpdateContract } from '@squidward/contracts/commands';
 import { zod4Resolver } from 'mantine-form-zod-resolver';
-import { useGetConfigs, useUpdateNode } from '@/shared/api';
+import { queryClient, useUpdateNode } from '@/shared/api';
 import { useActionNodeStore, useResetActionNodeStore } from '@/entities/nodes/nodes-store';
-import { COUNTRIES } from '@/shared/constants';
-import { IconMapPin } from '@tabler/icons-react';
+import { NodeBaseForm } from '@/shared/components/forms/node-base-form';
+import { QUERY_KEYS } from '@/shared/constants';
+import { NodeProxyForm } from '@/shared/components/forms/node-proxy-form';
 
 type NodeCreateModalProps = ModalBaseProps & {
     onSubmit(): void;
@@ -20,8 +21,6 @@ export function NodeEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps)
             onSubmit();
         },
     });
-    
-    const { configs, refetchConfigs } = useGetConfigs();
     
     const node = useActionNodeStore();
     const resetAction = useResetActionNodeStore();
@@ -38,14 +37,23 @@ export function NodeEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps)
                 name: node.name,
                 host: node.host,
                 port: node.port,
+                countryCode: node.countryCode,
                 configId: node.configId,
                 description: node.description || '',
+                proxy: {
+                    httpPort: null,
+                    httpsEnabled: false,
+                    httpsPort: null,
+                    speedPerUser: null,
+                },
             });
             ;(async () => {
-                await refetchConfigs();
+                await queryClient.prefetchQuery({
+                    queryKey: QUERY_KEYS.CONFIGS.CONFIGS_LIST,
+                })
             })();
         }
-    }, [ modalProps.opened, node, refetchConfigs ]);
+    }, [ modalProps.opened, node ]);
     
     function closeHandler() {
         resetAction();
@@ -54,71 +62,22 @@ export function NodeEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps)
     }
     
     return (
-        <Modal { ...modalProps } onClose={ closeHandler } title='Edit node' size='sm' centered>
+        <Modal { ...modalProps } onClose={ closeHandler } title='Edit node' size={1200} centered>
             <form onSubmit={ form.onSubmit((values) => {
                 updateNode(values);
             }) }>
-                <Stack
-                    align='stretch'
-                    justify='center'
-                    gap='md'
-                >
-                    <TextInput
-                        withAsterisk
-                        label='Name'
-                        placeholder='My node'
-                        key={ form.key('name') }
-                        { ...form.getInputProps('name') }
-                        readOnly={ isPending }
-                    />
-                    
-                    <Select
-                        key={ form.key('countryCode') }
-                        label='Country'
-                        { ...form.getInputProps('countryCode') }
-                        data={ COUNTRIES }
-                        leftSection={ <IconMapPin size={ 16 }/> }
-                        placeholder='Select country'
-                        required
-                        searchable
-                        styles={ {
-                            label: { fontWeight: 500 },
-                        } }
-                    />
-                    
-                    <TextInput
-                        withAsterisk
-                        label='Host'
-                        placeholder='ip or domain'
-                        key={ form.key('host') }
-                        { ...form.getInputProps('host') }
-                        readOnly={ isPending }
-                    />
-                    <NumberInput
-                        withAsterisk
-                        label='Port'
-                        placeholder='50000'
-                        key={ form.key('port') }
-                        { ...form.getInputProps('port') }
-                        readOnly={ isPending }
-                    />
-                    <Select
-                        label='Squid config'
-                        placeholder='Pick squid config'
-                        data={ configs?.map((config) => ({
-                            value: config.uuid, label: config.name,
-                        })) }
-                        key={ form.key('configId') }
-                        { ...form.getInputProps('configId') }
-                    />
-                    <TextInput
-                        label='Description'
-                        placeholder='My node'
-                        key={ form.key('description') }
-                        { ...form.getInputProps('description') }
-                        readOnly={ isPending }
-                    />
-                </Stack>
+                <Grid>
+                    <Grid.Col span={ { base: 12, lg: 6, md: 6 } }>
+                        <Fieldset legend='Node settings'>
+                            <NodeBaseForm form={ form } isPending={ isPending }/>
+                        </Fieldset>
+                    </Grid.Col>
+                    <Grid.Col span={ { base: 12, lg: 6, md: 6 } }>
+                        <Fieldset legend='Node proxy settings'>
+                            <NodeProxyForm form={ form } isPending={ isPending }/>
+                        </Fieldset>
+                    </Grid.Col>
+                </Grid>
                 <Group justify='flex-end' mt='md'>
                     <Button type='submit' loading={ isPending }>Save</Button>
                 </Group>

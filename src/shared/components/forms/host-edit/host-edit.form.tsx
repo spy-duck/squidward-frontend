@@ -58,6 +58,7 @@ export function HostEditForm({ form, onSubmit, isPending }: HostUpdateFormProps)
                     styles={ {
                         label: { fontWeight: 500 },
                     } }
+                    clearable
                 />
                 <Select
                     label='Node'

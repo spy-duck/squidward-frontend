@@ -70,6 +70,7 @@ export function HostCreateForm({ onSubmit, isPending }: HostCreateFormProps): Re
                     styles={ {
                         label: { fontWeight: 500 },
                     } }
+                    clearable
                 />
                 <Select
                     label='Node'

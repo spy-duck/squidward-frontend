@@ -88,6 +88,7 @@ export function NodeCreateModal({ onSubmit, ...modalProps }: NodeCreateModalProp
                         styles={ {
                             label: { fontWeight: 500 },
                         } }
+                        clearable
                     />
                     
                     <TextInput
