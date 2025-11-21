@@ -16,7 +16,7 @@ import { useUpdateUser } from '@/shared/api';
 import { useActionUserStore, useResetActionUserStore } from '@/entities/users/users-store';
 import { UserUpdateContract } from '@squidward/contracts/commands';
 import { USER_STATUS_VALUES } from '@squidward/contracts/constants';
-import { DatePickerInput } from '@mantine/dates';
+import { DateTimePicker } from '@mantine/dates';
 import { IconCalendar } from '@tabler/icons-react';
 import dayjs from 'dayjs';
 import { z } from 'zod';
@@ -53,7 +53,7 @@ export function UserEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps)
                         .nullable(),
                     expireAt: z
                         .date()
-                        .min(dayjs().add(1, 'day').toDate())
+                        .optional()
                         .or(
                             z
                                 .iso
@@ -61,21 +61,24 @@ export function UserEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps)
                                 .refine(
                                     (isoString) => {
                                         const date = dayjs(isoString);
-                                        return date.isValid() && date > dayjs();
+                                        return date.isValid();
                                     },
                                     {
-                                        message: `Date must be an ISO string and not earlier than ${dayjs().toISOString()}`,
-                                    }
+                                        message: `Date must be an ISO string and not earlier than ${ dayjs().toISOString() }`,
+                                    },
                                 )
-                        )
+                                .optional(),
+                        ),
                 }),
         ),
         transformValues(values) {
+            const dirtyFields: Partial<Record<keyof UserUpdateContract.Request, boolean>> = form.getDirty();
+            console.log({dirtyFields})
             return {
                 ...values,
                 telegramId: values.telegramId || null,
                 email: values.email?.trim() || null,
-                expireAt: dayjs(values.expireAt).toDate(),
+                expireAt: dirtyFields.expireAt ? dayjs(values.expireAt).toDate() : undefined,
             }
         },
     });
@@ -92,9 +95,10 @@ export function UserEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps)
                 telegramId: user.telegramId,
                 expireAt: user.expireAt,
             });
+            
         }
     }, [ modalProps.opened ]);
-
+    
     function closeHandler() {
         resetAction();
         form.reset();
@@ -106,7 +110,7 @@ export function UserEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps)
     }
     
     return (
-        <Modal { ...modalProps } onClose={closeHandler} title='Edit user' centered>
+        <Modal { ...modalProps } onClose={ closeHandler } title='Edit user' centered>
             <form onSubmit={ form.onSubmit(submitHandler) }>
                 <Stack
                     align='stretch'
@@ -164,12 +168,34 @@ export function UserEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps)
                         disabled={ isPending }
                         data={ USER_STATUS_VALUES }
                     />
-                    <DatePickerInput
-                        leftSection={<IconCalendar size={18} stroke={1.5} />}
+                    <DateTimePicker
+                        leftSection={ <IconCalendar size={ 18 } stroke={ 1.5 }/> }
                         label='Expire at'
                         key={ form.key('expireAt') }
                         { ...form.getInputProps('expireAt') }
                         disabled={ isPending }
+                        onChange={ (date) => {
+                            const formInputProps = form.getInputProps('expireAt')
+                            if (formInputProps.onChange) {
+                                formInputProps.onChange(dayjs(date, 'DD MMM YYYY hh:mm').toDate());
+                            }
+                        } }
+                        minDate={ new Date() }
+                        presets={ [
+                            {
+                                value: dayjs().add(1, 'month').format('YYYY-MM-DD HH:mm:ss'),
+                                label: '1 month',
+                            },
+                            {
+                                value: dayjs().add(3, 'months').format('YYYY-MM-DD HH:mm:ss'),
+                                label: '3 months',
+                            },
+                            {
+                                value: dayjs().add(1, 'year').format('YYYY-MM-DD HH:mm:ss'),
+                                label: '1 year',
+                            },
+                        ] }
+                        highlightToday
                     />
                 </Stack>
                 <Group justify='flex-end' mt='md'>
