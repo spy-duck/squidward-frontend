@@ -60,7 +60,7 @@ export function NodesList({ nodes }: NodesListProps): ReactElement {
             <Table.Td>{ formatDateTime(node.createdAt) }</Table.Td>
             <Table.Td>
                 <Badge variant='outline'>
-                    { node.version }
+                    { node.version || 'N/A' }
                 </Badge>
             </Table.Td>
         </motion.tr>
