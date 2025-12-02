@@ -58,6 +58,11 @@ export function NodesList({ nodes }: NodesListProps): ReactElement {
             </Table.Td>
             <Table.Td>{ node.description }</Table.Td>
             <Table.Td>{ formatDateTime(node.createdAt) }</Table.Td>
+            <Table.Td>
+                <Badge variant='outline'>
+                    { node.version }
+                </Badge>
+            </Table.Td>
         </motion.tr>
     ));
     return (
@@ -73,6 +78,7 @@ export function NodesList({ nodes }: NodesListProps): ReactElement {
                     <Table.Th>Config</Table.Th>
                     <Table.Th>Description</Table.Th>
                     <Table.Th style={ { width: 160 } }>Created at</Table.Th>
+                    <Table.Th>Version</Table.Th>
                 </Table.Tr>
             </Table.Thead>
             <Table.Tbody>
