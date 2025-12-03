@@ -72,7 +72,7 @@ export function ConfigEditModal({ onSubmit, ...modalProps }: ConfigEditModalProp
     }
     
     return (
-        <Modal { ...modalProps } onClose={closeHandler} title='Edit user' size='xl' centered>
+        <Modal { ...modalProps } onClose={closeHandler} title='Edit squid config' size='xl' centered>
             <form onSubmit={ form.onSubmit(submitHandler) }>
                 <Stack
                     align='stretch'
