@@ -1,4 +1,4 @@
-import { createTheme } from '@mantine/core'
+import { colorsTuple, createTheme, virtualColor } from '@mantine/core'
 
 import components from './overrides'
 
@@ -21,11 +21,19 @@ export const theme = createTheme({
     fontSmoothing: true,
     focusRing: 'never',
     primaryShade: 8,
-    primaryColor: 'cyan',
+    primaryColor: 'primary',
     autoContrast: true,
     luminanceThreshold: 0.3,
     headings: {
         fontWeight: '600'
     },
-    defaultRadius: 'xs'
+    defaultRadius: 'xs',
+    colors: {
+        squidward: colorsTuple('#ACC8BA'),
+        primary:  virtualColor({
+            name: 'primary',
+            dark: 'squidward',
+            light: 'cyan',
+        }),
+    },
 })

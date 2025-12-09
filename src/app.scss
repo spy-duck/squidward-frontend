@@ -1,5 +1,14 @@
 html,
 body,
 #root {
-  min-height: 100vh;
+  height: 100%;
+}
+
+#root {
+  border: none;
+  outline: none;
+}
+
+body div[data-portal] {
+  position: absolute;
 }

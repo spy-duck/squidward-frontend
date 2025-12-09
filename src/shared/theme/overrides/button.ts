@@ -5,7 +5,6 @@ export default {
         defaultProps: {
             radius: 'md',
             variant: 'outline',
-            color: 'blue',
         }
     })
 }

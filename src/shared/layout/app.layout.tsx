@@ -1,5 +1,5 @@
-import { useDisclosure } from '@mantine/hooks';
-import { AppShell, Avatar, Burger, Button, Flex, Group, NavLink, Text } from '@mantine/core';
+import { useDisclosure, useMediaQuery } from '@mantine/hooks';
+import { AppShell, Avatar, Burger, Button, em, Flex, Group, NavLink, Text } from '@mantine/core';
 import { Outlet, NavLink as RouterLink } from 'react-router';
 import { ROUTES } from '@/shared/constants/routes';
 import { motion } from 'framer-motion'
@@ -10,6 +10,7 @@ import { ChangeAdminCredentialsModal } from '@/shared/components/ui/change-admin
 export function AppLayout() {
     const [ opened, { toggle, close } ] = useDisclosure();
     const { logout, isChangePasswordRequired } = useAuthContext();
+    const isMobile = useMediaQuery(`(max-width: ${ em(750) })`);
     
     const navLinks = [
         {
@@ -49,10 +50,9 @@ export function AppLayout() {
                     <Flex style={ { flex: 1 } } align='center' gap={14}>
                         <Avatar src='/logo.webp' radius="xl" />
                         <Text
-                            size="xl"
-                            fw={900}
-                            variant="gradient"
-                            gradient={{ from: 'cyan', to: 'blue', deg: 90 }}
+                            size={ isMobile ? 'sm' : 'xl' }
+                            fw={700}
+                            c='white'
                         >
                             Squidward Dashboard
                         </Text>
