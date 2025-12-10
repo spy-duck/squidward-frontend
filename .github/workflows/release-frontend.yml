@@ -66,6 +66,8 @@ jobs:
           rm -rf ../squidward-backend-tmp
 
       - name: Install dependencies and build
+        env:
+          VITE_VERSION: ${{ github.ref_name }}
         run: |
           corepack enable
           yarn set version stable
