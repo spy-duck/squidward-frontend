@@ -1,6 +1,6 @@
 import React from 'react';
 import { ConfigsListContract } from '@squidward/contracts/commands';
-import { Badge, Center, Table, Tooltip } from '@mantine/core';
+import { Badge, Center, Paper, Table, Tooltip } from '@mantine/core';
 import { formatDateTime } from '@/shared/utils';
 import { ConfigsListItemMenu } from './configs-list-item-menu';
 import { motion } from 'framer-motion';
@@ -48,26 +48,28 @@ export function ConfigsList({ configs }: ConfigsListProps): React.ReactElement {
         </motion.tr>
     ));
     return (
-        <Table striped withTableBorder>
-            <Table.Thead>
-                <Table.Tr>
-                    <Table.Th style={ { width: 40 } }></Table.Th>
-                    <Table.Th style={{ width: 'min-content' }}>Name</Table.Th>
-                    <Table.Th>Nodes</Table.Th>
-                    <Table.Th style={ { width: 160 } }>Updated At</Table.Th>
-                    <Table.Th style={ { width: 160 } }>Created at</Table.Th>
-                </Table.Tr>
-            </Table.Thead>
-            <Table.Tbody>
-                { rows.length === 0 && (
+        <Paper withBorder>
+            <Table striped>
+                <Table.Thead>
                     <Table.Tr>
-                        <Table.Td colSpan={ 5 }>
-                            <Center>No configs found</Center>
-                        </Table.Td>
+                        <Table.Th style={ { width: 40 } }></Table.Th>
+                        <Table.Th style={ { width: 'min-content' } }>Name</Table.Th>
+                        <Table.Th>Nodes</Table.Th>
+                        <Table.Th style={ { width: 160 } }>Updated At</Table.Th>
+                        <Table.Th style={ { width: 160 } }>Created at</Table.Th>
                     </Table.Tr>
-                ) }
-                { rows }
-            </Table.Tbody>
-        </Table>
+                </Table.Thead>
+                <Table.Tbody>
+                    { rows.length === 0 && (
+                        <Table.Tr>
+                            <Table.Td colSpan={ 5 }>
+                                <Center>No configs found</Center>
+                            </Table.Td>
+                        </Table.Tr>
+                    ) }
+                    { rows }
+                </Table.Tbody>
+            </Table>
+        </Paper>
     );
 }

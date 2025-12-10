@@ -29,7 +29,7 @@ export const theme = createTheme({
     },
     defaultRadius: 'xs',
     colors: {
-        squidward: colorsTuple('#ACC8BA'),
+        squidward: colorsTuple('#759585'),
         primary:  virtualColor({
             name: 'primary',
             dark: 'squidward',

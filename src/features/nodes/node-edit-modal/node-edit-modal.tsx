@@ -40,12 +40,11 @@ export function NodeEditModal({ onSubmit, ...modalProps }: NodeCreateModalProps)
                 countryCode: node.countryCode,
                 configId: node.configId,
                 description: node.description || '',
-                proxy: {
-                    httpPort: null,
-                    httpsEnabled: false,
-                    httpsPort: null,
-                    speedPerUser: null,
-                },
+                httpPort: node.httpPort,
+                httpsEnabled: node.httpsEnabled,
+                httpsPort: node.httpsPort,
+                speedLimitEnabled: node.speedLimitEnabled,
+                speedLimit: node.speedLimit,
             });
             ;(async () => {
                 await queryClient.prefetchQuery({

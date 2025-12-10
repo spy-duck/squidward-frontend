@@ -5,6 +5,8 @@ import notification from './notification';
 import modal from './modal';
 import fieldset from './fieldset';
 import input from './input';
+import actionIcon from './action-icon';
+import paper from './paper';
 
 export default {
     ...badge,
@@ -14,4 +16,6 @@ export default {
     ...notification,
     ...modal,
     ...input,
+    ...actionIcon,
+    ...paper,
 }

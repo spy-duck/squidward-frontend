@@ -1,6 +1,6 @@
 import React from 'react';
 import { UsersListContract } from '@squidward/contracts/commands';
-import { Badge, Center, Table } from '@mantine/core';
+import { Badge, Center, Paper, Table } from '@mantine/core';
 import { formatDateTime } from '@/shared/utils';
 import { UsersListItemMenu } from '@/features/users/users-list/users-list-item-menu';
 import { motion } from 'framer-motion';
@@ -44,28 +44,30 @@ export function UsersList({ users }: UsersListProps): React.ReactElement {
         </motion.tr>
     ));
     return (
-        <Table striped withTableBorder>
-            <Table.Thead>
-                <Table.Tr>
-                    <Table.Th style={ { width: 40 } }></Table.Th>
-                    <Table.Th>Name</Table.Th>
-                    <Table.Th>status</Table.Th>
-                    <Table.Th>Email</Table.Th>
-                    <Table.Th>telegramId</Table.Th>
-                    <Table.Th style={ { width: 160 } }>Created at</Table.Th>
-                    <Table.Th style={ { width: 160 } }>Expire at</Table.Th>
-                </Table.Tr>
-            </Table.Thead>
-            <Table.Tbody>
-                { rows.length === 0 && (
+        <Paper withBorder>
+            <Table striped>
+                <Table.Thead>
                     <Table.Tr>
-                        <Table.Td colSpan={ 6 }>
-                            <Center>No users found</Center>
-                        </Table.Td>
+                        <Table.Th style={ { width: 40 } }></Table.Th>
+                        <Table.Th>Name</Table.Th>
+                        <Table.Th>status</Table.Th>
+                        <Table.Th>Email</Table.Th>
+                        <Table.Th>telegramId</Table.Th>
+                        <Table.Th style={ { width: 160 } }>Created at</Table.Th>
+                        <Table.Th style={ { width: 160 } }>Expire at</Table.Th>
                     </Table.Tr>
-                ) }
-                { rows }
-            </Table.Tbody>
-        </Table>
+                </Table.Thead>
+                <Table.Tbody>
+                    { rows.length === 0 && (
+                        <Table.Tr>
+                            <Table.Td colSpan={ 6 }>
+                                <Center>No users found</Center>
+                            </Table.Td>
+                        </Table.Tr>
+                    ) }
+                    { rows }
+                </Table.Tbody>
+            </Table>
+        </Paper>
     );
 }

@@ -1,9 +1,9 @@
 import React, { type ReactElement } from 'react';
 import { NodesListContract } from '@squidward/contracts/commands';
-import { Badge, Center, Flex, Table, Tooltip } from '@mantine/core';
+import { Badge, Center, Flex, Table, Tooltip, CopyButton, ActionIcon, Paper } from '@mantine/core';
 import { formatDateTime } from '@/shared/utils';
 import { NodesListItemMenu } from '@/features/nodes/nodes-list/nodes-list-item-menu';
-import { IconLinkOff } from '@tabler/icons-react';
+import { IconCheck, IconCopy, IconLinkOff } from '@tabler/icons-react';
 import type { TNodeState } from '@squidward/contracts/constants';
 import { motion } from 'framer-motion';
 import { NODE_STATUS_ICON } from '@/shared/constants/nodes/node-status';
@@ -37,11 +37,11 @@ export function NodesList({ nodes }: NodesListProps): ReactElement {
             </Table.Td>
             <Table.Td>
                 <Flex align='center' justify='center' gap={ 14 }>
-                        {!node.isConnected && (
-                            <Tooltip label='Disconnected'>
-                                <IconLinkOff size={ 18 } color='#e03131'/>
-                            </Tooltip>
-                        )}
+                    { !node.isConnected && (
+                        <Tooltip label='Disconnected'>
+                            <IconLinkOff size={ 18 } color='#e03131'/>
+                        </Tooltip>
+                    ) }
                     { (node.isConnected && node.state) && (NODE_STATUS_ICON[node.state as TNodeState] || `[${ node.state }]`) }
                 </Flex>
             </Table.Td>
@@ -49,12 +49,34 @@ export function NodesList({ nodes }: NodesListProps): ReactElement {
             <Table.Td style={ { whiteSpace: 'nowrap' } }>
                 { COUNTRIES_MAP[node.countryCode as CountryCode] }
             </Table.Td>
-            <Table.Td>{ node.host }</Table.Td>
+            <Table.Td>
+                <Flex align='center' gap={ 7 }>
+                    { node.host }
+                    <CopyButton value={ node.host } timeout={ 2000 }>
+                        { ({ copied, copy }) => (
+                            <Tooltip label={ copied ? 'Copied' : 'Copy' } withArrow position='right'>
+                                <ActionIcon color={ copied ? 'teal' : 'gray' } variant='subtle' onClick={ copy }>
+                                    { copied ? <IconCheck size={ 14 }/> : <IconCopy size={ 14 }/> }
+                                </ActionIcon>
+                            </Tooltip>
+                        ) }
+                    </CopyButton>
+                </Flex>
+            </Table.Td>
             <Table.Td>{ node.port }</Table.Td>
             <Table.Td>
                 <Badge variant='outline'>
                     { node.config?.name }
                 </Badge>
+            </Table.Td>
+            <Table.Td>{ node.httpPort }</Table.Td>
+            <Table.Td>
+                { node.httpsEnabled && node.httpsPort }
+                { !node.httpsEnabled && (
+                    <Badge color='gray'>
+                        disabled
+                    </Badge>
+                ) }
             </Table.Td>
             <Table.Td>{ node.description }</Table.Td>
             <Table.Td>{ formatDateTime(node.createdAt) }</Table.Td>
@@ -66,31 +88,35 @@ export function NodesList({ nodes }: NodesListProps): ReactElement {
         </motion.tr>
     ));
     return (
-        <Table striped withTableBorder>
-            <Table.Thead>
-                <Table.Tr>
-                    <Table.Th style={ { width: 40 } }></Table.Th>
-                    <Table.Th style={ { width: 40 } }><Center>Status</Center></Table.Th>
-                    <Table.Th>Name</Table.Th>
-                    <Table.Th>Country</Table.Th>
-                    <Table.Th>Host</Table.Th>
-                    <Table.Th>Port</Table.Th>
-                    <Table.Th>Config</Table.Th>
-                    <Table.Th>Description</Table.Th>
-                    <Table.Th style={ { width: 160 } }>Created at</Table.Th>
-                    <Table.Th>Version</Table.Th>
-                </Table.Tr>
-            </Table.Thead>
-            <Table.Tbody>
-                { rows.length === 0 && (
+        <Paper withBorder>
+            <Table striped>
+                <Table.Thead>
                     <Table.Tr>
-                        <Table.Td colSpan={ 8 }>
-                            <Center>No nodes found</Center>
-                        </Table.Td>
+                        <Table.Th style={ { width: 40 } }></Table.Th>
+                        <Table.Th style={ { width: 40 } }><Center>Status</Center></Table.Th>
+                        <Table.Th>Name</Table.Th>
+                        <Table.Th>Country</Table.Th>
+                        <Table.Th>Host</Table.Th>
+                        <Table.Th>API Port</Table.Th>
+                        <Table.Th>Config</Table.Th>
+                        <Table.Th>HTTP Port</Table.Th>
+                        <Table.Th>HTTPS Port</Table.Th>
+                        <Table.Th>Description</Table.Th>
+                        <Table.Th style={ { width: 160 } }>Created at</Table.Th>
+                        <Table.Th>Version</Table.Th>
                     </Table.Tr>
-                ) }
-                { rows }
-            </Table.Tbody>
-        </Table>
+                </Table.Thead>
+                <Table.Tbody>
+                    { rows.length === 0 && (
+                        <Table.Tr>
+                            <Table.Td colSpan={ 10 }>
+                                <Center>No nodes found</Center>
+                            </Table.Td>
+                        </Table.Tr>
+                    ) }
+                    { rows }
+                </Table.Tbody>
+            </Table>
+        </Paper>
     );
 }

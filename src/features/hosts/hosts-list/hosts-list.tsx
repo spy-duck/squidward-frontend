@@ -1,6 +1,6 @@
 import React from 'react';
 import { HostsListContract } from '@squidward/contracts/commands';
-import { Badge, Center, Group, Table } from '@mantine/core';
+import { Badge, Center, Group, Paper, Table } from '@mantine/core';
 import { formatDateTime } from '@/shared/utils';
 import { HostsListItemMenu } from './hosts-list-item-menu';
 import { motion } from 'framer-motion';
@@ -55,29 +55,31 @@ export function HostsList({ hosts }: HostsProps): React.ReactElement {
         </motion.tr>
     ));
     return (
-        <Table striped withTableBorder>
-            <Table.Thead>
-                <Table.Tr>
-                    <Table.Th style={ { width: 40 } }></Table.Th>
-                    <Table.Th>Name</Table.Th>
-                    <Table.Th>Country</Table.Th>
-                    <Table.Th>Enabled</Table.Th>
-                    <Table.Th>Node ID</Table.Th>
-                    <Table.Th style={ { width: 160 } }>Created at</Table.Th>
-                    <Table.Th style={ { width: 160 } }>Updated At</Table.Th>
-                    <Table.Th style={ { width: 160 } }>Priority</Table.Th>
-                </Table.Tr>
-            </Table.Thead>
-            <Table.Tbody>
-                { rows.length === 0 && (
+        <Paper withBorder>
+            <Table striped>
+                <Table.Thead>
                     <Table.Tr>
-                        <Table.Td colSpan={ 8 }>
-                            <Center>No hosts found</Center>
-                        </Table.Td>
+                        <Table.Th style={ { width: 40 } }></Table.Th>
+                        <Table.Th>Name</Table.Th>
+                        <Table.Th>Country</Table.Th>
+                        <Table.Th>Enabled</Table.Th>
+                        <Table.Th>Node ID</Table.Th>
+                        <Table.Th style={ { width: 160 } }>Created at</Table.Th>
+                        <Table.Th style={ { width: 160 } }>Updated At</Table.Th>
+                        <Table.Th style={ { width: 160 } }>Priority</Table.Th>
                     </Table.Tr>
-                ) }
-                { rows }
-            </Table.Tbody>
-        </Table>
+                </Table.Thead>
+                <Table.Tbody>
+                    { rows.length === 0 && (
+                        <Table.Tr>
+                            <Table.Td colSpan={ 8 }>
+                                <Center>No hosts found</Center>
+                            </Table.Td>
+                        </Table.Tr>
+                    ) }
+                    { rows }
+                </Table.Tbody>
+            </Table>
+        </Paper>
     );
 }

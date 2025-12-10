@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import {
-    Button,
+    ActionIcon,
+    Button, CopyButton, Flex,
     Group,
-    Modal,
+    Modal, Paper,
     Stack,
-    TextInput,
+    TextInput, Tooltip,
 } from '@mantine/core';
 import type { ModalBaseProps } from '@mantine/core';
 import { type TransformedValues, useForm } from '@mantine/form';
@@ -14,6 +15,7 @@ import { useActionConfigStore, useResetActionConfigStore } from '@/entities/conf
 import { ConfigUpdateContract } from '@squidward/contracts/commands';
 import { ConfigEditor } from '@/shared/components/ui/config-editor';
 import { QUERY_KEYS } from '@/shared/constants/api';
+import { IconCheck, IconCopy } from '@tabler/icons-react';
 
 type ConfigEditModalProps = ModalBaseProps & {
     onSubmit(): void;
@@ -60,7 +62,7 @@ export function ConfigEditModal({ onSubmit, ...modalProps }: ConfigEditModalProp
             });
         }
     }, [ actionConfig, config ]);
-
+    
     function closeHandler() {
         resetAction();
         form.reset();
@@ -72,36 +74,79 @@ export function ConfigEditModal({ onSubmit, ...modalProps }: ConfigEditModalProp
     }
     
     return (
-        <Modal { ...modalProps } onClose={closeHandler} title='Edit squid config' size='xl' centered>
-            <form onSubmit={ form.onSubmit(submitHandler) }>
-                <Stack
-                    align='stretch'
-                    justify='center'
-                    gap='md'
-                >
-                    <TextInput
-                        withAsterisk
-                        label='Name'
-                        placeholder='Default'
-                        key={ form.key('name') }
-                        { ...form.getInputProps('name') }
-                        readOnly={ isLoadingConfig || isPending }
+        <Modal { ...modalProps } onClose={ closeHandler } title='Edit squid config' size={ 1400 } centered>
+            <Flex gap={14} wrap='wrap'>
+                <form onSubmit={ form.onSubmit(submitHandler) } style={{ flex: 1}}>
+                    <Stack
+                        align='stretch'
+                        justify='center'
+                        gap='md'
+                    >
+                        <TextInput
+                            withAsterisk
+                            label='Name'
+                            placeholder='Default'
+                            key={ form.key('name') }
+                            { ...form.getInputProps('name') }
+                            readOnly={ isLoadingConfig || isPending }
+                        />
+                        <ConfigEditor
+                            value={ form.values.config }
+                            error={ form.errors.config }
+                            onChange={ (value) => form.setFieldValue('config', value || '') }
+                            disabled={ isLoadingConfig }
+                        />
+                    </Stack>
+                    <Group justify='flex-end' mt='md'>
+                        <Button
+                            type='submit'
+                            loading={ isPending }
+                            disabled={ isLoadingConfig }
+                        >Save</Button>
+                    </Group>
+                </form>
+                <Paper withBorder p='md'>
+                    <h3>Templates</h3>
+                    <Template
+                        pattern='node.httpPort'
+                        description='Proxy HTTP port'
                     />
-                    <ConfigEditor
-                        value={ form.values.config }
-                        error={ form.errors.config }
-                        onChange={ (value) => form.setFieldValue('config', value || '') }
-                        disabled={ isLoadingConfig }
+                    <Template
+                        pattern='node.httpsPort'
+                        description='Proxy HTTPS port'
                     />
-                </Stack>
-                <Group justify='flex-end' mt='md'>
-                    <Button
-                        type='submit'
-                        loading={ isPending }
-                        disabled={ isLoadingConfig }
-                    >Save</Button>
-                </Group>
-            </form>
+                    <Template
+                        pattern='node.httpsEnabled'
+                        description='Is HTTPS proxy enabled on node'
+                    />
+                    <Template
+                        pattern='node.speedLimitEnabled'
+                        description='Is speed limit enabled on node'
+                    />
+                    <Template
+                        pattern='node.speedLimit'
+                        description='Speed limit'
+                    />
+                </Paper>
+            </Flex>
         </Modal>
     );
+}
+
+function Template({ pattern, description }: { pattern: string, description: string }): React.ReactElement {
+    return (
+        <Flex align='center' gap={ 7 }>
+            { `{{ ${ pattern } }}` }
+            <CopyButton value={ `{{ ${ pattern } }}` } timeout={ 2000 }>
+                { ({ copied, copy }) => (
+                    <Tooltip label={ copied ? 'Copied' : 'Copy' } withArrow position='right'>
+                        <ActionIcon color={ copied ? 'teal' : 'gray' } variant='subtle' onClick={ copy }>
+                            { copied ? <IconCheck size={ 14 }/> : <IconCopy size={ 14 }/> }
+                        </ActionIcon>
+                    </Tooltip>
+                ) }
+            </CopyButton>
+            &mdash; { description }
+        </Flex>
+    )
 }

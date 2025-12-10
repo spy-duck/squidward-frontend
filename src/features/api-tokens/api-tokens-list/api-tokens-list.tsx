@@ -1,6 +1,6 @@
 import React from 'react';
 import { ApiTokensListContract } from '@squidward/contracts/commands';
-import { Button, Center, CopyButton, Table, UnstyledButton } from '@mantine/core';
+import { Button, Center, CopyButton, Paper, Table, UnstyledButton } from '@mantine/core';
 import { formatDateTime } from '@/shared/utils';
 import { ApiTokensListItemMenu } from './api-tokens-list-item-menu';
 import { motion } from 'framer-motion';
@@ -38,9 +38,9 @@ export function ApiTokensList({ apiTokens }: ApiTokensProps): React.ReactElement
                         { ({ copied, copy }) => (
                             <Button
                                 component='span'
-                                leftSection={(
-                                    <IconCopy size={14}/>
-                                )}
+                                leftSection={ (
+                                    <IconCopy size={ 14 }/>
+                                ) }
                                 color={ copied ? 'teal' : 'blue' }
                                 onClick={ copy }
                                 size='compact-xs'
@@ -59,26 +59,28 @@ export function ApiTokensList({ apiTokens }: ApiTokensProps): React.ReactElement
         </motion.tr>
     ));
     return (
-        <Table striped withTableBorder>
-            <Table.Thead>
-                <Table.Tr>
-                    <Table.Th style={ { width: 40 } }></Table.Th>
-                    <Table.Th style={ { width: 40 } }></Table.Th>
-                    <Table.Th>Name</Table.Th>
-                    <Table.Th style={ { width: 160 } }>Expire At</Table.Th>
-                    <Table.Th style={ { width: 160 } }>Created at</Table.Th>
-                </Table.Tr>
-            </Table.Thead>
-            <Table.Tbody>
-                { rows.length === 0 && (
+        <Paper withBorder>
+            <Table striped>
+                <Table.Thead>
                     <Table.Tr>
-                        <Table.Td colSpan={ 6 }>
-                            <Center>No API tokens found</Center>
-                        </Table.Td>
+                        <Table.Th style={ { width: 40 } }></Table.Th>
+                        <Table.Th style={ { width: 40 } }></Table.Th>
+                        <Table.Th>Name</Table.Th>
+                        <Table.Th style={ { width: 160 } }>Expire At</Table.Th>
+                        <Table.Th style={ { width: 160 } }>Created at</Table.Th>
                     </Table.Tr>
-                ) }
-                { rows }
-            </Table.Tbody>
-        </Table>
+                </Table.Thead>
+                <Table.Tbody>
+                    { rows.length === 0 && (
+                        <Table.Tr>
+                            <Table.Td colSpan={ 6 }>
+                                <Center>No API tokens found</Center>
+                            </Table.Td>
+                        </Table.Tr>
+                    ) }
+                    { rows }
+                </Table.Tbody>
+            </Table>
+        </Paper>
     );
 }
