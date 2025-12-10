@@ -38,6 +38,8 @@ export function HostEditModal({ onSubmit, ...modalProps }: HostEditModalProps) {
                 countryCode: host.countryCode,
                 nodeId: host.nodeId,
                 enabled: host.enabled,
+                priority: host.priority,
+                isNew: host.isNew,
             });
         }
     }, [ modalProps.opened ]);

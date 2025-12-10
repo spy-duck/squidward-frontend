@@ -2,7 +2,7 @@ import React from 'react';
 import { HostCreateContract } from '@squidward/contracts/commands';
 import { useForm } from '@mantine/form';
 import { zod4Resolver } from 'mantine-form-zod-resolver';
-import { Button, Group, Select, Stack, Switch, TextInput } from '@mantine/core';
+import { Button, Group, Select, Stack, Switch, TextInput, NumberInput } from '@mantine/core';
 import { IconMapPin } from '@tabler/icons-react';
 import { COUNTRIES } from '@/shared/constants';
 import { useGetNodes } from '@/shared/api';
@@ -22,6 +22,8 @@ export function HostCreateForm({ onSubmit, isPending }: HostCreateFormProps): Re
             countryCode: '',
             nodeId: '',
             enabled: false,
+            priority: 0,
+            isNew: false,
         },
         validate: zod4Resolver(
             HostCreateContract.RequestSchema,
@@ -35,13 +37,22 @@ export function HostCreateForm({ onSubmit, isPending }: HostCreateFormProps): Re
                 justify='center'
                 gap='md'
             >
-                <Switch
-                    label='Enabled'
-                    key={ form.key('enabled') }
-                    { ...form.getInputProps('enabled') }
-                    readOnly={ isPending }
-                    checked={ form.values.enabled }
-                />
+                <Group>
+                    <Switch
+                        label='Enabled'
+                        key={ form.key('enabled') }
+                        { ...form.getInputProps('enabled') }
+                        readOnly={ isPending }
+                        checked={ form.values.enabled }
+                    />
+                    <Switch
+                        label='Is new'
+                        key={ form.key('isNew') }
+                        { ...form.getInputProps('isNew') }
+                        readOnly={ isPending }
+                        checked={ form.values.isNew }
+                    />
+                </Group>
                 <TextInput
                     withAsterisk
                     label='Host name'
@@ -80,6 +91,14 @@ export function HostCreateForm({ onSubmit, isPending }: HostCreateFormProps): Re
                     })) }
                     key={ form.key('nodeId') }
                     { ...form.getInputProps('nodeId') }
+                />
+                <NumberInput
+                    withAsterisk
+                    label='Priority'
+                    placeholder='Priority for sorting'
+                    key={ form.key('priority') }
+                    { ...form.getInputProps('priority') }
+                    readOnly={ isPending }
                 />
                 
                 <Group justify='flex-end' mt='md'>
