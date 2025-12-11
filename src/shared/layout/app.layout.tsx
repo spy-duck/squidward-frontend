@@ -1,5 +1,5 @@
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-import { AppShell, Avatar, Burger, Button, em, Flex, Group, NavLink, Text } from '@mantine/core';
+import { AppShell, Avatar, Badge, Burger, Button, em, Flex, Group, NavLink, Text, Tooltip } from '@mantine/core';
 import { Outlet, NavLink as RouterLink } from 'react-router';
 import { ROUTES } from '@/shared/constants/routes';
 import { motion } from 'framer-motion'
@@ -9,7 +9,7 @@ import { ChangeAdminCredentialsModal } from '@/shared/components/ui/change-admin
 
 export function AppLayout() {
     const [ opened, { toggle, close } ] = useDisclosure();
-    const { logout, isChangePasswordRequired } = useAuthContext();
+    const { logout, isChangePasswordRequired, backendVersion } = useAuthContext();
     const isMobile = useMediaQuery(`(max-width: ${ em(750) })`);
     
     const navLinks = [
@@ -41,21 +41,27 @@ export function AppLayout() {
             navbar={ { width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } } }
             padding='md'
         >
-            {isChangePasswordRequired && (
-                <ChangeAdminCredentialsModal />
-            )}
+            { isChangePasswordRequired && (
+                <ChangeAdminCredentialsModal/>
+            ) }
             <AppShell.Header>
                 <Group h='100%' px='md'>
                     <Burger opened={ opened } onClick={ toggle } hiddenFrom='sm' size='sm'/>
-                    <Flex style={ { flex: 1 } } align='center' gap={14}>
-                        <Avatar src='/logo.webp' radius="xl" />
+                    <Flex style={ { flex: 1 } } align='center' gap={ 14 }>
+                        <Avatar src='/logo.webp' radius='xl'/>
                         <Text
                             size={ isMobile ? 'sm' : 'xl' }
-                            fw={700}
+                            fw={ 700 }
                             c='white'
                         >
                             Squidward Dashboard
                         </Text>
+                        <Tooltip label='Frontend | Backend' withArrow position='bottom-start'>
+                        <Badge>
+                            <span
+                            style={ { textTransform: 'lowercase' } }>v{ import.meta.env.VITE_VERSION } | { backendVersion }</span>
+                        </Badge>
+                        </Tooltip>
                     </Flex>
                     <Button onClick={ () => logout() }>
                         <IconLogout size={ 16 }/>

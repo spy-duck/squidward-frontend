@@ -10,6 +10,7 @@ type TAuthContext = {
     isAuthenticated: boolean;
     isInitialized: boolean;
     isChangePasswordRequired: boolean;
+    backendVersion: string | null | undefined;
     login(accessToken: string): Promise<void>;
     logout(): void;
 };
@@ -31,6 +32,7 @@ type TAuthProps = {
 export const AuthProvider = ({ children }: TAuthProps): ReactNode => {
     const [ isAuthenticated, setIsAuthenticated ] = useState(false);
     const [ isInitialized, setIsInitialized ] = useState(false);
+    const [ backendVersion, setBackendVersion ] = useState<string | null | undefined>(null);
     const [ isChangePasswordRequired, setIsChangePasswordRequired ] = useState(false);
     const sessionToken = useSessionToken();
     const setSessionToken = useSetSession();
@@ -50,9 +52,10 @@ export const AuthProvider = ({ children }: TAuthProps): ReactNode => {
         setIsAuthenticated(authCheck?.success || false);
         if (authCheck?.success) {
             setIsChangePasswordRequired(!!authCheck?.isChangePasswordRequired);
+            setBackendVersion(authCheck.version);
         }
     }, [ authCheck?.success ]);
-    
+ 
     useEffect(() => {
         return logoutEvents.subscribe(() => {
             if (!isAuthenticated) {
@@ -104,6 +107,7 @@ export const AuthProvider = ({ children }: TAuthProps): ReactNode => {
             isChangePasswordRequired,
             login,
             logout,
+            backendVersion,
         } }>
             { children }
         </AuthContext>
