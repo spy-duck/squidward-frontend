@@ -4,7 +4,7 @@ import {
     Button, CopyButton, Flex,
     Group,
     Modal, Paper,
-    Stack,
+    Stack, Text,
     TextInput, Tooltip,
 } from '@mantine/core';
 import type { ModalBaseProps } from '@mantine/core';
@@ -106,7 +106,10 @@ export function ConfigEditModal({ onSubmit, ...modalProps }: ConfigEditModalProp
                     </Group>
                 </form>
                 <Paper withBorder p='md'>
-                    <h3>Templates</h3>
+                    <Text size='xl' fw={ 700 }>Templates</Text>
+                    <Text size='xs' mb='md'>
+                        Full support <a href='https://jinja.palletsprojects.com/en/stable/templates/' target='_blank' rel='noreferrer'>Jinja2 templates</a>
+                    </Text>
                     <Template
                         pattern='node.httpPort'
                         description='Proxy HTTP port'

@@ -8,7 +8,7 @@ import clsx from 'clsx';
 type ConfigEditorProps = {
     value: string | undefined,
     error: ReactNode,
-    disabled: boolean,
+    disabled?: boolean,
     onChange(value: string | undefined): void;
 };
 
@@ -52,14 +52,17 @@ export function ConfigEditor({ disabled, error, value, onChange }: ConfigEditorP
     );
 }
 
-const DEV_CONFIG = `# Базовые настройки
-http_port 3128
-https_port 3129 \\
+const DEV_CONFIG = `# Basic settings
+http_port {{ node.httpPort }}
+
+{% if node.httpsEnabled %}
+https_port {{ node.httpsPort }} \\
    tls-cert=/etc/squid/certs/squid.pem \\
    options=NO_SSLv3:NO_TLSv1 \\
    cipher=ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
+{% endif %}
 
-# ACL для доступа
+# ACL
 acl localnet src 0.0.0.1-0.255.255.255  # RFC 1122 "this" network (LAN)
 acl localnet src 10.0.0.0/8             # RFC 1918 local private network (LAN)
 acl localnet src 100.64.0.0/10          # RFC 6598 shared address space (CGN)
@@ -89,29 +92,33 @@ acl TorrentFiles rep_mime_type -i mime-type application/x-bittorrent
 http_reply_access deny TorrentFiles
 deny_info TCP_RESET TorrentFiles
 
-# Определение ACL для авторизации
+# External authenticator
 auth_param basic program /app/bin/squid-auth-connector.js
 auth_param basic children 5 startup=5 idle=1
-auth_param basic realm spy-duck-proxy
+# auth_param basic realm <# YOUR_REALM #>
 auth_param basic credentialsttl 1 minutes
 
-# Определение ACL, который требует авторизацию
+# ACL for authenticator
 acl authenticated proxy_auth REQUIRED
 
-# Разрешить доступ для авторизованных пользователей
+# Allow access for authenticated users
 http_access allow authenticated
 
 # Speed limit
+{% if node.speedLimitEnabled %}
 delay_pools 1
 delay_class 1 4
 delay_access 1 allow authenticated
-delay_parameters 1 -1/-1 -1/-1 -1/-1 6250000/6250000
+delay_parameters 1 -1/-1 -1/-1 -1/-1 {{ node.speedLimit }}/{{ node.speedLimit }}
+{% else %}
+# Speed limit is disabled for this node
+{% endif %}
 
 # Connections limit
 # acl limitcon maxconn 500
 # http_access deny limitcon
 
-# Правила доступа
+# Access rules
 http_access deny !Safe_ports
 http_access deny CONNECT !SSL_ports
 http_access allow localhost manager
@@ -120,18 +127,20 @@ http_access allow localhost
 http_access allow localnet
 http_access deny all
 
-# Кеширование
+# Cache
 cache_dir ufs /var/spool/squid 100 16 256
 coredump_dir /var/spool/squid
 cache_mem 2048 MB
 cache_effective_user squid
 
-# # Дополнительные настройки
+# Additional settings
 refresh_pattern ^ftp:           1440    20%     10080
 refresh_pattern ^gopher:        1440    0%      1440
 refresh_pattern -i (/cgi-bin/|\\?) 0     0%      0
 refresh_pattern .               0       20%     4320
 
-# Логирование
+# Logging
+logformat prometheus %ts.%03tr %6>rsl %>st %mt %ru %ID %<A %Ss/%Sh %<st %rm
 access_log daemon:/var/log/squid/access.log squid
+access_log /var/log/squid/prometheus.log prometheus
 `;
