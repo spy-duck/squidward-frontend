@@ -1259,11 +1259,11 @@ __metadata:
 
 "@squidward/contracts@file:../squidward-backend/libs/contracts::locator=squidward-frontend%40workspace%3A.":
   version: 0.0.1
-  resolution: "@squidward/contracts@file:../squidward-backend/libs/contracts#../squidward-backend/libs/contracts::hash=1ec5e8&locator=squidward-frontend%40workspace%3A."
+  resolution: "@squidward/contracts@file:../squidward-backend/libs/contracts#../squidward-backend/libs/contracts::hash=573e5b&locator=squidward-frontend%40workspace%3A."
   dependencies:
     dayjs: "npm:^1.11.18"
     zod: "npm:^4.1.8"
-  checksum: 10c0/72af7116b9d0c4818575e03d4b3c061b347515e679795ce33535a7dc0ee944d4a4085c4a0232a86b413f2753123ea4262b4c9e0eda976182f308061c935e6409
+  checksum: 10c0/cd4e0c32cd7229a07e188fa13ce60f326004f49f0e94e408beb69f05954f9a0060a23d5e833ba74c0f627b79a05ce2e57f3586fe0556c0e486a61e832c403223
   languageName: node
   linkType: hard
 
@@ -1522,6 +1522,22 @@ __metadata:
   version: 1.0.8
   resolution: "@types/estree@npm:1.0.8"
   checksum: 10c0/39d34d1afaa338ab9763f37ad6066e3f349444f9052b9676a7cc0252ef9485a41c6d81c9c4e0d26e9077993354edf25efc853f3224dd4b447175ef62bdcc86a5
+  languageName: node
+  linkType: hard
+
+"@types/lodash-es@npm:^4":
+  version: 4.17.12
+  resolution: "@types/lodash-es@npm:4.17.12"
+  dependencies:
+    "@types/lodash": "npm:*"
+  checksum: 10c0/5d12d2cede07f07ab067541371ed1b838a33edb3c35cb81b73284e93c6fd0c4bbeaefee984e69294bffb53f62d7272c5d679fdba8e595ff71e11d00f2601dde0
+  languageName: node
+  linkType: hard
+
+"@types/lodash@npm:*":
+  version: 4.17.21
+  resolution: "@types/lodash@npm:4.17.21"
+  checksum: 10c0/73cb006e047d8871e9d63f3a165543bf16c44a5b6fe3f9f6299e37cb8d67a7b1d55ac730959a81f9def510fd07232ff7e30e05413e5d5a12793baad84ebe36c3
   languageName: node
   linkType: hard
 
@@ -2966,6 +2982,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash-es@npm:^4.17.22":
+  version: 4.17.22
+  resolution: "lodash-es@npm:4.17.22"
+  checksum: 10c0/5f28a262183cca43e08c580622557f393cb889386df2d8adf7c852bfdff7a84c5e629df5aa6c5c6274e83b38172f239d3e4e72e1ad27352d9ae9766627338089
+  languageName: node
+  linkType: hard
+
 "lodash@npm:^4.17.21":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
@@ -4312,6 +4335,7 @@ __metadata:
     "@squidward/contracts": "file:../squidward-backend/libs/contracts"
     "@tabler/icons-react": "npm:^3.35.0"
     "@tanstack/react-query": "npm:^5.90.12"
+    "@types/lodash-es": "npm:^4"
     "@types/node": "npm:22.19.0"
     "@types/react": "npm:^19.2.7"
     "@types/react-dom": "npm:^19.2.3"
@@ -4327,6 +4351,7 @@ __metadata:
     generate-password-ts: "npm:^1.6.5"
     isbot: "npm:^5.1.32"
     jotai: "npm:^2.15.2"
+    lodash-es: "npm:^4.17.22"
     mantine-form-zod-resolver: "npm:^1.3.0"
     monaco-editor: "npm:^0.55.1"
     react: "npm:^19.2.1"
