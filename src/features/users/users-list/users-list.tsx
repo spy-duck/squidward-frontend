@@ -41,7 +41,7 @@ export function UsersList({ users }: UsersListProps): React.ReactElement {
             <Table.Td>{ user.email }</Table.Td>
             <Table.Td>{ user.telegramId }</Table.Td>
             <Table.Td>
-                <Popover width={ 200 } position='bottom' withArrow shadow='md'>
+                <Popover width={ 200 } position='bottom'>
                     <Popover.Target>
                         <Badge
                             variant='transparent'
@@ -52,7 +52,6 @@ export function UsersList({ users }: UsersListProps): React.ReactElement {
                         </Badge>
                     </Popover.Target>
                     <Popover.Dropdown>
-                        
                         <Table>
                             <Table.Tbody>
                                 <Table.Tr>

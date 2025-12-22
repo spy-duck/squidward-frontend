@@ -7,6 +7,7 @@ import fieldset from './fieldset';
 import input from './input';
 import actionIcon from './action-icon';
 import paper from './paper';
+import popover from './popover';
 
 export default {
     ...badge,
@@ -18,4 +19,5 @@ export default {
     ...input,
     ...actionIcon,
     ...paper,
+    ...popover,
 }
