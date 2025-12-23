@@ -1259,11 +1259,11 @@ __metadata:
 
 "@squidward/contracts@file:../squidward-backend/libs/contracts::locator=squidward-frontend%40workspace%3A.":
   version: 0.0.1
-  resolution: "@squidward/contracts@file:../squidward-backend/libs/contracts#../squidward-backend/libs/contracts::hash=573e5b&locator=squidward-frontend%40workspace%3A."
+  resolution: "@squidward/contracts@file:../squidward-backend/libs/contracts#../squidward-backend/libs/contracts::hash=f0c573&locator=squidward-frontend%40workspace%3A."
   dependencies:
     dayjs: "npm:^1.11.18"
     zod: "npm:^4.1.8"
-  checksum: 10c0/cd4e0c32cd7229a07e188fa13ce60f326004f49f0e94e408beb69f05954f9a0060a23d5e833ba74c0f627b79a05ce2e57f3586fe0556c0e486a61e832c403223
+  checksum: 10c0/fbfd023616cca413c1a8414f78677b688c322da1195bfe8ef3dedff3132a547de0fdd727d1bd20275aaee9e11a6a10742e639666afc899de0c2da3b4f805c000
   languageName: node
   linkType: hard
 

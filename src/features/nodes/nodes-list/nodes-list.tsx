@@ -8,6 +8,7 @@ import type { TNodeState } from '@squidward/contracts/constants';
 import { motion } from 'framer-motion';
 import { NODE_STATUS_ICON } from '@/shared/constants/nodes/node-status';
 import { COUNTRIES_MAP, type CountryCode } from '@/shared/constants';
+import { MetricsValueWithPopup } from '@/shared/components/ui';
 
 
 type NodesListProps = {
@@ -78,7 +79,9 @@ export function NodesList({ nodes }: NodesListProps): ReactElement {
                     </Badge>
                 ) }
             </Table.Td>
-            <Table.Td>{ node.description }</Table.Td>
+            <Table.Td>
+                <MetricsValueWithPopup metrics={ node.metrics }/>
+            </Table.Td>
             <Table.Td>{ formatDateTime(node.createdAt) }</Table.Td>
             <Table.Td>
                 <Badge variant='outline'>
@@ -101,7 +104,7 @@ export function NodesList({ nodes }: NodesListProps): ReactElement {
                         <Table.Th>Config</Table.Th>
                         <Table.Th>HTTP Port</Table.Th>
                         <Table.Th>HTTPS Port</Table.Th>
-                        <Table.Th>Description</Table.Th>
+                        <Table.Th>Traffic</Table.Th>
                         <Table.Th style={ { width: 160 } }>Created at</Table.Th>
                         <Table.Th>Version</Table.Th>
                     </Table.Tr>

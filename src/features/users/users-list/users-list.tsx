@@ -1,10 +1,11 @@
 import React from 'react';
 import { UsersListContract } from '@squidward/contracts/commands';
-import { Badge, Center, Paper, Popover, Text, Table } from '@mantine/core';
-import { bytesToGb, formatDateTime } from '@/shared/utils';
+import { Badge, Center, Paper, Table } from '@mantine/core';
+import { formatDateTime } from '@/shared/utils';
 import { UsersListItemMenu } from '@/features/users/users-list/users-list-item-menu';
 import { motion } from 'framer-motion';
 import { USER_STATUS_COLOR } from '@/shared/constants/users/user-status';
+import { MetricsValueWithPopup } from '@/shared/components/ui';
 
 type UsersListProps = {
     users: UsersListContract.Response['response']['users'],
@@ -41,59 +42,7 @@ export function UsersList({ users }: UsersListProps): React.ReactElement {
             <Table.Td>{ user.email }</Table.Td>
             <Table.Td>{ user.telegramId }</Table.Td>
             <Table.Td>
-                <Popover width={ 200 } position='bottom'>
-                    <Popover.Target>
-                        <Badge
-                            variant='transparent'
-                            className='cursor-pointer'
-                            color={ user.metrics?.total ? 'teal' : 'gray' }
-                        >
-                            { bytesToGb(user.metrics?.total || 0) } Gib
-                        </Badge>
-                    </Popover.Target>
-                    <Popover.Dropdown>
-                        <Table>
-                            <Table.Tbody>
-                                <Table.Tr>
-                                    <Table.Td>
-                                        <Text size='xs'>
-                                            Upload:
-                                        </Text>
-                                    </Table.Td>
-                                    <Table.Td>
-                                        <Text size='xs'>
-                                            { bytesToGb(user.metrics?.upload || 0) } Gib
-                                        </Text>
-                                    </Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Td>
-                                        <Text size='xs'>
-                                            Download:
-                                        </Text>
-                                    </Table.Td>
-                                    <Table.Td>
-                                        <Text size='xs'>
-                                            { bytesToGb(user.metrics?.download || 0) } Gib
-                                        </Text>
-                                    </Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Td>
-                                        <Text size='xs'>
-                                            Total:
-                                        </Text>
-                                    </Table.Td>
-                                    <Table.Td>
-                                        <Text size='xs'>
-                                            { bytesToGb(user.metrics?.total || 0) } Gib
-                                        </Text>
-                                    </Table.Td>
-                                </Table.Tr>
-                            </Table.Tbody>
-                        </Table>
-                    </Popover.Dropdown>
-                </Popover>
+                <MetricsValueWithPopup metrics={ user.metrics }/>
             </Table.Td>
             <Table.Td>{ formatDateTime(user.createdAt) }</Table.Td>
             <Table.Td>{ formatDateTime(user.expireAt) }</Table.Td>
