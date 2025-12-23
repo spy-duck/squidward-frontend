@@ -7,14 +7,15 @@ import {
     IconRefresh,
     IconTrash,
 } from '@tabler/icons-react';
-import type { TNode } from '@squidward/contracts/schemas/node.schema';
+import type { TNode } from '@squidward/contracts/schemas';
 import type { ReactNode } from 'react';
 import { useSetActionNodeStore, useSetIsRemoveNodeStore, useSetIsEditNodeStore } from '@/entities/nodes/nodes-store';
-import { useStartNode } from '@/shared/api';
+import { useResetNodeTraffic, useStartNode } from '@/shared/api';
 import { useNodesPageContext } from '@/pages/nodes/nodes.context';
 import { useStopNode } from '@/shared/api/hooks/nodes/use-stop-node';
 import { useRestartNode } from '@/shared/api/hooks/nodes/use-restart-node';
 import { NODE_STATE, type TNodeState } from '@squidward/contracts/constants';
+import { notifications } from '@mantine/notifications';
 
 type MenuItemProps = {
     text: string;
@@ -37,6 +38,19 @@ export function NodesListItemMenu({ node }: NodesListItemMenuProps) {
     const { startNode } = useStartNode({ onSuccess: () => refetchNodes() });
     const { stopNode } = useStopNode({ onSuccess: () => refetchNodes() });
     const { restartNode } = useRestartNode({ onSuccess: () => refetchNodes() });
+    const {
+        resetNodeTraffic,
+        isPending: isPendingResetTraffic,
+    } = useResetNodeTraffic({
+        onSuccess: () => {
+            notifications.show({
+                title: 'Reset traffic',
+                message: 'Traffic has been reset',
+                color: 'green',
+            });
+            refetchNodes();
+        },
+    });
     
     function makeNodeMenuAction(
         availableStates: TNodeState[],
@@ -110,6 +124,16 @@ export function NodesListItemMenu({ node }: NodesListItemMenuProps) {
                 disabled: isStateContains(node.state, [ NODE_STATE.STOPPING, NODE_STATE.RESTARTING ]),
             },
         ),
+        {
+            text: 'Reset traffic',
+            leftSection: <IconTrash size={ 14 }/>,
+            onClick: () => {
+                if (node.uuid) {
+                    resetNodeTraffic(node.uuid);
+                }
+            },
+            disabled: isPendingResetTraffic,
+        },
         {
             text: 'Delete',
             leftSection: <IconTrash size={ 14 }/>,

@@ -4,3 +4,4 @@ export * from './use-update-node';
 export * from './use-remove-node';
 export * from './use-start-node';
 export * from './use-keygen-nodes';
+export * from './use-reset-node-traffic';

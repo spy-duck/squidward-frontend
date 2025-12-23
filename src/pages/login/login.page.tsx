@@ -33,7 +33,7 @@ export function LoginPage() {
     }
     
     return (
-        <Card shadow='xl' padding='xl' radius='md' miw={ isMobile ? '100%' : 360 } w={'100%'}>
+        <Card shadow='xl' padding='xl' radius='lg' miw={ isMobile ? '100%' : 360 } w={'100%'}>
             <Flex direction={ isMobile ? 'column' : 'row' } gap={ 24 } align='center' justify='center' w='100%'>
                 <Flex direction='column' align='center' gap={ 4 }>
                     <img
