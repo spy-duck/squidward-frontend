@@ -12,7 +12,6 @@ type UsersListProps = {
 };
 
 export function UsersList({ users }: UsersListProps): React.ReactElement {
-    console.log(users)
     const rows = (users || []).map((user, index) => (
         <motion.tr
             key={ user.uuid }

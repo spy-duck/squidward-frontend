@@ -1,7 +1,7 @@
 import { type MantineColor, Menu, UnstyledButton } from '@mantine/core';
 import {
     IconDotsVertical,
-    IconPencil,
+    IconPencil, IconRestore,
     IconTrash,
 } from '@tabler/icons-react';
 import type { ReactNode } from 'react';
@@ -11,12 +11,16 @@ import {
     useSetIsRemoveUserStore,
 } from '@/entities/users/users-store';
 import type { TUser } from '@squidward/contracts/schemas';
+import { useResetUserTraffic } from '@/shared/api';
+import { notifications } from '@mantine/notifications';
+import { useUsersPageContext } from '@/pages/users/users.context';
 
 type MenuProps = {
     text: ReactNode;
     icon: ReactNode;
     onClick(): void;
     color?: MantineColor;
+    disabled?: boolean;
 }
 
 
@@ -29,6 +33,18 @@ export function UsersListItemMenu({ user }: UsersListItemMenuProps) {
     const setActionUser = useSetActionUserStore();
     const setIsEditUser = useSetIsEditUserStore();
     const setIsRemoveUser = useSetIsRemoveUserStore();
+    const { refetchUsers } = useUsersPageContext();
+    const { resetUserTraffic, isPending } = useResetUserTraffic({
+        onSuccess() {
+            notifications.show({
+                title: 'Reset traffic',
+                message: 'Traffic has been reset',
+                color: 'green',
+            });
+            refetchUsers();
+        }
+    });
+    
     
     const items: MenuProps[] = [
         {
@@ -38,6 +54,16 @@ export function UsersListItemMenu({ user }: UsersListItemMenuProps) {
                 setActionUser(user);
                 setIsEditUser(true);
             },
+        },
+        {
+            text: 'Reset traffic',
+            icon: <IconRestore size={ 14 }/>,
+            onClick: () => {
+                if (user.uuid) {
+                    resetUserTraffic(user.uuid);
+                }
+            },
+            disabled: isPending,
         },
         {
             text: 'Delete',
@@ -64,6 +90,7 @@ export function UsersListItemMenu({ user }: UsersListItemMenuProps) {
                         leftSection={ item.icon }
                         color={ item.color }
                         onClick={ item.onClick }
+                        disabled={ item.disabled }
                     >
                         { item.text }
                     </Menu.Item>
